@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+.venv
+venv/
+env/
+
+# Secrets
+.api_key
+.vllm_key
+
+# Project-specific
+output/
+output
+data/
+
+*.zip
+api_keys
+
+
+# egg info
+*.egg-info/
+*.egg
+.gemini
+.claude
+# Internal-only docs
+docs/internal/
+AGENTS.md
+docs/agent-instructions/

@@ -1,0 +1,14 @@
+# Mem0 baseline requirements
+#
+# Install after the base ATMBench deps:
+#   pip install -r requirements.txt
+#   pip install -e .
+#   pip install -r memqa/qa_agent_baselines/mem0/requirements.txt
+#
+# Upstream provides the `mem0` module via the `mem0ai` package.
+
+mem0ai>=1.0.2
+chromadb>=0.4.24
+langchain>=0.2.0
+langchain-community>=0.0.0
+

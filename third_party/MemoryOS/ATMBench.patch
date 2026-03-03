@@ -1,0 +1,13 @@
+diff --git a/memoryos-pypi/requirements.txt b/memoryos-pypi/requirements.txt
+index 64c0394..18b4797 100644
+--- a/memoryos-pypi/requirements.txt
++++ b/memoryos-pypi/requirements.txt
+@@ -5,7 +5,7 @@ sentence-transformers==5.0.0 # Updated for Qwen model support
+ transformers>=4.51.0              # Required for newer sentence-transformer features
+ FlagEmbedding>=1.2.9                # For BGE-M3 model support
+ 
+-faiss-gpu>=1.7.0,<2.0.0
++faiss-gpu
+ httpx[socks]
+ openai
+ # Web framework (for demo)

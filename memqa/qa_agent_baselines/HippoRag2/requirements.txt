@@ -1,0 +1,22 @@
+# HippoRAG 2 Baseline Dependencies
+# HippoRAG itself is vendored under `third_party/HippoRAG/`.
+
+# Core
+sentence-transformers>=2.2.0
+torch>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+tqdm>=4.65.0
+networkx>=3.0
+pydantic>=2.0.0
+tenacity>=8.0.0
+tiktoken>=0.7.0
+nest_asyncio
+litellm>=1.0.0
+python-igraph>=0.11.0
+
+# For NV-Embed-v2 (optional, paper default embedding)
+# einops>=0.6.0
+
+# Note: depending on which upstream HippoRAG features you enable, you may need
+# additional extras (see `third_party/HippoRAG/requirements.txt`).

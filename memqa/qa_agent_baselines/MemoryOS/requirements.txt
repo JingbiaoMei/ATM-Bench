@@ -1,0 +1,15 @@
+# MemoryOS baseline requirements
+# Install with: pip install -r requirements.txt
+
+# MemoryOS package (the module is named "memoryos").
+memoryos-pro>=1.0.0
+
+# Or install from GitHub for the reference implementation:
+# pip install git+https://github.com/BAI-LAB/MemoryOS.git#subdirectory=memoryos-pypi
+
+# Dependencies (should be installed with memoryos-pro, but listed for reference):
+# numpy>=1.20.0
+# faiss-cpu>=1.7.0  # or faiss-gpu for GPU support
+# sentence-transformers>=2.0.0
+# FlagEmbedding>=1.0.0  # for bge-m3 support
+# openai>=1.0.0
