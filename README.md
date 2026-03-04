@@ -10,20 +10,22 @@
 ## 🗓️ Timeline
 
 - **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
-- **2026-03-04 (planned):** Codebase release
+- **2026-03-04:** Initial Codebase release
 - **Coming soon:** ATM-Bench data release
-- **Coming soon:** Implementations for OpenClaw, Codex, and OpenCode
+- **Coming soon:** Implementations for Benchmarking on OpenClaw, Codex, and OpenCode
 
 ## 📋 Overview
 
 Existing long-term memory benchmarks focus primarily on dialogue history, failing to capture realistic personalized references grounded in lived experience. ATM-Bench addresses this gap with:
 
-- 🖼️ **Multimodal data:** Images, videos, emails
-- 📅 **Long-term horizon:** ~4 years of personal memory
-- 🎯 **Referential queries:** Resolving personal references ("the restaurant I visited last month")
+- 🖼️ **Multimodal and Multisource data:** Images, videos, emails
+- 📅 **Extremely Long-term horizon:** ~4 years of personal memory
+- 🎯 **Referential queries:** Resolving personal references ("Referring my cat to "Grace", my recent visit Europe Trip ")
 - 🔍 **Evidence-grounded:** Human-annotated QA pairs with ground-truth memory evidence
 - 🧩 **Multi-evidence reasoning:** Queries requiring evidence from multiple sources
 - ⚡ **Conflicting evidence:** Handling contradictory information
+
+![ATM-Bench Overview](docs/images/ATM-Bench-Demo.png)
 
 ### Schema-Guided Memory (SGM)
 
