@@ -51,7 +51,9 @@ Existing long-term memory benchmarks focus primarily on dialogue history, failin
 1. **Memory preprocessing** (how each memory item is represented)
 2. **Memory organization** (how items are structured/linked)
 
-<img src="docs/images/ATM-Method.png" alt="ATM Method" width="50%" />
+<p align="center">
+  <img src="docs/images/ATM-Method.png" alt="ATM Method" width="50%" />
+</p>
 
 ### Memory Preprocessing
 We compare two preprocessing representations:
