@@ -10,7 +10,7 @@
 ## 🗓️ Timeline
 
 - **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
-- **2026-03-04:** Initial Codebase release
+- **2026-03-04:** Initial Codebase release, including baseline implementations for MMRAG, Oracle, and NIAH.
 - **Coming soon:** ATM-Bench data release
 - **Coming soon:** Implementations for Benchmarking on OpenClaw, Codex, and OpenCode
 
@@ -27,9 +27,35 @@ Existing long-term memory benchmarks focus primarily on dialogue history, failin
 
 ![ATM-Bench Overview](docs/images/ATM-Bench-Demo.png)
 
-### Schema-Guided Memory (SGM)
+## Memory Ingestion
 
-We propose **Schema-Guided Memory (SGM)** to provide a structured representation of memory items from different sources, improving over descriptive memory approaches used in prior work.
+**Memory Ingestion** is decomposed into:
+
+1. **Memory preprocessing** (how each memory item is represented)
+2. **Memory organization** (how items are structured/linked)
+
+![ATM Method](docs/images/ATM-Method.png)
+### Memory Preprocessing
+We compare two preprocessing representations:
+
+- **Descriptive Memory (DM):** each memory item is represented as one natural-language description.
+- **Schema-Guided Memory (SGM):** each memory item is represented with fixed text-based key-value fields under a schema.
+
+In SGM, schema fields are modality-aware. For example:
+
+- **Image/Video memory:** `time`, `location`, `entities`, `ocr`, `tags`
+- **Email memory:** `time`, `summary`, `body`
+
+DM and SGM contain the same underlying information but use different formats.
+
+In our code base, DM are "caption" based representations, while SGM are "schema" based representations.
+### Memory Organization
+For organization of the memory store:
+
+- **Piled Memory:** items are stored without explicit links.
+- **Linked Memory:** items are linked with inferred relations (graph structure); agentic systems can additionally update existing items during organization.
+
+
 
 ## 🚀 Quick Start
 
@@ -63,8 +89,6 @@ bash scripts/QA_Agent/MMRAG/run.sh
 # Oracle (upper bound)
 bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b.sh
 
-# NIAH (generation-only on hard set with fixed pools)
-bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b.sh
 ```
 
 For detailed setup, data layout, and reproducibility settings, see:
@@ -118,7 +142,3 @@ If you use ATM-Bench in your research, please cite:
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-Thanks to all contributors and the research community for feedback and support.
