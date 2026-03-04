@@ -7,6 +7,13 @@
 
 > **Paper:** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)  
 
+## 🗓️ Timeline
+
+- **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
+- **2026-03-04 (planned):** Codebase release
+- **Coming soon:** ATM-Bench data release
+- **Coming soon:** Implementations for OpenClaw, Codex, and OpenCode
+
 ## 📋 Overview
 
 Existing long-term memory benchmarks focus primarily on dialogue history, failing to capture realistic personalized references grounded in lived experience. ATM-Bench addresses this gap with:
@@ -90,8 +97,14 @@ ATMBench/
 If you use ATM-Bench in your research, please cite:
 
 ```bibtex
- @article{Mei2026ATM, title={According to Me: Long-Term Personalized Referential Memory QA}, url={http://arxiv.org/abs/2603.01990}, DOI={10.48550/arXiv.2603.01990}, note={arXiv:2603.01990 [cs]}, number={arXiv:2603.01990}, publisher={arXiv}, author={Mei, Jingbiao and Chen, Jinghong and Yang, Guangyu and Hou, Xinyu and Li, Margaret and Byrne, Bill}, year={2026}, month=mar}
-
+@article{mei2026atm,
+  title={According to Me: Long-Term Personalized Referential Memory QA},
+  author={Mei, Jingbiao and Sun, Mingsheng and Lin, Weizhe and Zhang, Chenyang and Lin, Jinghong and Byrne, Bill},
+  journal={arXiv preprint arXiv:2603.01990},
+  year={2026},
+  url={https://arxiv.org/abs/2603.01990},
+  doi={10.48550/arXiv.2603.01990}
+}
 ```
 
 ## 🔗 Links
