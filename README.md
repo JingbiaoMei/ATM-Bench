@@ -6,7 +6,22 @@
 **ATM-Bench** is the first benchmark for **multimodal, multi-source personalized referential memory QA** over long time horizons (~4 years) with **evidence-grounded** retrieval and answering.
 
 > **Paper:** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)  
+> **Project Page:** [https://atmbench.github.io/](https://atmbench.github.io/)
 
+## Table of Contents
+
+- [Timeline](#timeline)
+- [Overview](#overview)
+- [Memory Ingestion](#memory-ingestion)
+- [NIAH Evaluation Setup](#niah-evaluation-setup)
+- [Quick Start](#quick-start)
+- [Repository Structure](#repository-structure)
+- [Documentation](#documentation)
+- [Citation](#citation)
+- [Links](#links)
+- [License](#license)
+
+<a id="timeline"></a>
 ## 🗓️ Timeline
 
 - **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
@@ -14,6 +29,7 @@
 - **Coming soon:** ATM-Bench data release
 - **Coming soon:** Implementations for benchmarking on OpenClaw, Codex, and OpenCode
 
+<a id="overview"></a>
 ## 📋 Overview
 
 Existing long-term memory benchmarks focus primarily on dialogue history, failing to capture realistic personalized references grounded in lived experience. ATM-Bench addresses this gap with:
@@ -27,6 +43,7 @@ Existing long-term memory benchmarks focus primarily on dialogue history, failin
 
 ![ATM-Bench Overview](docs/images/ATM-Bench-Demo.png)
 
+<a id="memory-ingestion"></a>
 ## Memory Ingestion
 
 **Memory Ingestion** is decomposed into:
@@ -34,7 +51,7 @@ Existing long-term memory benchmarks focus primarily on dialogue history, failin
 1. **Memory preprocessing** (how each memory item is represented)
 2. **Memory organization** (how items are structured/linked)
 
-![ATM Method](docs/images/ATM-Method.png)
+<img src="docs/images/ATM-Method.png" alt="ATM Method" width="50%" />
 
 ### Memory Preprocessing
 We compare two preprocessing representations:
@@ -57,6 +74,7 @@ For organization of the memory store:
 - **Piled Memory:** items are stored without explicit links.
 - **Linked Memory:** items are linked with inferred relations (graph structure); agentic systems can additionally update existing items during organization.
 
+<a id="niah-evaluation-setup"></a>
 ## NIAH Evaluation Setup
 
 In addition to end-to-end retrieval + generation evaluation, we provide **NIAH (Needle In A Haystack)**:
@@ -69,6 +87,7 @@ See:
 - [`docs/niah.md`](docs/niah.md)
 
 
+<a id="quick-start"></a>
 ## 🚀 Quick Start
 
 ### Installation
@@ -127,6 +146,7 @@ For detailed setup, data layout, and reproducibility settings, see:
 - [`docs/baseline.md`](docs/baseline.md)
 - [`docs/niah.md`](docs/niah.md)
 
+<a id="repository-structure"></a>
 ## 📁 Repository Structure
 
 ```
@@ -139,6 +159,7 @@ ATMBench/
 └── output/             # Experiment outputs (gitignored)
 ```
 
+<a id="documentation"></a>
 ## 📚 Documentation
 
 - [`docs/README.md`](docs/README.md) - Getting started guide
@@ -149,6 +170,7 @@ ATMBench/
 - [`docs/reproducibility.md`](docs/reproducibility.md) - Reproduction instructions
 - [`docs/repo_structure.md`](docs/repo_structure.md) - Repository organization
 
+<a id="citation"></a>
 ## 📖 Citation
 
 If you use ATM-Bench in your research, please cite:
@@ -164,12 +186,14 @@ If you use ATM-Bench in your research, please cite:
 }
 ```
 
+<a id="links"></a>
 ## 🔗 Links
 
 - 📄 **Paper:** https://arxiv.org/abs/2603.01990
 - 💻 **Code:** https://github.com/JingbiaoMei/ATM-Bench
 - 🐛 **Issues:** https://github.com/JingbiaoMei/ATM-Bench/issues
 
+<a id="license"></a>
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
