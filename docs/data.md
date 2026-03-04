@@ -21,15 +21,24 @@ This repo expects you to place benchmark files and raw memory artifacts under
 
 Note: `data/` and `output/` are gitignored.
 
-## Downloading Benchmark Files (TODO)
+## Benchmark Data Release Status
 
-We will publish ATMBench artifacts on Hugging Face. After upload, fill in:
+Current status:
 
-- [ ] HF dataset/model link
-- [ ] Versioning scheme (tag/date + git commit)
-- [ ] `sha256` checksums for each released file
-- [ ] Minimal download instructions (curl / `huggingface_hub`)
-- [ ] License + citation block
+- Paper/code release is available.
+- Benchmark data release is pending.
+
+Planned release channel:
+
+- Hugging Face (dataset artifacts and versioned files).
+
+Planned metadata to publish with the data release:
+
+- HF dataset/model link
+- Versioning scheme (tag/date + git commit)
+- `sha256` checksums for released files
+- Minimal download instructions (curl / `huggingface_hub`)
+- License + citation block
 
 ## Schemas (What Scripts Expect)
 

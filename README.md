@@ -10,7 +10,7 @@
 ## 🗓️ Timeline
 
 - **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
-- **2026-03-04:** Initial codebase release, including baseline implementations for MMRAG, Oracle, and NIAH.
+- **2026-03-04:** Initial codebase release, including baseline implementations for MMRAG, Oracle, NIAH, and four ported third-party baselines (A-Mem, HippoRAG2, mem0, MemoryOS).
 - **Coming soon:** ATM-Bench data release
 - **Coming soon:** Implementations for benchmarking on OpenClaw, Codex, and OpenCode
 
@@ -35,6 +35,7 @@ Existing long-term memory benchmarks focus primarily on dialogue history, failin
 2. **Memory organization** (how items are structured/linked)
 
 ![ATM Method](docs/images/ATM-Method.png)
+
 ### Memory Preprocessing
 We compare two preprocessing representations:
 
@@ -58,7 +59,7 @@ For organization of the memory store:
 
 ## NIAH Evaluation Setup
 
-In addition to end-to-end retrieval+generation evaluation, we provide **NIAH (Needle In A Haystack)**:
+In addition to end-to-end retrieval + generation evaluation, we provide **NIAH (Needle In A Haystack)**:
 
 - Each question is paired with a fixed evidence pool (`niah_evidence_ids`) that contains all ground-truth items.
 - The rest of the pool is filled with realistic distractors.
@@ -91,7 +92,7 @@ Or use local key files (gitignored):
 - `api_keys/.openai_key`
 - `api_keys/.vllm_key`
 
-### Run Baselines
+### Quick commands (MMRAG + Oracle)
 
 ```bash
 # MMRAG (runs both ATM-bench and ATM-bench-hard)
