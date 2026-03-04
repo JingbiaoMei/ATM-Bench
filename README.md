@@ -10,17 +10,17 @@
 ## 🗓️ Timeline
 
 - **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
-- **2026-03-04:** Initial Codebase release, including baseline implementations for MMRAG, Oracle, and NIAH.
+- **2026-03-04:** Initial codebase release, including baseline implementations for MMRAG, Oracle, and NIAH.
 - **Coming soon:** ATM-Bench data release
-- **Coming soon:** Implementations for Benchmarking on OpenClaw, Codex, and OpenCode
+- **Coming soon:** Implementations for benchmarking on OpenClaw, Codex, and OpenCode
 
 ## 📋 Overview
 
 Existing long-term memory benchmarks focus primarily on dialogue history, failing to capture realistic personalized references grounded in lived experience. ATM-Bench addresses this gap with:
 
-- 🖼️ **Multimodal and Multisource data:** Images, videos, emails
-- 📅 **Extremely Long-term horizon:** ~4 years of personal memory
-- 🎯 **Referential queries:** Resolving personal references ("Referring my cat to "Grace", my recent visit Europe Trip ")
+- 🖼️ **Multimodal and multi-source data:** Images, videos, emails
+- 📅 **Long-term horizon:** ~4 years of personal memory
+- 🎯 **Referential queries:** Resolving personalized references (e.g., "the restaurant I visited last month")
 - 🔍 **Evidence-grounded:** Human-annotated QA pairs with ground-truth memory evidence
 - 🧩 **Multi-evidence reasoning:** Queries requiring evidence from multiple sources
 - ⚡ **Conflicting evidence:** Handling contradictory information
@@ -48,13 +48,26 @@ In SGM, schema fields are modality-aware. For example:
 
 DM and SGM contain the same underlying information but use different formats.
 
-In our code base, DM are "caption" based representations, while SGM are "schema" based representations.
+In this codebase, DM is implemented as caption/description-style text, while SGM is implemented as schema-based key-value text fields.
+
 ### Memory Organization
 For organization of the memory store:
 
 - **Piled Memory:** items are stored without explicit links.
 - **Linked Memory:** items are linked with inferred relations (graph structure); agentic systems can additionally update existing items during organization.
 
+## NIAH Evaluation Setup
+
+In addition to end-to-end retrieval+generation evaluation, we provide **NIAH (Needle In A Haystack)**:
+
+- Each question is paired with a fixed evidence pool (`niah_evidence_ids`) that contains all ground-truth items.
+- The rest of the pool is filled with realistic distractors.
+- This isolates answer generation/reasoning quality from retrieval quality.
+
+See:
+- [`docs/niah.md`](docs/niah.md)
+- [`memqa/qa_agent_baselines/NIAH/README.md`](memqa/qa_agent_baselines/NIAH/README.md)
+- [`scripts/QA_Agent/NIAH/README.md`](scripts/QA_Agent/NIAH/README.md)
 
 
 ## 🚀 Quick Start
@@ -96,6 +109,7 @@ For detailed setup, data layout, and reproducibility settings, see:
 - [`docs/data.md`](docs/data.md)
 - [`docs/reproducibility.md`](docs/reproducibility.md)
 - [`docs/baseline.md`](docs/baseline.md)
+- [`docs/niah.md`](docs/niah.md)
 
 ## 📁 Repository Structure
 
@@ -114,6 +128,7 @@ ATMBench/
 - [`docs/README.md`](docs/README.md) - Getting started guide
 - [`docs/data.md`](docs/data.md) - Data format and preparation
 - [`docs/baseline.md`](docs/baseline.md) - Baseline implementations
+- [`docs/niah.md`](docs/niah.md) - NIAH protocol and usage
 - [`docs/metrics.md`](docs/metrics.md) - Evaluation metrics
 - [`docs/reproducibility.md`](docs/reproducibility.md) - Reproduction instructions
 - [`docs/repo_structure.md`](docs/repo_structure.md) - Repository organization
@@ -125,7 +140,7 @@ If you use ATM-Bench in your research, please cite:
 ```bibtex
 @article{mei2026atm,
   title={According to Me: Long-Term Personalized Referential Memory QA},
-  author={Mei, Jingbiao and Sun, Mingsheng and Lin, Weizhe and Zhang, Chenyang and Lin, Jinghong and Byrne, Bill},
+  author={Mei, Jingbiao and Chen, Jinghong and Yang, Guangyu and Hou, Xinyu and Li, Margaret and Byrne, Bill},
   journal={arXiv preprint arXiv:2603.01990},
   year={2026},
   url={https://arxiv.org/abs/2603.01990},
