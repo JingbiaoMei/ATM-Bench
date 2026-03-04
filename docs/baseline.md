@@ -94,6 +94,23 @@ Notes:
 - Some baselines have heavy/native deps (e.g., `python-igraph`, `faiss-*`). Install them per your platform.
 - Some baselines vendor upstream code under `third_party/` (see `third_party/README.md`).
 
+## Environment Recommendations
+
+- Core baselines (`MMRAG`, `Oracle`, `NIAH`) are tested in the main `atmbench` environment.
+- Third-party memory-system baselines in this repo are:
+  - `A-Mem`
+  - `HippoRAG2`
+  - `mem0`
+  - `MemoryOS`
+- `MemoryOS` is strongly recommended to run in a separate conda environment.
+- `A-Mem`, `HippoRAG2`, and `mem0` are tested to be compatible with the core baseline environment, but separate environments are still safer for dependency isolation.
+- Setup for these four baselines is documented under:
+  - `third_party/A-mem/`
+  - `third_party/HippoRAG/`
+  - `third_party/mem0/`
+  - `third_party/MemoryOS/`
+- OpenClaw, OpenCode, and Codex baselines are compatible with this repo’s evaluation workflow, but each requires its own third-party software installation.
+
 ## Vendored upstream code (third_party)
 
 For reproducibility, some baselines vendor upstream code directly into this repo under `third_party/`.
@@ -554,4 +571,4 @@ If you want to try extraction, set:
 - `--niah-field`: field name for pools (default: `niah_evidence_ids`)
 - All other flags are passed through to `oracle_baseline.py` (provider/model/media flags, output path, etc.)
 
-See `memqa/qa_agent_baselines/NIAH/README.md` for schema and usage.
+See `docs/niah.md` for schema and usage.

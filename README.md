@@ -20,7 +20,7 @@ Existing long-term memory benchmarks focus primarily on dialogue history, failin
 
 - 🖼️ **Multimodal and multi-source data:** Images, videos, emails
 - 📅 **Long-term horizon:** ~4 years of personal memory
-- 🎯 **Referential queries:** Resolving personalized references (e.g., "the restaurant I visited last month")
+- 🎯 **Referential queries:** Resolving personalized references (e.g., "Show me the moments where Grace was trying to be sneaky...")
 - 🔍 **Evidence-grounded:** Human-annotated QA pairs with ground-truth memory evidence
 - 🧩 **Multi-evidence reasoning:** Queries requiring evidence from multiple sources
 - ⚡ **Conflicting evidence:** Handling contradictory information
@@ -66,8 +66,6 @@ In addition to end-to-end retrieval+generation evaluation, we provide **NIAH (Ne
 
 See:
 - [`docs/niah.md`](docs/niah.md)
-- [`memqa/qa_agent_baselines/NIAH/README.md`](memqa/qa_agent_baselines/NIAH/README.md)
-- [`scripts/QA_Agent/NIAH/README.md`](scripts/QA_Agent/NIAH/README.md)
 
 
 ## 🚀 Quick Start
@@ -103,6 +101,23 @@ bash scripts/QA_Agent/MMRAG/run.sh
 bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b.sh
 
 ```
+
+### Baseline Compatibility and Environments
+
+- Core baselines (`MMRAG`, `Oracle`, `NIAH`) are tested in the main `atmbench` environment.
+- Third-party memory-system baselines in this repo include:
+  - `A-Mem`
+  - `HippoRAG2`
+  - `mem0`
+  - `MemoryOS`
+- `MemoryOS` is strongly recommended to run in a separate conda environment.
+- `A-Mem`, `HippoRAG2`, and `mem0` are tested to be compatible with the core baseline environment, but separate environments are still safer for reproducibility and dependency isolation.
+- Setup references for these baselines are under `third_party/`:
+  - `third_party/A-mem/`
+  - `third_party/HippoRAG/`
+  - `third_party/mem0/`
+  - `third_party/MemoryOS/`
+- OpenClaw, OpenCode, and Codex baselines are compatible with this repo’s evaluation workflow, but each requires its own third-party software installation.
 
 For detailed setup, data layout, and reproducibility settings, see:
 - [`docs/README.md`](docs/README.md)

@@ -51,6 +51,13 @@ bash scripts/QA_Agent/NIAH/run_niah_gpt5.sh
 
 For additional memory-agent baselines (HippoRAG 2, MemoryOS, A‑Mem, Mem0), see `docs/baseline.md`.
 
+Environment note:
+- `MemoryOS` is strongly recommended to run in a separate conda environment.
+- `HippoRAG 2`, `A‑Mem`, and `Mem0` are tested to be compatible with the core baseline environment, but separate environments are still safer for reproducibility.
+
+Agent-system note:
+- OpenClaw, OpenCode, and Codex baselines are compatible with this repo’s evaluation workflow, but each requires its own third-party software installation.
+
 ## Evaluation Defaults (Paper)
 
 - `open_end` judge model: `gpt-5-mini` (default in this repo)
