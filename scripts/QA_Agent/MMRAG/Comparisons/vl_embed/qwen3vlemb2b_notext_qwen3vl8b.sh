@@ -25,6 +25,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
     --max-workers 4 \
     --timeout 1200 \
     --retrieval-top-k "${RETRIEVAL_TOP_K}" \
+    --retrieval-max-k "${RETRIEVAL_MAX_K}" \
     --output-dir-base "${OUTPUT_BASE}/vl_embed/qwen3vlemb_2b/${ANSWERER_TAG}" \
     --method-name "${METHOD_NAME}" \
     --no-vl-text-augment \

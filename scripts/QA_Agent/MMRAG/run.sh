@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 TOP_K="${TOP_K:-10}"
+RETRIEVAL_MAX_K="${RETRIEVAL_MAX_K:-200}"
 VLLM_ENDPOINT="${VLLM_ENDPOINT:-http://127.0.0.1:8000/v1/chat/completions}"
 ANSWERER_MODEL="${ANSWERER_MODEL:-Qwen/Qwen3-VL-8B-Instruct-FP8}"
 TEXT_EMBED_MODEL="${TEXT_EMBED_MODEL:-sentence-transformers/all-MiniLM-L6-v2}"
@@ -25,6 +26,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --model "${ANSWERER_MODEL}" \
   --max-workers 32 \
   --retrieval-top-k "${TOP_K}" \
+  --retrieval-max-k "${RETRIEVAL_MAX_K}" \
   --output-dir-base "${OUTPUT_BASE}/atmbench/text_embed/allminilm_l6/qwen3vl8b_answerer" \
   --method-name MMRAG
 
@@ -42,5 +44,6 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --model "${ANSWERER_MODEL}" \
   --max-workers 32 \
   --retrieval-top-k "${TOP_K}" \
+  --retrieval-max-k "${RETRIEVAL_MAX_K}" \
   --output-dir-base "${OUTPUT_BASE}/hard/text_embed/allminilm_l6/qwen3vl8b_answerer" \
   --method-name MMRAG

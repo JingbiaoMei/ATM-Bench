@@ -26,6 +26,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
     --model "${ANSWERER_MODEL}" \
     --max-workers 4 \
     --timeout 1200 \
+    --retrieval-max-k "${RETRIEVAL_MAX_K}" \
     --rerank-input-k "${RERANK_INPUT_K}" \
     --rerank-top-k "${RERANK_TOP_K}" \
     --output-dir-base "${OUTPUT_BASE}/text_embed_rerank/allminilm_l6_qwen3rerank_0.6b/${ANSWERER_TAG}" \
@@ -50,6 +51,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
     --model "${ANSWERER_MODEL}" \
     --max-workers 4 \
     --timeout 1200 \
+    --retrieval-max-k "${RETRIEVAL_MAX_K}" \
     --rerank-input-k "${RERANK_INPUT_K}" \
     --rerank-top-k "${RERANK_TOP_K}" \
     --output-dir-base "${OUTPUT_BASE}/text_embed_rerank/allminilm_l6_qwen3rerank_0.6b/${ANSWERER_TAG}" \

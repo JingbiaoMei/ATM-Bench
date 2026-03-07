@@ -3,6 +3,7 @@
 
 # Top-K configuration
 TOP_K="${TOP_K:-10}"
+RETRIEVAL_MAX_K="${RETRIEVAL_MAX_K:-200}"
 
 if [ "${TOP_K}" -eq 5 ]; then
     RETRIEVAL_TOP_K=5
