@@ -389,8 +389,8 @@ Recall is reported as `R@1/5/10/25/50/100` using gold evidence IDs.
 python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --qa-file memqa/utils/final_data_processing/atm-20260121.json \
   --media-source batch_results \
-  --image-batch-results data/raw_memory/image/batch_results.json \
-  --video-batch-results data/raw_memory/video/batch_results.json \
+  --image-batch-results output/image/qwen3vl2b/batch_results.json \
+  --video-batch-results output/video/qwen3vl2b/batch_results.json \
   --email-file data/raw_memory/email/merged_emails.json \
   --retriever text \
   --text-embedding-model "Qwen/Qwen3-Embedding-0.6B" \
@@ -408,8 +408,8 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
 python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --qa-file memqa/utils/final_data_processing/atm-20260121.json \
   --media-source batch_results \
-  --image-batch-results data/raw_memory/image/batch_results.json \
-  --video-batch-results data/raw_memory/video/batch_results.json \
+  --image-batch-results output/image/qwen3vl2b/batch_results.json \
+  --video-batch-results output/video/qwen3vl2b/batch_results.json \
   --email-file data/raw_memory/email/merged_emails.json \
   --retriever sentence_transformer \
   --text-embedding-model "all-MiniLM-L6-v2" \
@@ -528,8 +528,8 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
 python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
   --qa-file memqa/utils/final_data_processing/atm-20260121.json \
   --media-source batch_results \
-  --image-batch-results data/raw_memory/image/batch_results.json \
-  --video-batch-results data/raw_memory/video/batch_results.json \
+  --image-batch-results output/image/qwen3vl2b/batch_results.json \
+  --video-batch-results output/video/qwen3vl2b/batch_results.json \
   --email-file data/raw_memory/email/merged_emails.json \
   --retriever text \
   --text-embedding-model "Qwen/Qwen3-Embedding-0.6B" \

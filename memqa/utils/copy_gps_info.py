@@ -6,8 +6,9 @@ The image/video processors cache reverse-geocoding results as JSON files named:
   <md5>_location_name.json
 
 If you already have a directory containing these cache files (for example, from a
-previous run or from a provided "GPS cache" bundle), copying them into the
-target cache directory lets the processors skip geocoding API calls.
+previous run or from a provided GPS cache bundle stored under
+data/raw_memory/geocoding_cache/{image,video}), copying them into the target
+cache directory lets the processors skip geocoding API calls.
 """
 
 from __future__ import annotations
@@ -71,4 +72,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

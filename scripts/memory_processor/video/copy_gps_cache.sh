@@ -6,18 +6,28 @@
 # allows the processors to skip geocoding API calls.
 #
 # Usage:
-#   bash scripts/memory_processor/video/copy_gps_cache.sh <SRC_CACHE_DIR> <DST_CACHE_DIR>
+#   bash scripts/memory_processor/video/copy_gps_cache.sh [SRC_CACHE_DIR] <DST_CACHE_DIR>
 #
 # Example:
 #   bash scripts/memory_processor/video/copy_gps_cache.sh \
-#     <GPS_CACHE_DIR> \
+#     output/video/qwen3vl2b/cache
+#   bash scripts/memory_processor/video/copy_gps_cache.sh \
+#     /path/to/other/video_gps_cache \
 #     output/video/qwen3vl2b/cache
 
-SRC_CACHE_DIR="${1:-}"
-DST_CACHE_DIR="${2:-}"
+DEFAULT_SRC_CACHE_DIR="data/raw_memory/geocoding_cache/video"
 
-if [ -z "${SRC_CACHE_DIR}" ] || [ -z "${DST_CACHE_DIR}" ]; then
-  echo "Usage: bash scripts/memory_processor/video/copy_gps_cache.sh <SRC_CACHE_DIR> <DST_CACHE_DIR>"
+if [ "$#" -eq 1 ]; then
+  SRC_CACHE_DIR="${DEFAULT_SRC_CACHE_DIR}"
+  DST_CACHE_DIR="${1}"
+else
+  SRC_CACHE_DIR="${1:-${DEFAULT_SRC_CACHE_DIR}}"
+  DST_CACHE_DIR="${2:-}"
+fi
+
+if [ -z "${DST_CACHE_DIR}" ]; then
+  echo "Usage: bash scripts/memory_processor/video/copy_gps_cache.sh [SRC_CACHE_DIR] <DST_CACHE_DIR>"
+  echo "Default SRC_CACHE_DIR: ${DEFAULT_SRC_CACHE_DIR}"
   exit 1
 fi
 

@@ -11,8 +11,8 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --qa-file "./data/atm-bench/atm-bench.json" \
   --media-source batch_results \
   --batch-fields "short_caption" \
-  --image-batch-results "./data/raw_memory/image/batch_results.json" \
-  --video-batch-results "./data/raw_memory/video/batch_results.json" \
+  --image-batch-results "./output/image/qwen3vl2b/batch_results.json" \
+  --video-batch-results "./output/video/qwen3vl2b/batch_results.json" \
   --email-file "./data/raw_memory/email/merged_emails.json" \
   --provider vllm \
   --vllm-endpoint "${VLLM_ENDPOINT}" \
@@ -35,8 +35,8 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --qa-file "./data/atm-bench/atm-bench-hard.json" \
   --media-source batch_results \
   --batch-fields "short_caption" \
-  --image-batch-results "./data/raw_memory/image/batch_results.json" \
-  --video-batch-results "./data/raw_memory/video/batch_results.json" \
+  --image-batch-results "./output/image/qwen3vl2b/batch_results.json" \
+  --video-batch-results "./output/video/qwen3vl2b/batch_results.json" \
   --email-file "./data/raw_memory/email/merged_emails.json" \
   --provider vllm \
   --vllm-endpoint "${VLLM_ENDPOINT}" \

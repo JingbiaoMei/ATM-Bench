@@ -13,9 +13,9 @@ This repo expects you to place benchmark files and raw memory artifacts under
   - `data/raw_memory/image/` (raw images)
   - `data/raw_memory/video/` (raw videos)
   - `data/raw_memory/email/merged_emails.json` (optional; see schema below)
-  - `data/raw_memory/image/batch_results.json` (generated)
-  - `data/raw_memory/video/batch_results.json` (generated)
 - Generated artifacts:
+  - `output/image/qwen3vl2b/batch_results.json` (generated)
+  - `output/video/qwen3vl2b/batch_results.json` (generated)
   - `data/processed_memory/` (optional; for any future normalized memory store)
   - `output/` (all run outputs; always safe to delete/re-generate)
 
@@ -98,13 +98,17 @@ The processors cache reverse-geocoding results as JSON files under `<output_dir>
 
 - `*_location_name.json`
 
-If you have a pre-extracted GPS cache bundle (recommended; we plan to ship one with the benchmark artifacts),
-copy those cache files into your processor cache directory before running the processors so geocoding calls
-are skipped:
+If you have a pre-extracted GPS cache bundle, place it under:
+
+- `data/raw_memory/geocoding_cache/image`
+- `data/raw_memory/geocoding_cache/video`
+
+Then copy those cache files into your processor cache directory before running the processors so geocoding
+calls are skipped:
 
 ```bash
-python memqa/utils/copy_gps_info.py <GPS_CACHE_DIR> output/image/qwen3vl2b/cache
-python memqa/utils/copy_gps_info.py <GPS_CACHE_DIR> output/video/qwen3vl2b/cache
+python memqa/utils/copy_gps_info.py data/raw_memory/geocoding_cache/image output/image/qwen3vl2b/cache
+python memqa/utils/copy_gps_info.py data/raw_memory/geocoding_cache/video output/video/qwen3vl2b/cache
 ```
 
 You can also use the convenience wrappers:

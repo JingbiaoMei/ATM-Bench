@@ -6,8 +6,8 @@ export OPENAI_API_KEY
 python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --qa-file "./data/atm-bench/atm-bench.json" \
   --media-source raw \
-  --image-batch-results "./data/raw_memory/image/batch_results.json" \
-  --video-batch-results "./data/raw_memory/video/batch_results.json" \
+  --image-batch-results "./output/image/qwen3vl2b/batch_results.json" \
+  --video-batch-results "./output/video/qwen3vl2b/batch_results.json" \
   --image-root "./data/raw_memory/image" \
   --video-root "./data/raw_memory/video" \
   --email-file "./data/raw_memory/email/merged_emails.json" \
@@ -30,8 +30,8 @@ python memqa/utils/evaluator/evaluate_qa.py \
 python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --qa-file "./data/atm-bench/atm-bench-hard.json" \
   --media-source raw \
-  --image-batch-results "./data/raw_memory/image/batch_results.json" \
-  --video-batch-results "./data/raw_memory/video/batch_results.json" \
+  --image-batch-results "./output/image/qwen3vl2b/batch_results.json" \
+  --video-batch-results "./output/video/qwen3vl2b/batch_results.json" \
   --image-root "./data/raw_memory/image" \
   --video-root "./data/raw_memory/video" \
   --email-file "./data/raw_memory/email/merged_emails.json" \

@@ -6,8 +6,8 @@ ANSWERER_MODEL="${ANSWERER_MODEL:-Qwen/Qwen3-VL-8B-Instruct-FP8}"
 TEXT_EMBED_MODEL="${TEXT_EMBED_MODEL:-sentence-transformers/all-MiniLM-L6-v2}"
 
 EMAIL_FILE="./data/raw_memory/email/merged_emails.json"
-IMAGE_BATCH="./data/raw_memory/image/batch_results.json"
-VIDEO_BATCH="./data/raw_memory/video/batch_results.json"
+IMAGE_BATCH="./output/image/qwen3vl2b/batch_results.json"
+VIDEO_BATCH="./output/video/qwen3vl2b/batch_results.json"
 
 OUTPUT_BASE="output/QA_Agent/MMRAG/main_table/topk${TOP_K}"
 

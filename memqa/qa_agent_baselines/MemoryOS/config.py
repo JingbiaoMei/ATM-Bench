@@ -33,8 +33,8 @@ MEMORYOS_CONFIG = {
     "image_root": str(PROJECT_ROOT / "data/raw_memory/image"),
     "video_root": str(PROJECT_ROOT / "data/raw_memory/video"),
     "email_file": str(PROJECT_ROOT / "data/raw_memory/email/merged_emails.json"),
-    "image_batch_results": str(PROJECT_ROOT / "data/raw_memory/image/batch_results.json"),
-    "video_batch_results": str(PROJECT_ROOT / "data/raw_memory/video/batch_results.json"),
+    "image_batch_results": str(PROJECT_ROOT / "output/image/qwen3vl2b/batch_results.json"),
+    "video_batch_results": str(PROJECT_ROOT / "output/video/qwen3vl2b/batch_results.json"),
     "output_dir_base": str(PROJECT_ROOT / "output/QA_Agent/MemoryOS"),
     "method_name": "memoryos_base",
     # Text augmentation flags (what to include in memory items)

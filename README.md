@@ -10,16 +10,25 @@
 
 ## Table of Contents
 
-- [Timeline](#timeline)
-- [Overview](#overview)
-- [Memory Ingestion](#memory-ingestion)
-- [NIAH Evaluation Setup](#niah-evaluation-setup)
-- [Quick Start](#quick-start)
-- [Repository Structure](#repository-structure)
-- [Documentation](#documentation)
-- [Citation](#citation)
-- [Links](#links)
-- [License](#license)
+- [ATM-Bench: Long-Term Personalized Referential Memory QA](#atm-bench-long-term-personalized-referential-memory-qa)
+  - [Table of Contents](#table-of-contents)
+  - [🗓️ Timeline](#️-timeline)
+  - [📋 Overview](#-overview)
+  - [Memory Ingestion](#memory-ingestion)
+    - [Memory Preprocessing](#memory-preprocessing)
+    - [Memory Organization](#memory-organization)
+  - [NIAH Evaluation Setup](#niah-evaluation-setup)
+  - [🚀 Quick Start](#-quick-start)
+    - [Installation](#installation)
+    - [API Keys](#api-keys)
+    - [Generate Memory Files First](#generate-memory-files-first)
+    - [Quick commands (MMRAG + Oracle)](#quick-commands-mmrag--oracle)
+    - [Baseline Compatibility and Environments](#baseline-compatibility-and-environments)
+  - [📁 Repository Structure](#-repository-structure)
+  - [📚 Documentation](#-documentation)
+  - [📖 Citation](#-citation)
+  - [🔗 Links](#-links)
+  - [📝 License](#-license)
 
 <a id="timeline"></a>
 ## 🗓️ Timeline
@@ -112,6 +121,21 @@ export VLLM_API_KEY="your-key"
 Or use local key files (gitignored):
 - `api_keys/.openai_key`
 - `api_keys/.vllm_key`
+
+### Generate Memory Files First
+
+Before running `MMRAG` or `Oracle`, generate the image/video `batch_results.json` files:
+
+```bash
+# Optional but recommended: preload reverse-geocoding cache
+bash scripts/memory_processor/image/copy_gps_cache.sh output/image/qwen3vl2b/cache
+bash scripts/memory_processor/video/copy_gps_cache.sh output/video/qwen3vl2b/cache
+
+# Generate memory itemization results
+bash scripts/memory_processor/image/memory_itemize/run_qwen3vl2b.sh
+bash scripts/memory_processor/video/memory_itemize/run_qwen3vl2b.sh
+```
+
 
 ### Quick commands (MMRAG + Oracle)
 

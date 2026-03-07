@@ -20,8 +20,8 @@ QA_FILE="${QA_FILE:-./data/atm-bench/atm-bench.json}"
 EMAIL_FILE="${EMAIL_FILE:-./data/raw_memory/email/merged_emails.json}"
 IMAGE_ROOT="${IMAGE_ROOT:-./data/raw_memory/image}"
 VIDEO_ROOT="${VIDEO_ROOT:-./data/raw_memory/video}"
-IMAGE_BATCH="${IMAGE_BATCH:-./data/raw_memory/image/batch_results.json}"
-VIDEO_BATCH="${VIDEO_BATCH:-./data/raw_memory/video/batch_results.json}"
+IMAGE_BATCH="${IMAGE_BATCH:-./output/image/qwen3vl2b/batch_results.json}"
+VIDEO_BATCH="${VIDEO_BATCH:-./output/video/qwen3vl2b/batch_results.json}"
 
 # Model endpoints
 VLLM_ENDPOINT="${VLLM_ENDPOINT:-http://127.0.0.1:8000/v1/chat/completions}"

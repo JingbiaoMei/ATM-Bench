@@ -18,7 +18,9 @@ pip install -e .
 See `docs/data.md` for the expected local layout:
 
 - `data/atm-bench/` (benchmark files)
-- `data/raw_memory/` (your raw memory + `batch_results.json`)
+- `data/raw_memory/` (your raw memory)
+- `output/image/qwen3vl2b/batch_results.json`
+- `output/video/qwen3vl2b/batch_results.json`
 
 ## Model Endpoints / Keys
 
@@ -26,6 +28,17 @@ See `docs/data.md` for the expected local layout:
 - vLLM answerers: set `VLLM_ENDPOINT` (default: `http://127.0.0.1:8000/v1/chat/completions`)
 
 ## What To Run
+
+### Precompute Memory Itemization
+
+Run this first so the baseline wrappers can read `output/{image,video}/qwen3vl2b/batch_results.json`:
+
+```bash
+bash scripts/memory_processor/image/copy_gps_cache.sh output/image/qwen3vl2b/cache
+bash scripts/memory_processor/video/copy_gps_cache.sh output/video/qwen3vl2b/cache
+bash scripts/memory_processor/image/memory_itemize/run_qwen3vl2b.sh
+bash scripts/memory_processor/video/memory_itemize/run_qwen3vl2b.sh
+```
 
 ### MMRAG (retrieval + answering)
 

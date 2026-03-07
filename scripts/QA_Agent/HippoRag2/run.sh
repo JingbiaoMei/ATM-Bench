@@ -17,8 +17,8 @@ QA_ATMBENCH="./data/atm-bench/atm-bench.json"
 QA_HARD="./data/atm-bench/atm-bench-hard.json"
 
 EMAIL_FILE="./data/raw_memory/email/merged_emails.json"
-IMAGE_BATCH="./data/raw_memory/image/batch_results.json"
-VIDEO_BATCH="./data/raw_memory/video/batch_results.json"
+IMAGE_BATCH="./output/image/qwen3vl2b/batch_results.json"
+VIDEO_BATCH="./output/video/qwen3vl2b/batch_results.json"
 IMAGE_ROOT="./data/raw_memory/image"
 VIDEO_ROOT="./data/raw_memory/video"
 

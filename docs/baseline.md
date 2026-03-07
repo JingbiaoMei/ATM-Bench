@@ -151,39 +151,40 @@ All canonical scripts assume the `docs/data.md` layout:
   - `data/atm-bench/atm-bench.json`
   - `data/atm-bench/atm-bench-hard.json`
 - Text evidence for media:
-  - `data/raw_memory/image/batch_results.json`
-  - `data/raw_memory/video/batch_results.json`
+  - `output/image/qwen3vl2b/batch_results.json`
+  - `output/video/qwen3vl2b/batch_results.json`
 - Optional emails:
   - `data/raw_memory/email/merged_emails.json`
 
 ### Generating `batch_results.json` (required for `--media-source batch_results`)
 
-Most baselines are text-first and expect `batch_results.json` to exist. The memory processors
-write `batch_results.json` under an `--output_dir`, so you typically need to copy (or symlink)
-the file into `data/raw_memory/.../batch_results.json`.
+Most baselines are text-first and expect `batch_results.json` to exist. In this repo, the default
+baseline scripts read directly from:
+
+- `output/image/qwen3vl2b/batch_results.json`
+- `output/video/qwen3vl2b/batch_results.json`
 
 Note on GPS / reverse-geocoding:
 - By default, the processors reverse-geocode GPS coordinates via a public provider (OpenStreetMap Nominatim).
 - Public geocoding endpoints are rate-limited (often strict per-IP requests/minute) and do not tolerate high concurrency.
-- If you have a pre-extracted GPS cache bundle (recommended for large archives; we plan to ship one with benchmark artifacts), copy the
-  `*_location_name.json` entries into your processor cache directory **before** running the
-  memory processors so geocoding is skipped and runs don’t stall.
+- If you have a pre-extracted GPS cache bundle, place the `*_location_name.json` entries under
+  `data/raw_memory/geocoding_cache/image` and `data/raw_memory/geocoding_cache/video`, then copy them into your
+  processor cache directory **before** running the memory processors so geocoding is skipped and runs don’t stall.
 
 Example (Qwen3-VL-2B captioner via vLLM):
 
 ```bash
 # Optional (recommended): copy pre-extracted GPS cache to skip geocoding calls
-python memqa/utils/copy_gps_info.py <GPS_CACHE_DIR> output/image/qwen3vl2b/cache
-python memqa/utils/copy_gps_info.py <GPS_CACHE_DIR> output/video/qwen3vl2b/cache
+python memqa/utils/copy_gps_info.py data/raw_memory/geocoding_cache/image output/image/qwen3vl2b/cache
+python memqa/utils/copy_gps_info.py data/raw_memory/geocoding_cache/video output/video/qwen3vl2b/cache
 
 # Generate batch results
 bash scripts/memory_processor/image/memory_itemize/run_qwen3vl2b.sh
 bash scripts/memory_processor/video/memory_itemize/run_qwen3vl2b.sh
-
-# Copy into the locations that QA baselines read by default
-cp output/image/qwen3vl2b/batch_results.json data/raw_memory/image/batch_results.json
-cp output/video/qwen3vl2b/batch_results.json data/raw_memory/video/batch_results.json
 ```
+
+The `run_qwen3vl2b.sh` wrappers write these files directly under `output/image/qwen3vl2b/`
+and `output/video/qwen3vl2b/`, which is what the QA baselines read by default.
 
 ### Output directories
 
