@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../common_eval.sh"
+
 TOP_K="${TOP_K:-10}"
 EMBEDDING_MODEL="${EMBEDDING_MODEL:-all-MiniLM-L6-v2}"
 
@@ -24,6 +27,8 @@ VIDEO_ROOT="./data/raw_memory/video"
 
 CACHE_DIR="output/QA_Agent/A-Mem/index_cache"
 OUTPUT_BASE="output/QA_Agent/A-Mem/main_table/topk${TOP_K}"
+ATM_DIR="${OUTPUT_BASE}/atmbench/amem"
+HARD_DIR="${OUTPUT_BASE}/hard/amem"
 
 echo "=============================================="
 echo "A-Mem (ATMBench)"
@@ -74,6 +79,12 @@ python memqa/qa_agent_baselines/A-Mem/amem_baseline.py \
   --output-dir-base "${OUTPUT_BASE}" \
   --method-name "atmbench/amem"
 
+run_eval_bundle \
+  "${QA_ATMBENCH}" \
+  "${ATM_DIR}/amem_answers.jsonl" \
+  "${ATM_DIR}/eval" \
+  "${ATM_DIR}/retrieval_recall_details.json"
+
 python memqa/qa_agent_baselines/A-Mem/amem_baseline.py \
   --stage answer \
   --qa-file "${QA_HARD}" \
@@ -96,3 +107,9 @@ python memqa/qa_agent_baselines/A-Mem/amem_baseline.py \
   --timeout 1200 \
   --output-dir-base "${OUTPUT_BASE}" \
   --method-name "hard/amem"
+
+run_eval_bundle \
+  "${QA_HARD}" \
+  "${HARD_DIR}/amem_answers.jsonl" \
+  "${HARD_DIR}/eval" \
+  "${HARD_DIR}/retrieval_recall_details.json"

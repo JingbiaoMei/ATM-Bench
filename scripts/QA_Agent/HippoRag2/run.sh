@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../common_eval.sh"
+
 TOP_K="${TOP_K:-10}"
 VLLM_ENDPOINT="${VLLM_ENDPOINT:-http://127.0.0.1:8000/v1/chat/completions}"
 MODEL="${MODEL:-Qwen/Qwen3-VL-2B-Instruct}"
@@ -23,6 +26,8 @@ IMAGE_ROOT="./data/raw_memory/image"
 VIDEO_ROOT="./data/raw_memory/video"
 
 OUTPUT_BASE="output/QA_Agent/HippoRag2/main_table/topk${TOP_K}/text_embed/allminilm_l6"
+ATM_DIR="${OUTPUT_BASE}/atmbench/hipporag2"
+HARD_DIR="${OUTPUT_BASE}/hard/hipporag2"
 
 echo "=============================================="
 echo "HippoRAG 2 (ATMBench)"
@@ -73,6 +78,12 @@ python memqa/qa_agent_baselines/HippoRag2/hipporag2_baseline.py \
   --max-workers "${MAX_WORKERS}" \
   --output-dir-base "${OUTPUT_BASE}"
 
+run_eval_bundle \
+  "${QA_ATMBENCH}" \
+  "${ATM_DIR}/hipporag2_answers.jsonl" \
+  "${ATM_DIR}/eval" \
+  "${ATM_DIR}/retrieval_recall_details.json"
+
 python memqa/qa_agent_baselines/HippoRag2/hipporag2_baseline.py \
   --stage answer \
   --qa-file "${QA_HARD}" \
@@ -94,3 +105,9 @@ python memqa/qa_agent_baselines/HippoRag2/hipporag2_baseline.py \
   --qa-top-k "${TOP_K}" \
   --max-workers "${MAX_WORKERS}" \
   --output-dir-base "${OUTPUT_BASE}"
+
+run_eval_bundle \
+  "${QA_HARD}" \
+  "${HARD_DIR}/hipporag2_answers.jsonl" \
+  "${HARD_DIR}/eval" \
+  "${HARD_DIR}/retrieval_recall_details.json"

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/../common_eval.sh"
+
 TOP_K="${TOP_K:-10}"
 VLLM_ENDPOINT="${VLLM_ENDPOINT:-http://127.0.0.1:8000/v1/chat/completions}"
 MODEL="${MODEL:-Qwen/Qwen3-VL-8B-Instruct-FP8}"
@@ -46,6 +49,8 @@ IMAGE_ROOT="./data/raw_memory/image"
 VIDEO_ROOT="./data/raw_memory/video"
 
 OUTPUT_BASE="output/QA_Agent/Mem0/main_table/topk${TOP_K}"
+ATM_DIR="${OUTPUT_BASE}/atmbench/${METHOD}"
+HARD_DIR="${OUTPUT_BASE}/hard/${METHOD}"
 
 echo "=============================================="
 echo "Mem0 (ATMBench)"
@@ -91,6 +96,12 @@ python memqa/qa_agent_baselines/mem0/mem0_baseline.py \
   --output-dir-base "${OUTPUT_BASE}/atmbench" \
   --method-name "${METHOD}"
 
+run_eval_bundle \
+  "${QA_ATMBENCH}" \
+  "${ATM_DIR}/mem0_answers.jsonl" \
+  "${ATM_DIR}/eval" \
+  "${ATM_DIR}/retrieval_recall_details.json"
+
 python memqa/qa_agent_baselines/mem0/mem0_baseline.py \
   --qa-file "${QA_HARD}" \
   --media-source batch_results \
@@ -122,3 +133,9 @@ python memqa/qa_agent_baselines/mem0/mem0_baseline.py \
   --max-workers "${MAX_WORKERS}" \
   --output-dir-base "${OUTPUT_BASE}/hard" \
   --method-name "${METHOD}"
+
+run_eval_bundle \
+  "${QA_HARD}" \
+  "${HARD_DIR}/mem0_answers.jsonl" \
+  "${HARD_DIR}/eval" \
+  "${HARD_DIR}/retrieval_recall_details.json"
