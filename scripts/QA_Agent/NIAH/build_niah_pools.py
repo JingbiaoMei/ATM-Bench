@@ -6,10 +6,10 @@ MMRAG run, this script constructs fixed evidence pools of size k that are
 guaranteed to contain all ground-truth evidence items.
 
 Example:
-  python scripts/QA_Agent/NIAH/build_niah_pools.py \
-    --qa-file data/atm-bench/atm-bench-hard.json \
-    --retrieval-details output/QA_Agent/MMRAG/.../retrieval_recall_details.json \
-    --pool-sizes 25 50 100 200
+python scripts/QA_Agent/NIAH/build_niah_pools.py \
+  --qa-file data/atm-bench/atm-hard.json \
+  --retrieval-details output/QA_Agent/MMRAG/main_table/topk10/hard/text_embed/allminilm_l6/qwen3vl8b_answerer/MMRAG/retrieval_recall_details.json \
+  --pool-sizes 25 50 100 200
 """
 
 import argparse
