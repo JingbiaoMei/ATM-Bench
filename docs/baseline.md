@@ -204,7 +204,7 @@ If you want to re-run with different settings, prefer changing:
 **What it measures:** Answer synthesis quality given perfect retrieval (not a retrieval baseline).
 
 **Default script:**
-- `bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b.sh`
+- `bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b_raw.sh`
 
 **Related scripts:**
 - `scripts/QA_Agent/Oracle/run_oracle_no_evidence_qwen3vl8b.sh` (answers with no evidence; sanity check)

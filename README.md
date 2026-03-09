@@ -143,8 +143,8 @@ bash scripts/memory_processor/video/memory_itemize/run_qwen3vl2b.sh
 # MMRAG (runs both ATM-bench and ATM-bench-hard)
 bash scripts/QA_Agent/MMRAG/run.sh
 
-# Oracle (upper bound)
-bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b.sh
+# Oracle (upper bound; raw multimodal evidence)
+bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b_raw.sh
 
 ```
 

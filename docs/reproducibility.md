@@ -51,7 +51,7 @@ bash scripts/QA_Agent/MMRAG/run.sh
 ### Oracle (upper bound using GT evidence IDs)
 
 ```bash
-bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b.sh
+bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b_raw.sh
 bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
 ```
 
