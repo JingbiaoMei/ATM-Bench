@@ -18,12 +18,12 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --model "Qwen/Qwen3-VL-8B-Instruct-FP8" \
   --max-workers 8 \
   --timeout 120 \
-  --output-file "output/QA_Agent/Oracle/qwen3vl8b/atmbench/oracle_qwen3vl8b.jsonl"
+  --output-file "output/QA_Agent/Oracle/qwen3vl8b_raw/atmbench/oracle_qwen3vl8b_raw.jsonl"
 
 python memqa/utils/evaluator/evaluate_qa.py \
   --ground-truth "./data/atm-bench/atm-bench.json" \
-  --predictions "output/QA_Agent/Oracle/qwen3vl8b/atmbench/oracle_qwen3vl8b.jsonl" \
-  --output-dir "output/QA_Agent/Oracle/qwen3vl8b/atmbench/eval" \
+  --predictions "output/QA_Agent/Oracle/qwen3vl8b_raw/atmbench/oracle_qwen3vl8b_raw.jsonl" \
+  --output-dir "output/QA_Agent/Oracle/qwen3vl8b_raw/atmbench/eval" \
   --metrics em atm \
   --judge-provider openai \
   --judge-model gpt-5-mini \
@@ -43,12 +43,12 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --model "Qwen/Qwen3-VL-8B-Instruct-FP8" \
   --max-workers 8 \
   --timeout 120 \
-  --output-file "output/QA_Agent/Oracle/qwen3vl8b/hard/oracle_qwen3vl8b.jsonl"
+  --output-file "output/QA_Agent/Oracle/qwen3vl8b_raw/hard/oracle_qwen3vl8b_raw.jsonl"
 
 python memqa/utils/evaluator/evaluate_qa.py \
   --ground-truth "./data/atm-bench/atm-bench-hard.json" \
-  --predictions "output/QA_Agent/Oracle/qwen3vl8b/hard/oracle_qwen3vl8b.jsonl" \
-  --output-dir "output/QA_Agent/Oracle/qwen3vl8b/hard/eval" \
+  --predictions "output/QA_Agent/Oracle/qwen3vl8b_raw/hard/oracle_qwen3vl8b_raw.jsonl" \
+  --output-dir "output/QA_Agent/Oracle/qwen3vl8b_raw/hard/eval" \
   --metrics em atm \
   --judge-provider openai \
   --judge-model gpt-5-mini \
