@@ -10,7 +10,7 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --video-batch-results "./output/video/qwen3vl2b/batch_results.json" \
   --image-root "./data/raw_memory/image" \
   --video-root "./data/raw_memory/video" \
-  --email-file "./data/raw_memory/email/merged_emails.json" \
+  --email-file "./data/raw_memory/email/emails.json" \
   --provider openai \
   --model gpt-5 \
   --max-workers 8 \
@@ -34,7 +34,7 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --video-batch-results "./output/video/qwen3vl2b/batch_results.json" \
   --image-root "./data/raw_memory/image" \
   --video-root "./data/raw_memory/video" \
-  --email-file "./data/raw_memory/email/merged_emails.json" \
+  --email-file "./data/raw_memory/email/emails.json" \
   --provider openai \
   --model gpt-5 \
   --max-workers 8 \

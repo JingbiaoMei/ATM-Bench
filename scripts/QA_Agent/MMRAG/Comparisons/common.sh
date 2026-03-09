@@ -18,7 +18,7 @@ fi
 # Paths (public placeholders)
 OUTPUT_BASE="${OUTPUT_BASE:-output/QA_Agent/MMRAG/table5/topk${TOP_K}}"
 QA_FILE="${QA_FILE:-./data/atm-bench/atm-bench.json}"
-EMAIL_FILE="${EMAIL_FILE:-./data/raw_memory/email/merged_emails.json}"
+EMAIL_FILE="${EMAIL_FILE:-./data/raw_memory/email/emails.json}"
 IMAGE_ROOT="${IMAGE_ROOT:-./data/raw_memory/image}"
 VIDEO_ROOT="${VIDEO_ROOT:-./data/raw_memory/video}"
 IMAGE_BATCH="${IMAGE_BATCH:-./output/image/qwen3vl2b/batch_results.json}"

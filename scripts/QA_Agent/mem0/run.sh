@@ -42,7 +42,7 @@ MAX_WORKERS="${MAX_WORKERS:-32}"
 QA_ATMBENCH="./data/atm-bench/atm-bench.json"
 QA_HARD="./data/atm-bench/atm-bench-hard.json"
 
-EMAIL_FILE="./data/raw_memory/email/merged_emails.json"
+EMAIL_FILE="./data/raw_memory/email/emails.json"
 IMAGE_BATCH="./output/image/qwen3vl2b/batch_results.json"
 VIDEO_BATCH="./output/video/qwen3vl2b/batch_results.json"
 IMAGE_ROOT="./data/raw_memory/image"

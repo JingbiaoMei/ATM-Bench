@@ -12,7 +12,7 @@ This repo expects you to place benchmark files and raw memory artifacts under
 - Raw personal memory (user-provided):
   - `data/raw_memory/image/` (raw images)
   - `data/raw_memory/video/` (raw videos)
-  - `data/raw_memory/email/merged_emails.json` (optional; see schema below)
+  - `data/raw_memory/email/emails.json` (optional; see schema below)
 - Generated artifacts:
   - `output/image/qwen3vl2b/batch_results.json` (generated)
   - `output/video/qwen3vl2b/batch_results.json` (generated)
@@ -55,7 +55,7 @@ For NIAH pool files, each entry additionally contains:
 
 - `niah_evidence_ids` (list of strings; fixed evidence pool, superset of `evidence_ids`)
 
-### Email File (`data/raw_memory/email/merged_emails.json`)
+### Email File (`data/raw_memory/email/emails.json`)
 
 If a QA item includes email evidence IDs (IDs starting with `email...`), Oracle/MMRAG
 scripts may load email evidence from a JSON list with entries like:

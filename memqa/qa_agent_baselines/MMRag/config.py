@@ -27,7 +27,7 @@ MMRAG_CONFIG = {
     #   data/raw_memory/{image,video,email}/...
     "image_root": str(PROJECT_ROOT / "data/raw_memory/image"),
     "video_root": str(PROJECT_ROOT / "data/raw_memory/video"),
-    "email_file": str(PROJECT_ROOT / "data/raw_memory/email/merged_emails.json"),
+    "email_file": str(PROJECT_ROOT / "data/raw_memory/email/emails.json"),
     "image_batch_results": str(PROJECT_ROOT / "output/image/qwen3vl2b/batch_results.json"),
     "video_batch_results": str(PROJECT_ROOT / "output/video/qwen3vl2b/batch_results.json"),
     "output_dir_base": str(PROJECT_ROOT / "output/QA_Agent/MMRag"),

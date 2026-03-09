@@ -48,7 +48,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
     --media-source raw \
     --image-root data/raw_memory/image \
     --video-root data/raw_memory/video \
-    --email-file data/raw_memory/email/merged_emails.json
+    --email-file data/raw_memory/email/emails.json
 
 # Stage 2: Reranking (loads intermediate results, reranks, generates answers)
 python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
@@ -391,7 +391,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --media-source batch_results \
   --image-batch-results output/image/qwen3vl2b/batch_results.json \
   --video-batch-results output/video/qwen3vl2b/batch_results.json \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever text \
   --text-embedding-model "Qwen/Qwen3-Embedding-0.6B" \
   --provider vllm \
@@ -410,7 +410,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --media-source batch_results \
   --image-batch-results output/image/qwen3vl2b/batch_results.json \
   --video-batch-results output/video/qwen3vl2b/batch_results.json \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever sentence_transformer \
   --text-embedding-model "all-MiniLM-L6-v2" \
   --provider vllm \
@@ -429,7 +429,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --media-source raw \
   --image-root data/raw_memory/image \
   --video-root data/raw_memory/video \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever qwen3_vl_embedding \
   --vl-embedding-model "Qwen/Qwen3-VL-Embedding-2B" \
   --provider vllm \
@@ -448,7 +448,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
   --media-source raw \
   --image-root data/raw_memory/image \
   --video-root data/raw_memory/video \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever qwen3_vl_embedding \
   --vl-embedding-model "Qwen/Qwen3-VL-Embedding-2B" \
   --reranker qwen3_vl_reranker \
@@ -469,7 +469,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --media-source raw \
   --image-root data/raw_memory/image \
   --video-root data/raw_memory/video \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever clip \
   --clip-model "openai/clip-vit-large-patch14" \
   --provider vllm \
@@ -488,7 +488,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
   --media-source raw \
   --image-root data/raw_memory/image \
   --video-root data/raw_memory/video \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever clip \
   --clip-model "openai/clip-vit-large-patch14" \
   --reranker qwen3_vl_reranker \
@@ -510,7 +510,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_answer.py \
   --media-source raw \
   --image-root data/raw_memory/image \
   --video-root data/raw_memory/video \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever vista \
   --vista-model-name "BAAI/bge-m3" \
   --vista-weights "${VISTA_WEIGHTS}" \
@@ -530,7 +530,7 @@ python memqa/qa_agent_baselines/MMRag/mmrag_retrieve_rerank_answer.py \
   --media-source batch_results \
   --image-batch-results output/image/qwen3vl2b/batch_results.json \
   --video-batch-results output/video/qwen3vl2b/batch_results.json \
-  --email-file data/raw_memory/email/merged_emails.json \
+  --email-file data/raw_memory/email/emails.json \
   --retriever text \
   --text-embedding-model "Qwen/Qwen3-Embedding-0.6B" \
   --reranker qwen3_reranker \

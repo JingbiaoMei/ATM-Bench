@@ -154,7 +154,7 @@ All canonical scripts assume the `docs/data.md` layout:
   - `output/image/qwen3vl2b/batch_results.json`
   - `output/video/qwen3vl2b/batch_results.json`
 - Optional emails:
-  - `data/raw_memory/email/merged_emails.json`
+  - `data/raw_memory/email/emails.json`
 
 ### Generating `batch_results.json` (required for `--media-source batch_results`)
 

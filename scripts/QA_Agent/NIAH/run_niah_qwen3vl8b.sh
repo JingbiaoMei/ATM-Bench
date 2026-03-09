@@ -10,7 +10,7 @@ NIAH_DIR="./data/atm-bench/niah"
 
 IMAGE_BATCH="./output/image/qwen3vl2b/batch_results.json"
 VIDEO_BATCH="./output/video/qwen3vl2b/batch_results.json"
-EMAIL_FILE="./data/raw_memory/email/merged_emails.json"
+EMAIL_FILE="./data/raw_memory/email/emails.json"
 
 ANSWERER_MODEL="Qwen/Qwen3-VL-8B-Instruct-FP8"
 JUDGE_MODEL="gpt-5-mini"

@@ -6,7 +6,7 @@ VLLM_ENDPOINT="${VLLM_ENDPOINT:-http://127.0.0.1:8000/v1/chat/completions}"
 ANSWERER_MODEL="${ANSWERER_MODEL:-Qwen/Qwen3-VL-8B-Instruct-FP8}"
 TEXT_EMBED_MODEL="${TEXT_EMBED_MODEL:-sentence-transformers/all-MiniLM-L6-v2}"
 
-EMAIL_FILE="./data/raw_memory/email/merged_emails.json"
+EMAIL_FILE="./data/raw_memory/email/emails.json"
 IMAGE_BATCH="./output/image/qwen3vl2b/batch_results.json"
 VIDEO_BATCH="./output/video/qwen3vl2b/batch_results.json"
 
