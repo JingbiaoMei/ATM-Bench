@@ -20,6 +20,7 @@ timm>=0.9.0
 einops>=0.6.0
 ftfy>=6.1.0
 torchvision>=0.15.0
+sentence-transformers>=2.2.0
 
 # Video processing
 decord>=0.6.0
