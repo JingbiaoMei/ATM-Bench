@@ -315,15 +315,8 @@ def ensure_directories():
     """Create all necessary directories if they don't exist."""
     dirs_to_create = [
         OUTPUT_DIR,
-        OUTPUT_DIR / "cache",
-        OUTPUT_DIR / "logs",
-        OUTPUT_DIR / "temp",
         OUTPUT_DIR / "image",
         OUTPUT_DIR / "video",
-        OUTPUT_DIR / "email",
-        OUTPUT_DIR / "health",
-        OUTPUT_DIR / "event_memory",
-        OUTPUT_DIR / "qa_results",
         API_KEYS_DIR,
     ]
     
