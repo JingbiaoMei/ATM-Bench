@@ -69,8 +69,10 @@ Construction rule (per question, per `k`):
 ## Run NIAH (Quick Start)
 
 ```bash
-bash scripts/QA_Agent/NIAH/run_niah_gpt5.sh
-bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b.sh
+bash scripts/QA_Agent/NIAH/run_niah_gpt5_SGM.sh
+bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b_SGM.sh
+bash scripts/QA_Agent/NIAH/run_niah_gpt5_raw.sh
+bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b_raw.sh
 ```
 
 ## Run NIAH (Direct CLI)
@@ -87,12 +89,13 @@ Example:
 python memqa/qa_agent_baselines/NIAH/niah_evaluate.py \
   --qa-file data/atm-bench/niah/atm-bench-hard-niah50.json \
   --media-source batch_results \
+  --batch-fields "type,timestamp,location,short_caption,caption,ocr,tags" \
   --image-batch-results <PATH_TO>/image_batch_results.json \
   --video-batch-results <PATH_TO>/video_batch_results.json \
   --email-file <PATH_TO>/merged_emails.json \
   --provider openai --model gpt-5 \
   --max-workers 8 --timeout 120 \
-  --output-file output/QA_Agent/NIAH/hard/gpt5/batch_results/niah50/niah_answers.jsonl
+  --output-file output/QA_Agent/NIAH/hard/gpt5/SGM/niah50/niah_answers.jsonl
 ```
 
 ## Evaluate and Summarize

@@ -58,8 +58,10 @@ bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
 ### NIAH (generation-only; fixed evidence pools)
 
 ```bash
-bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b.sh
-bash scripts/QA_Agent/NIAH/run_niah_gpt5.sh
+bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b_SGM.sh
+bash scripts/QA_Agent/NIAH/run_niah_gpt5_SGM.sh
+bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b_raw.sh
+bash scripts/QA_Agent/NIAH/run_niah_gpt5_raw.sh
 ```
 
 For additional memory-agent baselines (HippoRAG 2, MemoryOS, A‑Mem, Mem0), see `docs/baseline.md`.

@@ -560,12 +560,18 @@ If you want to try extraction, set:
 
 **What it measures:** Answer synthesis under a fixed pool size *k* (not retrieval).
 
-**Default script:**
-- `bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b.sh`
+**Packaged scripts:**
+- `bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b_SGM.sh`
+- `bash scripts/QA_Agent/NIAH/run_niah_gpt5_SGM.sh`
+- `bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b_raw.sh`
+- `bash scripts/QA_Agent/NIAH/run_niah_gpt5_raw.sh`
 
 **How it is implemented here:**
 - `memqa/qa_agent_baselines/NIAH/niah_evaluate.py` is a wrapper around the Oracle baseline:
   it swaps `niah_evidence_ids -> evidence_ids` and then calls `oracle_baseline.py`.
+- The `*_SGM.sh` scripts use `--media-source batch_results` with the paper's
+  SGM fields: `type,timestamp,location,short_caption,caption,ocr,tags`.
+- The `*_raw.sh` scripts use `--media-source raw` and pass raw image/video inputs.
 
 **Common CLI flags (wrapper):**
 - `--qa-file` / `--niah-qa-file`: NIAH pool QA file (must contain `niah_evidence_ids`)

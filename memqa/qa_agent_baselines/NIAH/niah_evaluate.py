@@ -10,9 +10,10 @@ Example:
   python memqa/qa_agent_baselines/NIAH/niah_evaluate.py \
     --qa-file data/atm-bench/niah/atm-bench-hard-niah50.json \
     --media-source batch_results \
+    --batch-fields "type,timestamp,location,short_caption,caption,ocr,tags" \
     --provider openai --model gpt-5 \
     --max-workers 8 --timeout 120 \
-    --output-file output/QA_Agent/NIAH/hard/gpt5/batch_results/niah50/niah_answers.jsonl
+    --output-file output/QA_Agent/NIAH/hard/gpt5/SGM/niah50/niah_answers.jsonl
 """
 
 import argparse
