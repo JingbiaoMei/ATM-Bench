@@ -4,14 +4,8 @@ OPENAI_API_KEY="${OPENAI_API_KEY:-$(cat api_keys/.openai_key)}"
 export OPENAI_API_KEY
 
 MODEL_NAME="gpt-5"
-MODEL_TAG="gpt5"
-ANSWER_REASONING_EFFORT="${ANSWER_REASONING_EFFORT:-medium}"
-
-if [[ "${ANSWER_REASONING_EFFORT}" == "none" ]]; then
-  RUN_TAG="${MODEL_TAG}_no_reasoning_effort"
-else
-  RUN_TAG="${MODEL_TAG}_reasoning_${ANSWER_REASONING_EFFORT}"
-fi
+RUN_TAG="gpt5_low_reasoning_effort"
+ANSWER_REASONING_EFFORT="low"
 
 ATM_PREDICTIONS="output/QA_Agent/Oracle/${RUN_TAG}/atmbench/oracle_${RUN_TAG}.jsonl"
 ATM_EVAL_DIR="output/QA_Agent/Oracle/${RUN_TAG}/atmbench/eval"

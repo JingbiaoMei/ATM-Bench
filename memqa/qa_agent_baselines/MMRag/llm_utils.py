@@ -17,12 +17,14 @@ class TokenUsage:
     prompt_tokens: int
     completion_tokens: int
     total_tokens: int
+    reasoning_tokens: int = 0
 
     def to_dict(self) -> Dict[str, int]:
         return {
             "prompt_tokens": self.prompt_tokens,
             "completion_tokens": self.completion_tokens,
             "total_tokens": self.total_tokens,
+            "reasoning_tokens": self.reasoning_tokens,
         }
 
 
@@ -133,6 +135,23 @@ def _responses_supports_temperature(model: str | None) -> bool:
     return "gpt-5-pro" not in model.lower()
 
 
+def _extract_reasoning_tokens(usage: Any) -> int:
+    if not usage:
+        return 0
+
+    output_details = getattr(usage, "output_tokens_details", None)
+    if output_details is not None:
+        reasoning_tokens = getattr(output_details, "reasoning_tokens", 0)
+        return int(reasoning_tokens or 0)
+
+    completion_details = getattr(usage, "completion_tokens_details", None)
+    if completion_details is not None:
+        reasoning_tokens = getattr(completion_details, "reasoning_tokens", 0)
+        return int(reasoning_tokens or 0)
+
+    return 0
+
+
 class LLMClient:
     def __init__(
         self,
@@ -202,6 +221,9 @@ class LLMClient:
                 kwargs["instructions"] = instructions
             if max_tokens_value is not None:
                 kwargs["max_output_tokens"] = max_tokens_value
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning"] = {"effort": reasoning_effort}
             if (
                 self.config.get("temperature") is not None
                 and _responses_supports_temperature(model)
@@ -218,6 +240,9 @@ class LLMClient:
             kwargs["max_completion_tokens"] = (
                 max_tokens_value * 3 if max_tokens_value else 3000
             )
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning_effort"] = reasoning_effort
         else:
             kwargs["max_tokens"] = max_tokens_value
             kwargs["temperature"] = self.config.get("temperature")
@@ -245,6 +270,9 @@ class LLMClient:
                 kwargs["instructions"] = instructions
             if max_tokens_value is not None:
                 kwargs["max_output_tokens"] = max_tokens_value
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning"] = {"effort": reasoning_effort}
             if (
                 self.config.get("temperature") is not None
                 and _responses_supports_temperature(model)
@@ -259,6 +287,7 @@ class LLMClient:
                     prompt_tokens=getattr(resp_usage, "input_tokens", 0),
                     completion_tokens=getattr(resp_usage, "output_tokens", 0),
                     total_tokens=getattr(resp_usage, "total_tokens", 0),
+                    reasoning_tokens=_extract_reasoning_tokens(resp_usage),
                 )
             return content, usage
 
@@ -270,6 +299,9 @@ class LLMClient:
             kwargs["max_completion_tokens"] = (
                 max_tokens_value * 3 if max_tokens_value else 3000
             )
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning_effort"] = reasoning_effort
         else:
             kwargs["max_tokens"] = max_tokens_value
             kwargs["temperature"] = self.config.get("temperature")
@@ -282,6 +314,7 @@ class LLMClient:
                 prompt_tokens=response.usage.prompt_tokens,
                 completion_tokens=response.usage.completion_tokens,
                 total_tokens=response.usage.total_tokens,
+                reasoning_tokens=_extract_reasoning_tokens(response.usage),
             )
         return content, usage
 

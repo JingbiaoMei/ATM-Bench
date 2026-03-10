@@ -3,6 +3,21 @@
 OPENAI_API_KEY="${OPENAI_API_KEY:-$(cat api_keys/.openai_key)}"
 export OPENAI_API_KEY
 
+MODEL_NAME="gpt-5.2-2025-12-11"
+MODEL_TAG="gpt5_2_2025_12_11"
+ANSWER_REASONING_EFFORT="${ANSWER_REASONING_EFFORT:-medium}"
+
+if [[ "${ANSWER_REASONING_EFFORT}" == "none" ]]; then
+  RUN_TAG="${MODEL_TAG}_no_reasoning_effort"
+else
+  RUN_TAG="${MODEL_TAG}_reasoning_${ANSWER_REASONING_EFFORT}"
+fi
+
+ATM_PREDICTIONS="output/QA_Agent/Oracle/${RUN_TAG}/atmbench/oracle_${RUN_TAG}.jsonl"
+ATM_EVAL_DIR="output/QA_Agent/Oracle/${RUN_TAG}/atmbench/eval"
+HARD_PREDICTIONS="output/QA_Agent/Oracle/${RUN_TAG}/hard/oracle_${RUN_TAG}.jsonl"
+HARD_EVAL_DIR="output/QA_Agent/Oracle/${RUN_TAG}/hard/eval"
+
 python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --qa-file "./data/atm-bench/atm-bench.json" \
   --media-source raw \
@@ -12,15 +27,16 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --video-root "./data/raw_memory/video" \
   --email-file "./data/raw_memory/email/emails.json" \
   --provider openai \
-  --model "gpt-5.2-2025-12-11" \
+  --model "${MODEL_NAME}" \
+  --reasoning-effort "${ANSWER_REASONING_EFFORT}" \
   --max-workers 8 \
   --timeout 120 \
-  --output-file "output/QA_Agent/Oracle/gpt5_2_2025_12_11/atmbench/oracle_gpt5_2_2025_12_11.jsonl"
+  --output-file "${ATM_PREDICTIONS}"
 
 python memqa/utils/evaluator/evaluate_qa.py \
   --ground-truth "./data/atm-bench/atm-bench.json" \
-  --predictions "output/QA_Agent/Oracle/gpt5_2_2025_12_11/atmbench/oracle_gpt5_2_2025_12_11.jsonl" \
-  --output-dir "output/QA_Agent/Oracle/gpt5_2_2025_12_11/atmbench/eval" \
+  --predictions "${ATM_PREDICTIONS}" \
+  --output-dir "${ATM_EVAL_DIR}" \
   --metrics em atm \
   --judge-provider openai \
   --judge-model gpt-5-mini \
@@ -36,15 +52,16 @@ python memqa/qa_agent_baselines/oracle/oracle_baseline.py \
   --video-root "./data/raw_memory/video" \
   --email-file "./data/raw_memory/email/emails.json" \
   --provider openai \
-  --model "gpt-5.2-2025-12-11" \
+  --model "${MODEL_NAME}" \
+  --reasoning-effort "${ANSWER_REASONING_EFFORT}" \
   --max-workers 8 \
   --timeout 120 \
-  --output-file "output/QA_Agent/Oracle/gpt5_2_2025_12_11/hard/oracle_gpt5_2_2025_12_11.jsonl"
+  --output-file "${HARD_PREDICTIONS}"
 
 python memqa/utils/evaluator/evaluate_qa.py \
   --ground-truth "./data/atm-bench/atm-bench-hard.json" \
-  --predictions "output/QA_Agent/Oracle/gpt5_2_2025_12_11/hard/oracle_gpt5_2_2025_12_11.jsonl" \
-  --output-dir "output/QA_Agent/Oracle/gpt5_2_2025_12_11/hard/eval" \
+  --predictions "${HARD_PREDICTIONS}" \
+  --output-dir "${HARD_EVAL_DIR}" \
   --metrics em atm \
   --judge-provider openai \
   --judge-model gpt-5-mini \

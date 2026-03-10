@@ -23,6 +23,7 @@ from memqa.mem_processor.video.utils import extract_frames
 from memqa.qa_agent_baselines.oracle.config import ORACLE_CONFIG, PROMPTS
 from memqa.qa_agent_baselines.MMRag.llm_utils import (
     TokenUsage,
+    _extract_reasoning_tokens,
     _messages_to_responses_input,
     _extract_response_text,
     _should_use_responses,
@@ -109,6 +110,9 @@ class OracleLLM:
                 kwargs["instructions"] = instructions
             if max_tokens_value is not None:
                 kwargs["max_output_tokens"] = max_tokens_value
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning"] = {"effort": reasoning_effort}
             if (
                 self.config.get("temperature") is not None
                 and _responses_supports_temperature(model)
@@ -125,6 +129,9 @@ class OracleLLM:
             kwargs["max_completion_tokens"] = (
                 max_tokens_value * 3 if max_tokens_value else 3000
             )
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning_effort"] = reasoning_effort
         else:
             kwargs["max_tokens"] = max_tokens_value
             kwargs["temperature"] = self.config.get("temperature")
@@ -152,6 +159,9 @@ class OracleLLM:
                 kwargs["instructions"] = instructions
             if max_tokens_value is not None:
                 kwargs["max_output_tokens"] = max_tokens_value
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning"] = {"effort": reasoning_effort}
             if (
                 self.config.get("temperature") is not None
                 and _responses_supports_temperature(model)
@@ -166,6 +176,7 @@ class OracleLLM:
                     prompt_tokens=getattr(resp_usage, "input_tokens", 0),
                     completion_tokens=getattr(resp_usage, "output_tokens", 0),
                     total_tokens=getattr(resp_usage, "total_tokens", 0),
+                    reasoning_tokens=_extract_reasoning_tokens(resp_usage),
                 )
             return content, usage
 
@@ -177,6 +188,9 @@ class OracleLLM:
             kwargs["max_completion_tokens"] = (
                 max_tokens_value * 3 if max_tokens_value else 3000
             )
+            reasoning_effort = self.config.get("reasoning_effort")
+            if reasoning_effort:
+                kwargs["reasoning_effort"] = reasoning_effort
         else:
             kwargs["max_tokens"] = max_tokens_value
             kwargs["temperature"] = self.config.get("temperature")
@@ -189,6 +203,7 @@ class OracleLLM:
                 prompt_tokens=response.usage.prompt_tokens,
                 completion_tokens=response.usage.completion_tokens,
                 total_tokens=response.usage.total_tokens,
+                reasoning_tokens=_extract_reasoning_tokens(response.usage),
             )
         return content, usage
 
@@ -627,6 +642,8 @@ def build_model_config(
         base["max_tokens"] = args.max_tokens
     if args.temperature is not None:
         base["temperature"] = args.temperature
+    if args.reasoning_effort:
+        base["reasoning_effort"] = args.reasoning_effort
     if args.timeout is not None:
         base["timeout"] = args.timeout
     if args.max_retries is not None:
@@ -900,6 +917,11 @@ def parse_args() -> argparse.Namespace:
         "--temperature", type=float, default=None, help="Temperature (overrides config)"
     )
     parser.add_argument(
+        "--reasoning-effort",
+        default=None,
+        help="Reasoning effort for OpenAI reasoning models (e.g., none, minimal, low, medium, high, xhigh)",
+    )
+    parser.add_argument(
         "--timeout", type=int, default=None, help="Timeout seconds (overrides config)"
     )
     parser.add_argument(
@@ -1028,6 +1050,7 @@ def process_single_qa(
         result["prompt_tokens"] = usage.prompt_tokens
         result["completion_tokens"] = usage.completion_tokens
         result["total_tokens"] = usage.total_tokens
+        result["reasoning_tokens"] = usage.reasoning_tokens
     return result
 
 
@@ -1145,6 +1168,7 @@ def main() -> int:
     total_prompt = sum(r.get("prompt_tokens", 0) for r in results)
     total_completion = sum(r.get("completion_tokens", 0) for r in results)
     total_tokens = sum(r.get("total_tokens", 0) for r in results)
+    total_reasoning = sum(r.get("reasoning_tokens", 0) for r in results)
     num_samples = len(results)
 
     run_stats = {
@@ -1152,11 +1176,15 @@ def main() -> int:
         "total_prompt_tokens": total_prompt,
         "total_completion_tokens": total_completion,
         "total_tokens": total_tokens,
+        "total_reasoning_tokens": total_reasoning,
         "avg_prompt_tokens": round(total_prompt / num_samples, 1) if num_samples else 0,
         "avg_completion_tokens": round(total_completion / num_samples, 1)
         if num_samples
         else 0,
         "avg_total_tokens": round(total_tokens / num_samples, 1) if num_samples else 0,
+        "avg_reasoning_tokens": round(total_reasoning / num_samples, 1)
+        if num_samples
+        else 0,
     }
 
     stats_path = output_path.parent / f"{output_path.stem}_run_stats.json"
