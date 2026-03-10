@@ -151,7 +151,6 @@ DEFAULT_PATHS = {
     "image_data_dir": str(RAW_MEMORY_DIR / "image"),
     "video_data_dir": str(RAW_MEMORY_DIR / "video"),
     "email_data_dir": str(RAW_MEMORY_DIR / "email"),
-    "health_data_dir": str(RAW_MEMORY_DIR / "health"),
     
     # API keys directory
     "api_keys_dir": str(API_KEYS_DIR),
