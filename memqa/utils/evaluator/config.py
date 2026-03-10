@@ -77,6 +77,8 @@ EVALUATOR_CONFIG = {
         **GLOBAL_OPENAI_CONFIG,
         "provider": "openai",
         "model": "gpt-5-mini",
+        "fallback_model": "gpt-4o-mini",
+        "fallback_after_retries": 3,
         "max_tokens": 600,
     },
     "vllm_text": {

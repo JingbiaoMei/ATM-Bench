@@ -332,6 +332,119 @@ def list_jaccard_score(ground_truth: str, prediction: str) -> float:
     return _list_jaccard_core(ground_truth, prediction)[0]
 
 
+class JudgeResponseError(RuntimeError):
+    def __init__(self, message: str, *, retryable: bool = True):
+        super().__init__(message)
+        self.retryable = retryable
+
+
+class OpenAIEmptyResponseError(JudgeResponseError):
+    def __init__(self, message: str = "Empty OpenAI response output_text"):
+        super().__init__(message, retryable=True)
+
+
+class OpenAIRefusalError(JudgeResponseError):
+    def __init__(self, refusal_text: str):
+        message = refusal_text.strip() or "OpenAI judge refused to answer"
+        super().__init__(message, retryable=False)
+        self.refusal_text = message
+
+
+def _coerce_openai_obj(value: Any) -> Dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    if hasattr(value, "model_dump"):
+        try:
+            dumped = value.model_dump()
+            if isinstance(dumped, dict):
+                return dumped
+        except Exception:
+            pass
+    if hasattr(value, "to_dict"):
+        try:
+            dumped = value.to_dict()
+            if isinstance(dumped, dict):
+                return dumped
+        except Exception:
+            pass
+    if hasattr(value, "__dict__"):
+        dumped = {
+            key: val for key, val in vars(value).items() if not str(key).startswith("_")
+        }
+        if isinstance(dumped, dict):
+            return dumped
+    return {}
+
+
+def _extract_openai_response_text_and_refusal(response: Any) -> Tuple[str, str]:
+    output_text = getattr(response, "output_text", None)
+    if output_text:
+        text = str(output_text).strip()
+        if text:
+            return text, ""
+
+    texts: List[str] = []
+    refusals: List[str] = []
+
+    def collect_refusal(value: Any) -> None:
+        if isinstance(value, str):
+            refusal_text = value.strip()
+            if refusal_text:
+                refusals.append(refusal_text)
+        elif isinstance(value, list):
+            for item in value:
+                collect_refusal(item)
+        elif value is not None:
+            refusal_text = str(value).strip()
+            if refusal_text:
+                refusals.append(refusal_text)
+
+    output = getattr(response, "output", None)
+    if not isinstance(output, list):
+        output = [output] if output is not None else []
+
+    for item in output:
+        item_dict = _coerce_openai_obj(item)
+        if not item_dict:
+            continue
+        if item_dict.get("type") == "refusal":
+            collect_refusal(
+                item_dict.get("refusal")
+                or item_dict.get("text")
+                or item_dict.get("content")
+            )
+
+        content = item_dict.get("content")
+        if isinstance(content, str) and content.strip():
+            texts.append(content.strip())
+        elif isinstance(content, list):
+            for part in content:
+                part_dict = _coerce_openai_obj(part)
+                if not part_dict:
+                    continue
+                part_type = str(part_dict.get("type", ""))
+                part_text = part_dict.get("text")
+                if part_type in {"output_text", "text"} and part_text:
+                    texts.append(str(part_text).strip())
+                if part_type == "refusal":
+                    collect_refusal(
+                        part_dict.get("refusal")
+                        or part_dict.get("text")
+                        or part_dict.get("content")
+                    )
+                elif part_dict.get("refusal") is not None:
+                    collect_refusal(part_dict.get("refusal"))
+
+        if item_dict.get("refusal") is not None:
+            collect_refusal(item_dict.get("refusal"))
+
+    if texts:
+        return "\n".join(text for text in texts if text).strip(), ""
+
+    refusal_text = "\n".join(text for text in refusals if text).strip()
+    return "", refusal_text
+
+
 class EvaluatorLLM:
     def __init__(self, provider: str, config: Dict[str, Any]):
         self.provider = provider
@@ -390,11 +503,17 @@ class EvaluatorLLM:
             kwargs["temperature"] = self.config.get("temperature")
 
         response = self.openai_client.responses.create(**kwargs)
-        output_text = (response.output_text or "").strip()
-        if not output_text:
-            print("Warning: empty OpenAI response output_text", file=sys.stderr)
-            raise RuntimeError("Empty OpenAI response output_text")
-        return output_text
+        output_text, refusal_text = _extract_openai_response_text_and_refusal(response)
+        if output_text:
+            return output_text
+        if refusal_text:
+            print(
+                f"Warning: OpenAI judge refusal detected: {refusal_text}",
+                file=sys.stderr,
+            )
+            raise OpenAIRefusalError(refusal_text)
+        print("Warning: empty OpenAI response output_text", file=sys.stderr)
+        raise OpenAIEmptyResponseError()
 
     def _chat_vllm_http(self, messages: List[Dict[str, Any]]) -> str:
         endpoint = self.config.get("endpoint")
@@ -561,10 +680,17 @@ def run_llm_judge(
     new_count = len(qas) - cached_count - failed_count
     rerun_count = failed_count + new_count
 
-    def get_llm() -> EvaluatorLLM:
-        if not hasattr(thread_local, "llm"):
-            thread_local.llm = EvaluatorLLM(provider, config)
-        return thread_local.llm
+    def get_llm(model_override: Optional[str] = None) -> EvaluatorLLM:
+        if not hasattr(thread_local, "llm_by_model"):
+            thread_local.llm_by_model = {}
+        resolved_model = model_override or str(config.get("model") or "")
+        cache_key = f"{provider}:{resolved_model}"
+        if cache_key not in thread_local.llm_by_model:
+            llm_config = dict(config)
+            if model_override:
+                llm_config["model"] = model_override
+            thread_local.llm_by_model[cache_key] = EvaluatorLLM(provider, llm_config)
+        return thread_local.llm_by_model[cache_key]
 
     def process_single(qa: Dict[str, Any]) -> Dict[str, Any]:
         qa_id = str(qa.get("id"))
@@ -580,6 +706,17 @@ def run_llm_judge(
         retry_count = 0
         last_error = None
         max_retries_effective = max_retries
+        current_model = str(config.get("model") or "")
+        fallback_model = ""
+        if provider == "openai":
+            fallback_model = str(config.get("fallback_model") or "").strip()
+            if fallback_model == current_model:
+                fallback_model = ""
+        fallback_after_retries = max(
+            0, int(config.get("fallback_after_retries", 0) or 0)
+        )
+        fallback_used = False
+        fallback_trigger = ""
 
         def is_rate_limit_error(exc: Exception) -> bool:
             if isinstance(exc, requests.HTTPError):
@@ -588,10 +725,27 @@ def run_llm_judge(
                     return True
             return "429" in str(exc)
 
+        def maybe_switch_to_fallback(reason: str, *, forced: bool = False) -> bool:
+            nonlocal current_model, fallback_used, fallback_trigger
+            if not fallback_model or fallback_used or current_model == fallback_model:
+                return False
+            if not forced and retry_count < fallback_after_retries:
+                return False
+            fallback_used = True
+            fallback_trigger = reason
+            current_model = fallback_model
+            print(
+                f"\nSwitching judge model to {fallback_model} for QA {qa_id} after "
+                f"{retry_count} failure(s): {reason}"
+            )
+            return True
+
         while retry_count < max_retries_effective:
             try:
                 prompt = build_judge_prompt(question, ground_truth, prediction)
-                response_text = get_llm().chat([{"role": "user", "content": prompt}])
+                response_text = get_llm(current_model).chat(
+                    [{"role": "user", "content": prompt}]
+                )
                 parsed = parse_judge_response(response_text)
                 accuracy_value = str(parsed.get("accuracy", "false")).lower() == "true"
                 explanation = parsed.get("explanation", "")
@@ -605,6 +759,7 @@ def run_llm_judge(
                     "accuracy": accuracy_value,
                     "explanation": explanation,
                     "raw_response": response_text,
+                    "judge_model": current_model,
                 }
 
                 if parsed.get("parse_fallback"):
@@ -612,6 +767,10 @@ def run_llm_judge(
 
                 if retry_count > 0:
                     result["retry_count"] = retry_count
+                if fallback_used:
+                    result["fallback_model_used"] = True
+                    result["fallback_model"] = fallback_model
+                    result["fallback_trigger"] = fallback_trigger
 
                 if request_delay > 0:
                     time.sleep(request_delay)
@@ -626,9 +785,19 @@ def run_llm_judge(
                 last_error = str(e)
                 retry_count += 1
                 rate_limited = is_rate_limit_error(e)
+                non_retryable = isinstance(e, JudgeResponseError) and not e.retryable
 
                 if rate_limited and max_retries_effective < 10:
                     max_retries_effective = 10
+
+                if maybe_switch_to_fallback(last_error, forced=non_retryable):
+                    continue
+
+                if non_retryable:
+                    print(
+                        f"\nFailed QA {qa_id} with non-retriable judge error: {last_error}"
+                    )
+                    break
 
                 if retry_count < max_retries_effective:
                     backoff_time = request_delay * (2 ** (retry_count - 1))
@@ -653,7 +822,12 @@ def run_llm_judge(
             "error": last_error,
             "retry_count": retry_count,
             "failed": True,
+            "judge_model": current_model,
         }
+        if fallback_used:
+            result["fallback_model_used"] = True
+            result["fallback_model"] = fallback_model
+            result["fallback_trigger"] = fallback_trigger
 
         if output_path:
             with write_lock:
@@ -1046,6 +1220,17 @@ def parse_args() -> argparse.Namespace:
         help="Reasoning effort for OpenAI judge models (e.g., none, minimal, low, medium, high)",
     )
     parser.add_argument(
+        "--judge-fallback-model",
+        default=EVALUATOR_CONFIG["llm_judge"].get("fallback_model", "gpt-5"),
+        help="Fallback OpenAI judge model to use after repeated failures (default: gpt-5)",
+    )
+    parser.add_argument(
+        "--judge-fallback-after-retries",
+        type=int,
+        default=EVALUATOR_CONFIG["llm_judge"].get("fallback_after_retries", 3),
+        help="Switch to the fallback judge model after this many failed attempts on the primary model (default: 3)",
+    )
+    parser.add_argument(
         "--request-delay",
         type=float,
         default=10.0,
@@ -1095,6 +1280,10 @@ def build_judge_config(args: argparse.Namespace) -> Dict[str, Any]:
 
     if args.judge_reasoning_effort:
         judge_config["reasoning_effort"] = args.judge_reasoning_effort
+    judge_config["fallback_model"] = str(args.judge_fallback_model or "").strip()
+    judge_config["fallback_after_retries"] = max(
+        0, int(args.judge_fallback_after_retries)
+    )
 
     return judge_config
 

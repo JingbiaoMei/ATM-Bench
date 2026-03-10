@@ -92,6 +92,13 @@ python memqa/utils/evaluator/evaluate_qa.py \
 - **Retry logic**: Exponential backoff for rate limits (up to 10 retries)
 - **Parallel execution**: Supports multi-threaded API calls
 - **Incremental saves**: Writes results immediately to avoid losing progress
+- **Fallback judge model**: For OpenAI judges, repeated failures or non-retriable refusals can switch from the primary judge to a fallback model (default: `gpt-4o-mini`)
+
+**Why we added a fallback judge**:
+- The primary OpenAI judge remains `gpt-5-mini`, but GPT-5-family guardrail behavior can change over time.
+- We observed one evaluator prompt (The trigger words is actually an ECCV2024 paper called Safe-CLIP) start failing with refusals or empty responses when the question/answer pair contained safety-sensitive terms, even when the task was only to return a JSON judgment.
+- Falling back to another GPT-5-family judge did not reliably fix those failures, while `gpt-4o-mini` does fix for the moment.
+- The fallback exists to keep long evaluation runs from stalling on a small number of refusal-prone items. It is a robustness mechanism, not a change in the default judge choice.
 
 **Judge prompt structure**:
 ```
@@ -116,11 +123,19 @@ python memqa/utils/evaluator/evaluate_qa.py \
   --metrics llm \
   --judge-provider openai \
   --judge-model gpt-5-mini \
+  --judge-fallback-model gpt-4o-mini \
+  --judge-fallback-after-retries 3 \
   --max-workers 2 \
   --request-delay 10.0
 ```
 
 **Output**: `eval/llm_judge_<model>.json` with per-item judgments and explanations.
+
+If fallback is used for an item, the result row records:
+- `judge_model`
+- `fallback_model_used`
+- `fallback_model`
+- `fallback_trigger`
 
 ---
 
