@@ -51,6 +51,37 @@ We also report:
 This is a diagnostic for retrieval dependence:
 - It drops when answers are correct but unsupported by retrieved evidence, or when retrieval fails.
 
+## Token Accounting
+
+Each Oracle / NIAH run saves a `*_run_stats.json` file next to the predictions
+file. The key field is `avg_prompt_tokens` (average input tokens per sample),
+which is used for the "Avg. Context Tokens" column in results tables.
+
+### How tokens are counted
+
+Token counts come directly from the **inference API's `usage` response**:
+
+| Provider | Source field | Vision tokens included? |
+|----------|-------------|------------------------|
+| `openai` (Responses API) | `response.usage.input_tokens` | Yes — OpenAI counts vision tokens in input |
+| `openai` (Chat Completions) | `response.usage.prompt_tokens` | Yes |
+| `vllm` (remote, OpenAI-compat) | `response.usage.prompt_tokens` | Yes — vLLM includes image tile tokens for VL models |
+| `vllm_local` | `len(output.prompt_token_ids)` | N/A — multimodal not supported |
+
+Implementation: `memqa/qa_agent_baselines/oracle/oracle_baseline.py`, lines
+around `chat_with_usage()` / `_chat_openai_with_usage()` /
+`_chat_vllm_with_usage()`.
+
+### SGM vs Raw token differences
+
+- **SGM** (`--media-source batch_results`): Text-only prompts (captions, OCR,
+  tags). No vision tokens.
+- **Raw** (`--media-source raw`): Images sent as base64 `image_url` content
+  parts. Vision tokens are included in `prompt_tokens` by the serving backend.
+
+The gap between Raw and SGM context tokens at the same NIAH pool size reflects
+the vision token overhead from sending actual images.
+
 ## Judge Configuration
 
 `open_end` questions use an LLM judge via `evaluate_qa.py`.

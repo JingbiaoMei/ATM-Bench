@@ -34,6 +34,7 @@ See `docs/data.md` for the expected local layout:
 Run this first so the baseline wrappers can read `output/{image,video}/qwen3vl2b/batch_results.json`:
 
 ```bash
+# GPS cache files are keyed by media filename stem.
 bash scripts/memory_processor/image/copy_gps_cache.sh output/image/qwen3vl2b/cache
 bash scripts/memory_processor/video/copy_gps_cache.sh output/video/qwen3vl2b/cache
 bash scripts/memory_processor/image/memory_itemize/run_qwen3vl2b.sh
