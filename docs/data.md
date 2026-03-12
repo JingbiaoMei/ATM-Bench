@@ -96,7 +96,12 @@ bottleneck for large archives, especially if you run the processors with high co
 
 The processors cache reverse-geocoding results as JSON files under `<output_dir>/cache/`:
 
-- `*_location_name.json`
+- `<media_filename_stem>_location_name.json`
+
+The cache key is the media filename stem, not the file contents hash. For example:
+
+- `20220430_132212_location_name.json`
+- `20220502_172850_location_name.json`
 
 If you have a pre-extracted GPS cache bundle, place it under:
 
@@ -104,7 +109,7 @@ If you have a pre-extracted GPS cache bundle, place it under:
 - `data/raw_memory/geocoding_cache/video`
 
 Then copy those cache files into your processor cache directory before running the processors so geocoding
-calls are skipped:
+calls are skipped. The bundle must match the current image/video filenames:
 
 ```bash
 python memqa/utils/copy_gps_info.py data/raw_memory/geocoding_cache/image output/image/qwen3vl2b/cache

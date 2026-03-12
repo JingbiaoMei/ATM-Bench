@@ -18,7 +18,6 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import hashlib
 
 import requests
 from PIL import Image
@@ -108,18 +107,14 @@ class VideoProcessor:
         )
         self.logger = logging.getLogger(__name__)
         
-    def _get_file_hash(self, file_path: Path) -> str:
-        """Generate MD5 hash for a file."""
-        hash_md5 = hashlib.md5()
-        with open(file_path, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hash_md5.update(chunk)
-        return hash_md5.hexdigest()
-    
+    def _get_cache_key(self, file_path: Path) -> str:
+        """Get a stable cache key from the filename (stem without extension)."""
+        return file_path.stem
+
     def _get_cache_path(self, file_path: Path, cache_type: str) -> Path:
         """Get cache file path for a given video and cache type."""
-        file_hash = self._get_file_hash(file_path)
-        return self.cache_dir / f"{file_hash}_{cache_type}.json"
+        cache_key = self._get_cache_key(file_path)
+        return self.cache_dir / f"{cache_key}_{cache_type}.json"
     
     def _load_from_cache(self, cache_path: Path) -> Optional[Dict]:
         """Load data from cache if it exists."""
@@ -189,8 +184,8 @@ class VideoProcessor:
             Tuple of (list of base64 encoded frames, path to frames directory)
         """
         # Create a unique directory for this video's frames
-        video_hash = self._get_file_hash(video_path)
-        frames_output_dir = self.frames_dir / video_hash
+        video_key = self._get_cache_key(video_path)
+        frames_output_dir = self.frames_dir / video_key
         
         # Check if frames already exist in cache
         if frames_output_dir.exists() and list(frames_output_dir.glob("*.jpg")):

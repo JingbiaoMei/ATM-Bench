@@ -3,12 +3,16 @@
 Copy reverse-geocoding cache entries (location_name) between processor cache directories.
 
 The image/video processors cache reverse-geocoding results as JSON files named:
-  <md5>_location_name.json
+  <media_filename_stem>_location_name.json
 
 If you already have a directory containing these cache files (for example, from a
 previous run or from a provided GPS cache bundle stored under
 data/raw_memory/geocoding_cache/{image,video}), copying them into the target
 cache directory lets the processors skip geocoding API calls.
+
+The cache key is the media filename stem (for example,
+`20220502_172850_location_name.json`), so the bundle must match the current
+image/video filenames.
 """
 
 from __future__ import annotations

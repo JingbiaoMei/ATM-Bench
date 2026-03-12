@@ -170,6 +170,7 @@ Note on GPS / reverse-geocoding:
 - If you have a pre-extracted GPS cache bundle, place the `*_location_name.json` entries under
   `data/raw_memory/geocoding_cache/image` and `data/raw_memory/geocoding_cache/video`, then copy them into your
   processor cache directory **before** running the memory processors so geocoding is skipped and runs don’t stall.
+- GPS cache files are keyed by the media filename stem, so the cache bundle must match the current image/video filenames.
 
 Example (Qwen3-VL-2B captioner via vLLM):
 
