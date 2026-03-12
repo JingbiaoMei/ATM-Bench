@@ -3,6 +3,8 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2603.01990-b31b1b.svg)](https://arxiv.org/abs/2603.01990)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+Official code for ATM-Bench: a benchmark for long-term multimodal personalized AI memory QA and retrieval.
+
 **ATM-Bench** is the first benchmark for **multimodal, multi-source personalized referential memory QA** over long time horizons (~4 years) with **evidence-grounded** retrieval and answering.
 
 > **Paper:** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)  
