@@ -39,14 +39,14 @@
 
 - **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
 - **2026-03-04:** Initial codebase release, including baseline implementations for MMRAG, Oracle, NIAH, and four ported third-party baselines (A-Mem, HippoRAG2, mem0, MemoryOS).
-- **2026-03-12:** Initial coding-agent benchmark results release for Claude Code, Codex, and OpenCode.
+- **2026-03-12:** Initial General-Purpose Agent benchmark results release for Claude Code, Codex, and OpenCode.
 - **2026-03-12:** ATM-Bench data release on Hugging Face ([Jingbiao/ATM-Bench](https://huggingface.co/datasets/Jingbiao/ATM-Bench)).
-- **Coming soon:** Coding-agent benchmarking code release, including OpenClaw, Claude Code, etc.
+- **Coming soon:** General-Purpose Agents benchmarking support, including OpenClaw.
 
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
 
-Agents' results on the ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge.
+Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge.
 
 | Agent | Model | QS | Total Tokens |
 |-------|-------|----|--------------|
@@ -56,7 +56,7 @@ Agents' results on the ATM-Bench-Hard are summarized below. The QS score here us
 | OpenCode | Kimi K2.5 | 0.303 | 0.86M |
 | OpenCode | MiniMax M2.5 | 0.229 | 1.06M |
 
-We found that the coding agents still struggle on the ATM-Bench-Hard. Although, much better than other baselines, including vairous agentic memory baseline systems. 
+The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
 
 <a id="oracle-and-niah-results"></a>
 ## 📊 Oracle and NIAH Results
@@ -216,7 +216,7 @@ bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b_raw.sh
   - `third_party/HippoRAG/`
   - `third_party/mem0/`
   - `third_party/MemoryOS/`
-- OpenClaw, OpenCode, and Codex baselines are compatible with this repo’s evaluation workflow, but each requires its own third-party software installation.
+- OpenClaw support is planned; We will shortly release the evaluation setup for all General-Purpose Agents (Claude Code, Codex, OpenCode, OpenClaw) on ATM-Bench.
 
 For detailed setup, data layout, and reproducibility settings, see:
 - [`docs/README.md`](docs/README.md)
