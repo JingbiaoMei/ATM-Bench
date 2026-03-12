@@ -26,15 +26,15 @@ Note: `data/` and `output/` are gitignored.
 Current status:
 
 - Paper/code release is available.
-- Benchmark data release is pending.
+- ATM-Bench dataset release is available on Hugging Face: `https://huggingface.co/datasets/Jingbiao/ATM-Bench`
 
-Planned release channel:
+Release channel:
 
 - Hugging Face (dataset artifacts and versioned files).
 
-Planned metadata to publish with the data release:
+Release metadata checklist:
 
-- HF dataset/model link
+- HF dataset link: `https://huggingface.co/datasets/Jingbiao/ATM-Bench`
 - Versioning scheme (tag/date + git commit)
 - `sha256` checksums for released files
 - Minimal download instructions (curl / `huggingface_hub`)

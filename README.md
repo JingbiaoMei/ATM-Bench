@@ -13,6 +13,10 @@
 - [ATM-Bench: Long-Term Personalized Referential Memory QA](#atm-bench-long-term-personalized-referential-memory-qa)
   - [Table of Contents](#table-of-contents)
   - [🗓️ Timeline](#️-timeline)
+  - [🤖 General-Purpose Agent Results](#-general-purpose-agent-results)
+  - [📊 Oracle and NIAH Results](#-oracle-and-niah-results)
+    - [Oracle on ATM-Bench-Hard](#oracle-on-atm-bench-hard)
+    - [NIAH on ATM-Bench-Hard](#niah-on-atm-bench-hard)
   - [📋 Overview](#-overview)
   - [Memory Ingestion](#memory-ingestion)
     - [Memory Preprocessing](#memory-preprocessing)
@@ -35,8 +39,55 @@
 
 - **2026-03-03:** arXiv paper release ([2603.01990](https://arxiv.org/abs/2603.01990))
 - **2026-03-04:** Initial codebase release, including baseline implementations for MMRAG, Oracle, NIAH, and four ported third-party baselines (A-Mem, HippoRAG2, mem0, MemoryOS).
-- **Coming soon:** ATM-Bench data release
-- **Coming soon:** Implementations for benchmarking on OpenClaw, Codex, and OpenCode
+- **2026-03-12:** Initial coding-agent benchmark results release for Claude Code, Codex, and OpenCode.
+- **2026-03-12:** ATM-Bench data release on Hugging Face ([Jingbiao/ATM-Bench](https://huggingface.co/datasets/Jingbiao/ATM-Bench)).
+- **Coming soon:** Coding-agent benchmarking code release, including OpenClaw, Claude Code, etc.
+
+<a id="General-Purpose-Agent-results"></a>
+## 🤖 General-Purpose Agent Results
+
+Agents' results on the ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge.
+
+| Agent | Model | QS | Total Tokens |
+|-------|-------|----|--------------|
+| Claude Code | Claude Opus 4.6 | 0.338 | 4.93M |
+| Codex | GPT-5.2 | 0.397 | 15.46M |
+| OpenCode | GLM-5 | 0.297 | 0.95M |
+| OpenCode | Kimi K2.5 | 0.303 | 0.86M |
+| OpenCode | MiniMax M2.5 | 0.229 | 1.06M |
+
+We found that the coding agents still struggle on the ATM-Bench-Hard. Although, much better than other baselines, including vairous agentic memory baseline systems. 
+
+<a id="oracle-and-niah-results"></a>
+## 📊 Oracle and NIAH Results
+
+
+### Oracle on ATM-Bench-Hard
+
+QS is reported with `gpt-5-mini` as the primary judge.
+
+| Model | Setting | QS |
+|-------|---------|----|
+| GPT-5 | Reasoning Low + Raw | 72.12% |
+| Qwen3-VL-8B-Instruct | Raw | 40.14% |
+| Qwen3-VL-8B-Instruct | SGM | 27.98% |
+| Qwen3-VL-8B-Instruct | D | 21.69% |
+
+### NIAH on ATM-Bench-Hard
+
+For NIAH, we compare the `Qwen3-VL-8B-Instruct` SGM and Raw settings at different haystack sizes.
+
+| Model | Setting | QS | Avg. Context Tokens |
+|-------|---------|----|---------------------|
+| Qwen3-VL-8B-Instruct | Raw, Oracle | 40.14% | 5.7k |
+| Qwen3-VL-8B-Instruct | Raw, NIAH-25 | 25.43% | 15.9k |
+| Qwen3-VL-8B-Instruct | Raw, NIAH-50 | 24.87% | 29.0k |
+| Qwen3-VL-8B-Instruct | Raw, NIAH-100 | 10.90% | 56.0k |
+| Qwen3-VL-8B-Instruct | SGM, Oracle | 27.98% | 4.6k |
+| Qwen3-VL-8B-Instruct | SGM, NIAH-25 | 16.33% | 12.5k |
+| Qwen3-VL-8B-Instruct | SGM, NIAH-50 | 15.77% | 23.9k |
+| Qwen3-VL-8B-Instruct | SGM, NIAH-100 | 12.66% | 45.8k |
+
 
 <a id="overview"></a>
 ## 📋 Overview
@@ -128,6 +179,8 @@ Before running `MMRAG` or `Oracle`, generate the image/video `batch_results.json
 
 ```bash
 # Optional but recommended: preload reverse-geocoding cache
+# Cache files are keyed by media filename stem, so the cache bundle must match
+# the current image/video filenames.
 bash scripts/memory_processor/image/copy_gps_cache.sh output/image/qwen3vl2b/cache
 bash scripts/memory_processor/video/copy_gps_cache.sh output/video/qwen3vl2b/cache
 
@@ -216,6 +269,7 @@ If you use ATM-Bench in your research, please cite:
 ## 🔗 Links
 
 - 📄 **Paper:** https://arxiv.org/abs/2603.01990
+- 🤗 **Dataset:** https://huggingface.co/datasets/Jingbiao/ATM-Bench
 - 💻 **Code:** https://github.com/JingbiaoMei/ATM-Bench
 - 🐛 **Issues:** https://github.com/JingbiaoMei/ATM-Bench/issues
 
