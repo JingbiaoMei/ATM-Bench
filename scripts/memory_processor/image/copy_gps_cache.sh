@@ -4,6 +4,7 @@
 #
 # Public reverse-geocoding services are rate-limited; copying a GPS cache bundle first
 # allows the processors to skip geocoding API calls.
+# Cache files are keyed by the source image filename stem.
 #
 # Usage:
 #   bash scripts/memory_processor/image/copy_gps_cache.sh [SRC_CACHE_DIR] <DST_CACHE_DIR>

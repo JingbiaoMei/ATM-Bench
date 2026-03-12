@@ -6,6 +6,6 @@ python memqa/mem_processor/image/batch_processor.py "./data/raw_memory/image" \
   --provider "vllm" \
   --vllm-endpoint "http://localhost:8000/v1/chat/completions" \
   --model "Qwen/Qwen3-VL-8B-Instruct-FP8" \
-  --max-concurrent 50 \
-  --chunk-size 50 \
+  --max-concurrent 500 \
+  --chunk-size 1000 \
   --timeout 1000
