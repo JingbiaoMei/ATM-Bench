@@ -2,6 +2,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2603.01990-b31b1b.svg)](https://arxiv.org/abs/2603.01990)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/datasets/Jingbiao/ATM-Bench)
 
 **ATM-Bench** is the first benchmark for **multimodal, multi-source personalized referential memory QA** over long time horizons (~4 years) with **evidence-grounded** retrieval and answering.
 
@@ -41,6 +42,7 @@
 - **2026-03-04:** Initial codebase release, including baseline implementations for MMRAG, Oracle, NIAH, and four ported third-party baselines (A-Mem, HippoRAG2, mem0, MemoryOS).
 - **2026-03-12:** Initial General-Purpose Agent benchmark results release for Claude Code, Codex, and OpenCode.
 - **2026-03-12:** ATM-Bench data release on Hugging Face ([Jingbiao/ATM-Bench](https://huggingface.co/datasets/Jingbiao/ATM-Bench)).
+- **2026-03-13:** Fixed Opencode Token Accounting and updated OpenClaw results.
 - **Coming soon:** General-Purpose Agents benchmarking support, including OpenClaw.
 
 <a id="General-Purpose-Agent-results"></a>
@@ -52,9 +54,10 @@ Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. Th
 |-------|-------|----|--------------|
 | Claude Code | Claude Opus 4.6 | 0.338 | 4.93M |
 | Codex | GPT-5.2 | 0.397 | 15.46M |
-| OpenCode | GLM-5 | 0.297 | 0.95M |
-| OpenCode | Kimi K2.5 | 0.303 | 0.86M |
-| OpenCode | MiniMax M2.5 | 0.229 | 1.06M |
+| OpenCode | GLM-5 | 0.270 | 16.89M |
+| OpenCode | Kimi K2.5 | 0.303 | 8.46M |
+| OpenCode | MiniMax M2.5 | 0.229 | 14.5M |
+| OpenClaw | Kimi K2.5 | 0.254 | 9.63M |
 
 The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
 
