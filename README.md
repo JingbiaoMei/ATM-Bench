@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/datasets/Jingbiao/ATM-Bench)
 
+Official code for ATM-Bench: a benchmark for long-term multimodal personalized AI memory QA and retrieval.
+
 **ATM-Bench** is the first benchmark for **multimodal, multi-source personalized referential memory QA** over long time horizons (~4 years) with **evidence-grounded** retrieval and answering.
 
 > **Paper:** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)  
