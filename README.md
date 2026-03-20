@@ -1,3 +1,5 @@
+[English](README.md) | [中文](README_zh.md)
+
 # ATM-Bench: Long-Term Personalized Referential Memory QA
 
 [![arXiv](https://img.shields.io/badge/arXiv-2603.01990-b31b1b.svg)](https://arxiv.org/abs/2603.01990)
