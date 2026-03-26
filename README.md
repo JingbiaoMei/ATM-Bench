@@ -54,16 +54,20 @@ Official code for ATM-Bench: a benchmark for long-term multimodal personalized A
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
 
-Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge.
+Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge. `Tokens/QS` shows the token cost per point of QS, so lower is more efficient.
 
-| Agent | Model | QS | Total Tokens |
-|-------|-------|----|--------------|
-| Claude Code | Claude Opus 4.6 | 0.338 | 4.93M |
-| Codex | GPT-5.2 | 0.397 | 15.46M |
-| OpenCode | GLM-5 | 0.270 | 16.89M |
-| OpenCode | Kimi K2.5 | 0.303 | 8.46M |
-| OpenCode | MiniMax M2.5 | 0.229 | 14.5M |
-| OpenClaw | Kimi K2.5 | 0.254 | 9.63M |
+| Agent | Model | QS | Total Tokens | Tokens/QS |
+|-------|-------|----|--------------|-----------|
+| Claude Code | Claude Opus 4.6 | 0.338 | 4.93M | 14.59M |
+| Codex | GPT-5.2 | 0.397 | 15.46M | 38.94M |
+| Codex | GPT-5.4* | 0.296 | 14.29M | 48.28M |
+| OpenCode | GLM-5 | 0.270 | 16.89M | 62.56M |
+| OpenCode | Kimi K2.5 | 0.303 | 8.46M | 27.92M |
+| OpenCode | MiniMax M2.5 | 0.229 | 14.5M | 63.32M |
+| OpenCode | MiniMax M2.7 | 0.278 | 13.48M | 48.49M |
+| OpenClaw 🦞 | Kimi K2.5 | 0.254 | 9.63M | 37.91M |
+
+* `GPT-5.4` results may be unreliable because the Codex service was unstable during evaluation.
 
 The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
 

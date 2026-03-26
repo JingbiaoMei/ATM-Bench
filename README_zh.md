@@ -47,16 +47,20 @@ ATM-Bench 官方代码：面向长期多模态个性化 AI 记忆问答与检索
 <a id="general-purpose-agent-results-zh"></a>
 ## 通用智能体结果
 
-ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-mini` 作为主要评判模型。
+ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-mini` 作为主要评判模型。`Tokens/QS` 表示每单位 QS 对应的 token 成本，因此数值越低表示效率越高。
 
-| 智能体 | 模型 | QS | 总 Token 数 |
-|--------|------|----|-------------|
-| Claude Code | Claude Opus 4.6 | 0.338 | 4.93M |
-| Codex | GPT-5.2 | 0.397 | 15.46M |
-| OpenCode | GLM-5 | 0.270 | 16.89M |
-| OpenCode | Kimi K2.5 | 0.303 | 8.46M |
-| OpenCode | MiniMax M2.5 | 0.229 | 14.5M |
-| OpenClaw | Kimi K2.5 | 0.254 | 9.63M |
+| 智能体 | 模型 | QS | 总 Token 数 | Tokens/QS |
+|--------|------|----|-------------|-----------|
+| Claude Code | Claude Opus 4.6 | 0.338 | 4.93M | 14.59M |
+| Codex | GPT-5.2 | 0.397 | 15.46M | 38.94M |
+| Codex | GPT-5.4* | 0.296 | 14.29M | 48.28M |
+| OpenCode | GLM-5 | 0.270 | 16.89M | 62.56M |
+| OpenCode | Kimi K2.5 | 0.303 | 8.46M | 27.92M |
+| OpenCode | MiniMax M2.5 | 0.229 | 14.5M | 63.32M |
+| OpenCode | MiniMax M2.7 | 0.278 | 13.48M | 48.49M |
+| OpenClaw 🦞 | Kimi K2.5 | 0.254 | 9.63M | 37.91M |
+
+* `GPT-5.4` 的结果可能不够可靠，因为评测期间 Codex 服务状态不稳定。
 
 编程智能体在 ATM-Bench-Hard 上仍然表现不佳，但显著优于各种智能体记忆基线。
 
