@@ -158,6 +158,34 @@ DM 和 SGM 包含相同的底层信息，但使用不同的格式。
 <a id="quick-start-zh"></a>
 ## 快速开始
 
+### 下载数据集
+
+ATM-Bench 托管在 Hugging Face [`Jingbiao/ATM-Bench`](https://huggingface.co/datasets/Jingbiao/ATM-Bench)。下载脚本会下载完整发布数据，并自动将文件放到评估脚本期望的位置。
+
+**完整下载（约 3.3 GB）** — 包含 QA、NIAH 池、预处理记忆、emails、原始图像、原始视频以及 GPS 反向地理编码缓存：
+
+```bash
+bash scripts/download_data.sh
+```
+
+执行后将得到：
+
+```
+data/atm-bench/atm-bench.json
+data/atm-bench/atm-bench-hard.json
+data/atm-bench/niah/...
+data/raw_memory/email/emails.json                   # emails
+data/raw_memory/image/...                           # 原始图像
+data/raw_memory/video/...                           # 原始视频
+data/raw_memory/geocoding_cache/...                 # GPS 反向地理编码缓存
+output/image/qwen3vl2b/batch_results.json           # 预处理的图像记忆
+output/video/qwen3vl2b/batch_results.json           # 预处理的视频记忆
+```
+
+HF 上的 `data/processed_memory/{image,video}_batch_results.json` 会被脚本自动重命名并复制到 `output/image/qwen3vl2b/batch_results.json` 与 `output/video/qwen3vl2b/batch_results.json`。
+
+脚本使用 `huggingface_hub` Python 包（若未安装会自动安装）。若数据集为私有，请先运行 `huggingface-cli login`。
+
 ### 安装
 
 ```bash
@@ -179,9 +207,22 @@ export VLLM_API_KEY="your-key"
 - `api_keys/.openai_key`
 - `api_keys/.vllm_key`
 
-### 首先生成记忆文件
+### 准备记忆文件
 
-在运行 `MMRAG` 或 `Oracle` 之前，先生成图像/视频的 `batch_results.json` 文件：
+运行这些基线之前，`output/{image,video}/qwen3vl2b/` 下必须存在 `batch_results.json`。有两种方式：
+
+**方式 A（推荐）：直接从 Hugging Face 下载预处理记忆。**
+
+若已运行上面的 `bash scripts/download_data.sh`，预处理的记忆文件已就位：
+
+- `output/image/qwen3vl2b/batch_results.json`
+- `output/video/qwen3vl2b/batch_results.json`
+
+无需其他操作，可直接跳到下面的快速命令。
+
+**方式 B：从原始图像/视频重新生成记忆文件。**
+
+仅当你需要重新预处理（例如换用其他 VLM 或使用自己的原始记忆）时才需要。需要 `data/raw_memory/image/` 下的原始图像与 `data/raw_memory/video/` 下的视频：
 
 ```bash
 # 可选但推荐：预加载反向地理编码缓存
@@ -198,10 +239,21 @@ bash scripts/memory_processor/video/memory_itemize/run_qwen3vl2b.sh
 
 ```bash
 # MMRAG（同时运行 ATM-bench 和 ATM-bench-hard）
+#   需要：`bash scripts/download_data.sh`
+#        + 本地运行的 vLLM 服务，地址 http://127.0.0.1:8000/v1/chat/completions，
+#          模型 Qwen/Qwen3-VL-8B-Instruct-FP8（可通过 VLLM_ENDPOINT / ANSWERER_MODEL
+#          环境变量覆盖）。
 bash scripts/QA_Agent/MMRAG/run.sh
 
-# Oracle（上界；原始多模态证据）
+# Qwen3-VL-8B 原始图像/视频 Oracle（本地上界）
+#   需要：`bash scripts/download_data.sh`
+#        + 本地 vLLM 服务，模型 Qwen/Qwen3-VL-8B-Instruct-FP8。
 bash scripts/QA_Agent/Oracle/run_oracle_qwen3vl8b_raw.sh
+
+# GPT-5 原始图像/视频 Oracle（无需本地 GPU / vLLM）
+#   需要：`bash scripts/download_data.sh`
+#        + 环境变量 OPENAI_API_KEY 或文件 api_keys/.openai_key。
+bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
 ```
 
 ### 基线兼容性与环境
