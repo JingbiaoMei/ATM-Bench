@@ -21,6 +21,7 @@ Official code for ATM-Bench: a benchmark for long-term multimodal personalized A
   - [Table of Contents](#table-of-contents)
   - [🗓️ Timeline](#️-timeline)
   - [🤖 General-Purpose Agent Results](#-general-purpose-agent-results)
+  - [🧠 Memory-System Baseline Results](#-memory-system-baseline-results)
   - [📊 Oracle and NIAH Results](#-oracle-and-niah-results)
     - [Oracle on ATM-Bench-Hard](#oracle-on-atm-bench-hard)
     - [NIAH on ATM-Bench-Hard](#niah-on-atm-bench-hard)
@@ -50,6 +51,7 @@ Official code for ATM-Bench: a benchmark for long-term multimodal personalized A
 - **2026-03-12:** Initial General-Purpose Agent benchmark results release for Claude Code, Codex, and OpenCode.
 - **2026-03-12:** ATM-Bench data release on Hugging Face ([ATM-Bench](https://huggingface.co/datasets/Jingbiao/ATM-Bench)).
 - **2026-03-13:** Fixed Opencode Token Accounting and updated OpenClaw results.
+- **2026-05-15:** Released the MemPalace port and added memory-system comparison results.
 - **Coming soon:** General-Purpose Agents benchmarking support, including OpenClaw.
 
 <a id="General-Purpose-Agent-results"></a>
@@ -57,8 +59,8 @@ Official code for ATM-Bench: a benchmark for long-term multimodal personalized A
 
 Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge. `Tokens/QS` shows the token cost per percentage point of QS, so lower is more efficient.
 
-| Agent | Model | QS | Total Tokens | Tokens/QS |
-|-------|-------|----|--------------|-----------|
+| Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Tokens/QS ↓ |
+|-------|-------|------------:|---------------:|-------------:|
 | Claude Code | Claude Opus 4.6 | 33.80% | 4.93M | 0.146M |
 | Codex | GPT-5.2 | 39.70% | 15.46M | 0.389M |
 | Codex | GPT-5.4* | 29.60% | 14.29M | 0.483M |
@@ -72,6 +74,19 @@ Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. Th
 * `GPT-5.4` results may be unreliable because the Codex service was unstable during evaluation.
 
 The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
+
+<a id="memory-system-baseline-results"></a>
+## 🧠 Memory-System Baseline Results
+
+Memory-system baselines below use `Qwen3-VL-8B-Instruct-FP8` as the answerer, `Qwen3-VL-2B-Instruct` as the memory processor. ATM-Bench-Hard uses the `atm-bench-hard` release set, the results may differ from the original preprint.
+
+| System | Index Time (hr) ↓ | ATM-Bench QS ↑ | ATM-Bench Recall@10 ↑ | ATM-Bench-Hard QS ↑ | ATM-Bench-Hard Recall@10 ↑ |
+|--------|------------------:|---------------:|----------------------:|--------------------:|---------------------------:|
+| [A-Mem](https://github.com/WujiangXu/A-mem) | 12.6 | 44.8 | 66.4 | 9.9 | 31.7 |
+| [mem0](https://github.com/mem0ai/mem0) | 16.7 | 43.5 | 61.9 | 9.2 | 32.7 |
+| [MemoryOS](https://github.com/BAI-LAB/MemoryOS) | 36.6 | 47.2 | 59.2 | 13.7 | 23.7 |
+| [HippoRAG2](https://github.com/OSU-NLP-Group/HippoRAG) | 1.5 | 42.9 | 66.4 | 9.7 | 31.9 |
+| [MemPalace](https://github.com/MemPalace/mempalace) | 0.5 | 56.8 | 76.4 | 9.7 | 28.3 |
 
 <a id="oracle-and-niah-results"></a>
 ## 📊 Oracle and NIAH Results
@@ -275,13 +290,15 @@ bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
   - `HippoRAG2`
   - `mem0`
   - `MemoryOS`
-- `MemoryOS` is strongly recommended to run in a separate conda environment.
+  - `MemPalace`
+- `MemoryOS` and `MemPalace` are strongly recommended to run in separate conda environments. `MemoryOS` uses a FAISS / sentence-transformers stack, while `MemPalace` uses ChromaDB / ONNX-backed local embeddings; isolating them avoids dependency collisions with the core baseline environment and each other.
 - `A-Mem`, `HippoRAG2`, and `mem0` are tested to be compatible with the core baseline environment, but separate environments are still safer for reproducibility and dependency isolation.
-- Setup references for these baselines are under `third_party/`:
+- Setup references for the vendored baselines are under `third_party/`:
   - `third_party/A-mem/`
   - `third_party/HippoRAG/`
   - `third_party/mem0/`
   - `third_party/MemoryOS/`
+- `MemPalace` ships as a PyPI package (`mempalace==3.3.5`) and is installed via `memqa/qa_agent_baselines/Mempalace/requirements.txt` — no `third_party/` vendoring.
 - OpenClaw support is planned; We will shortly release the evaluation setup for all General-Purpose Agents (Claude Code, Codex, OpenCode, OpenClaw) on ATM-Bench.
 
 For detailed setup, data layout, and reproducibility settings, see:

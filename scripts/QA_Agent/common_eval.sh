@@ -2,6 +2,7 @@
 
 JUDGE_MODEL_GPT="${JUDGE_MODEL_GPT:-gpt-5-mini}"
 JUDGE_MAX_WORKERS="${JUDGE_MAX_WORKERS:-8}"
+RETRIEVAL_K_VALUES="${RETRIEVAL_K_VALUES:-1,5,10,25,50,100}"
 
 run_eval_bundle() {
     local ground_truth="$1"
@@ -27,7 +28,8 @@ run_eval_bundle() {
 
     if [ -n "${retrieval_details}" ] && [ -f "${retrieval_details}" ]; then
         python memqa/utils/evaluator/evaluate_retrieval/comprehensive_eval.py \
-            --details "${retrieval_details}"
+            --details "${retrieval_details}" \
+            --k-values "${RETRIEVAL_K_VALUES}"
 
         local atm_details=""
         atm_details="$(ls "${eval_dir}"/atm_*.json 2>/dev/null | head -n 1)"

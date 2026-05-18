@@ -23,6 +23,7 @@ ATM-Bench 官方代码：面向长期多模态个性化 AI 记忆问答与检索
   - [目录](#table-of-contents-zh)
   - [时间线](#timeline-zh)
   - [通用智能体结果](#general-purpose-agent-results-zh)
+  - [记忆系统基线结果](#memory-system-baseline-results-zh)
   - [Oracle 与 NIAH 结果](#oracle-and-niah-results-zh)
   - [概述](#overview-zh)
   - [记忆摄入](#memory-ingestion-zh)
@@ -42,6 +43,7 @@ ATM-Bench 官方代码：面向长期多模态个性化 AI 记忆问答与检索
 - **2026-03-12：** 首批通用智能体基准结果发布，涵盖 Claude Code、Codex 和 OpenCode。
 - **2026-03-12：** ATM-Bench 数据集在 Hugging Face 发布（[Jingbiao/ATM-Bench](https://huggingface.co/datasets/Jingbiao/ATM-Bench)）。
 - **2026-03-13：** 修复 Opencode Token 统计并更新 OpenClaw 结果。
+- **2026-05-15：** 发布 MemPalace 移植版本，并加入记忆系统对比结果。
 - **即将推出：** 通用智能体基准支持，包括 OpenClaw。
 
 <a id="general-purpose-agent-results-zh"></a>
@@ -49,8 +51,8 @@ ATM-Bench 官方代码：面向长期多模态个性化 AI 记忆问答与检索
 
 ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-mini` 作为主要评判模型。`Tokens/QS` 表示每 1 个 QS 百分点对应的 token 成本，因此数值越低表示效率越高。
 
-| 智能体 | 模型 | QS | 总 Token 数 | Tokens/QS |
-|--------|------|----|-------------|-----------|
+| 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ | Tokens/QS ↓ |
+|--------|------|-------------:|---------------:|------------:|
 | Claude Code | Claude Opus 4.6 | 33.80% | 4.93M | 0.146M |
 | Codex | GPT-5.2 | 39.70% | 15.46M | 0.389M |
 | Codex | GPT-5.4* | 29.60% | 14.29M | 0.483M |
@@ -64,6 +66,19 @@ ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-
 * `GPT-5.4` 的结果可能不够可靠，因为评测期间 Codex 服务状态不稳定。
 
 编程智能体在 ATM-Bench-Hard 上仍然表现不佳，但显著优于各种智能体记忆基线。
+
+<a id="memory-system-baseline-results-zh"></a>
+## 记忆系统基线结果
+
+下面的记忆系统基线使用 `Qwen3-VL-8B-Instruct-FP8` 作为回答模型，`Qwen3-VL-2B-Instruct` 作为共享的图像/视频描述预处理器。ATM-Bench-Hard 使用 `atm-bench-hard` 发布集合，结果可能与原始预印本不同。
+
+| 系统 | 索引时间 (hr) ↓ | ATM-Bench QS ↑ | ATM-Bench Recall@10 ↑ | ATM-Bench-Hard QS ↑ | ATM-Bench-Hard Recall@10 ↑ |
+|------|----------------:|---------------:|----------------------:|--------------------:|---------------------------:|
+| [A-Mem](https://github.com/WujiangXu/A-mem) | 12.6 | 44.8 | 66.4 | 9.9 | 31.7 |
+| [mem0](https://github.com/mem0ai/mem0) | 16.7 | 43.5 | 61.9 | 9.2 | 32.7 |
+| [MemoryOS](https://github.com/BAI-LAB/MemoryOS) | 36.6 | 47.2 | 59.2 | 13.7 | 23.7 |
+| [HippoRAG2](https://github.com/OSU-NLP-Group/HippoRAG) | 1.5 | 42.9 | 66.4 | 9.7 | 31.9 |
+| [MemPalace](https://github.com/MemPalace/mempalace) | 0.5 | 56.8 | 76.4 | 9.7 | 28.3 |
 
 <a id="oracle-and-niah-results-zh"></a>
 ## Oracle 与 NIAH 结果
@@ -264,13 +279,15 @@ bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
   - `HippoRAG2`
   - `mem0`
   - `MemoryOS`
-- 强烈建议在独立的 conda 环境中运行 `MemoryOS`。
+  - `MemPalace`
+- 强烈建议在独立的 conda 环境中运行 `MemoryOS` 和 `MemPalace`。`MemoryOS` 使用 FAISS / sentence-transformers 依赖栈，`MemPalace` 使用 ChromaDB / ONNX 本地嵌入依赖栈；隔离环境可避免它们与核心基线环境及彼此之间发生依赖冲突。
 - `A-Mem`、`HippoRAG2` 和 `mem0` 经测试与核心基线环境兼容，但为确保可复现性和依赖隔离，仍建议使用独立环境。
 - 这些基线的设置参考位于 `third_party/` 下：
   - `third_party/A-mem/`
   - `third_party/HippoRAG/`
   - `third_party/mem0/`
   - `third_party/MemoryOS/`
+- `MemPalace` 以 PyPI 包形式发布（`mempalace==3.3.5`），通过 `memqa/qa_agent_baselines/Mempalace/requirements.txt` 安装；不需要放入 `third_party/`。
 - OpenClaw 支持已在规划中；我们将很快发布所有通用智能体（Claude Code、Codex、OpenCode、OpenClaw）在 ATM-Bench 上的评估设置。
 
 详细的设置、数据布局和可复现性设置，请参见：

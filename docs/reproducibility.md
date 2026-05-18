@@ -65,10 +65,10 @@ bash scripts/QA_Agent/NIAH/run_niah_qwen3vl8b_raw.sh
 bash scripts/QA_Agent/NIAH/run_niah_gpt5_raw.sh
 ```
 
-For additional memory-agent baselines (HippoRAG 2, MemoryOS, A‑Mem, Mem0), see `docs/baseline.md`.
+For additional memory-agent baselines (HippoRAG 2, MemoryOS, A‑Mem, Mem0, MemPalace), see `docs/baseline.md`.
 
 Environment note:
-- `MemoryOS` is strongly recommended to run in a separate conda environment.
+- `MemoryOS` and `MemPalace` are strongly recommended to run in separate conda environments.
 - `HippoRAG 2`, `A‑Mem`, and `Mem0` are tested to be compatible with the core baseline environment, but separate environments are still safer for reproducibility.
 
 Agent-system note:
@@ -77,6 +77,7 @@ Agent-system note:
 ## Evaluation Defaults (Paper)
 
 - `open_end` judge model: `gpt-5-mini` (default in this repo)
+- retrieval summary k values: `1,5,10,25,50,100`
 
 To summarize NIAH runs into a Markdown table:
 

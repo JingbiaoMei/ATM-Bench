@@ -1,0 +1,18 @@
+# MemPalace baseline dependencies
+#
+# MemPalace ships as a PyPI package; no third_party/ vendoring is required.
+# The package brings in chromadb (with the bundled ONNX MiniLM embedding) and
+# its own BM25/closet-search code path. Version 3.3.5 exposes the upstream
+# API surface this wrapper calls.
+
+mempalace==3.3.5
+
+# CPU torch is sufficient — MemPalace's ONNX embedding does not need GPU torch.
+# Install via the PyTorch CPU index if your environment does not already have
+# torch, e.g.:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.0.0
+Pillow
+openai>=1.0.0
+requests
+tqdm>=4.65.0

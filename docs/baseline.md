@@ -102,13 +102,15 @@ Notes:
   - `HippoRAG2`
   - `mem0`
   - `MemoryOS`
-- `MemoryOS` is strongly recommended to run in a separate conda environment.
+  - `MemPalace`
+- `MemoryOS` and `MemPalace` are strongly recommended to run in separate conda environments. `MemoryOS` uses a FAISS / sentence-transformers stack, while `MemPalace` uses ChromaDB / ONNX-backed local embeddings; isolating them avoids dependency collisions with the core baseline environment and each other.
 - `A-Mem`, `HippoRAG2`, and `mem0` are tested to be compatible with the core baseline environment, but separate environments are still safer for dependency isolation.
-- Setup for these four baselines is documented under:
+- Setup for the vendored baselines is documented under:
   - `third_party/A-mem/`
   - `third_party/HippoRAG/`
   - `third_party/mem0/`
   - `third_party/MemoryOS/`
+- `MemPalace` is installed from PyPI (`mempalace==3.3.5`); see `memqa/qa_agent_baselines/Mempalace/README.md`.
 - OpenClaw, OpenCode, and Codex baselines are compatible with this repo’s evaluation workflow, but each requires its own third-party software installation.
 
 ## Vendored upstream code (third_party)
@@ -551,6 +553,72 @@ If you want to try extraction, set:
 **Outputs (typical):**
 - `<output>/mem0_answers.jsonl`
 - `<output>/retrieval_recall_details.json`
+
+---
+
+### MemPalace (Hybrid Drawer + Closet Retrieval Baseline)
+
+**What it is:** A wrapper around the upstream [`mempalace`](https://pypi.org/project/mempalace/) PyPI package (`3.3.5`) that stores each ATM-Bench memory item as a chunked "drawer" plus a regex topic/entity "closet" pointer index, then retrieves with hybrid BM25 + cosine reranking, closet boost, and drawer-grep neighborhood enrichment.
+
+**Default script (vLLM 8B answerer, local ONNX embedding, hybrid retrieval):**
+- `bash scripts/QA_Agent/Mempalace/run.sh`
+
+**Key design choices:**
+
+1) **All retrieval primitives come from upstream `mempalace`**
+- `chunk_text` (CHUNK_SIZE=800 / OVERLAP=100 / MIN=50), `_build_drawer_metadata`,
+  `build_closet_lines`, `purge_file_closets`, `upsert_closet_lines`, and
+  `search_memories` are called directly. Nothing is re-implemented.
+
+1) **Virtual source files (`atmbench://<item_id>`)**
+- ATM-Bench items are not files on disk, so `process_file()` cannot be used.
+  We inline its pipeline (`chunk_text → _build_drawer_metadata → batched
+  collection.upsert → build_closet_lines → upsert_closet_lines`) so the
+  resulting Chroma collection is byte-equivalent to what `process_file`
+  would write for an on-disk corpus.
+
+1) **Wing = modality, room = sanitized item ID**
+- Upstream `detect_room` walks a project directory, which is meaningless
+  here. We use modality (`email`/`image`/`video`) for the wing and the
+  item ID for the room.
+
+1) **Over-fetch for recall reporting**
+- `--n-results` defaults to 100 (upstream default is 5). The full ranked
+  list is persisted in `retrieval_recall_details.json` so `R@{1,5,10,25,50,100}`
+  can be computed; only the top `--retrieve-k` (default 10) items are passed
+  to the answerer.
+
+**Important knobs:**
+- `TOP_K` / `--retrieve-k`: evidence items per question
+- `N_RESULTS` / `--n-results`: rerank candidate pool size
+- `RETRIEVAL_K_VALUES`: comprehensive retrieval eval k values
+  (default: `1,5,10,25,50,100`)
+- `--candidate-strategy {vector,union}`: pure vector candidates vs vector ∪ BM25
+- `--max-distance`: cosine distance cutoff (0.0 disables filtering)
+- `ANSWERER_MODEL` / `--model`: answerer LLM
+- `REBUILD_INDEX=1` / `--force-rebuild`: rebuild the palace cache
+
+**Correctness pitfall:**
+- The build and answer stages must use the same cache-affecting args
+  (batch-results paths, email file, all `--include-*` toggles, and `--limit`
+  when used for a debug index). Changing
+  any of them produces a new `cache_key` and the answer stage will refuse
+  to run until you rebuild.
+
+**WSL / NTFS HNSW quarantine:**
+- Chroma occasionally quarantines the HNSW index on first query when the
+  palace lives on NTFS. The answer stage runs three warmup `search_memories`
+  calls before the parallel QA loop for this reason — keep them.
+
+**Where to look for full CLI:** `memqa/qa_agent_baselines/Mempalace/mempalace_baseline.py`
+
+**Baseline README:** `memqa/qa_agent_baselines/Mempalace/README.md`
+
+**Outputs (typical):**
+- `<output>/mempalace_answers.jsonl`
+- `<output>/retrieval_recall_details.json`
+- `<output>/retrieval_recall_comprehensive_summary.json`
+- `<output>/retrieval_recall_joint_accuracy_summary.json`
 
 ---
 
