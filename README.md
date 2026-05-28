@@ -2,8 +2,6 @@
 
 # ATM-Bench: Long-Term Personalized Referential Memory QA
 
----
-
 **The first benchmark for multimodal, multi-source personalized referential memory QA over long time horizons (~4 years), with evidence-grounded retrieval and answering.**
 
 [🇬🇧 English](README.md) • [🇨🇳 中文](README_zh.md)
@@ -26,31 +24,17 @@
 
 ## Table of Contents
 
-- [ATM-Bench: Long-Term Personalized Referential Memory QA](#atm-bench-long-term-personalized-referential-memory-qa)
-  - [Table of Contents](#table-of-contents)
-  - [🗓️ Timeline](#️-timeline)
-  - [🤖 General-Purpose Agent Results](#-general-purpose-agent-results)
-  - [🧠 Memory-System Baseline Results](#-memory-system-baseline-results)
-  - [📊 Oracle and NIAH Results](#-oracle-and-niah-results)
-    - [Oracle on ATM-Bench-Hard](#oracle-on-atm-bench-hard)
-    - [NIAH on ATM-Bench-Hard](#niah-on-atm-bench-hard)
-  - [📋 Overview](#-overview)
-  - [Memory Ingestion](#memory-ingestion)
-    - [Memory Preprocessing](#memory-preprocessing)
-    - [Memory Organization](#memory-organization)
-  - [NIAH Evaluation Setup](#niah-evaluation-setup)
-  - [🚀 Quick Start](#-quick-start)
-    - [Download Dataset](#download-dataset)
-    - [Installation](#installation)
-    - [API Keys](#api-keys)
-    - [Prepare Memory Files](#prepare-memory-files)
-    - [Quick commands (MMRAG + Oracle)](#quick-commands-mmrag--oracle)
-    - [Baseline Compatibility and Environments](#baseline-compatibility-and-environments)
-  - [📁 Repository Structure](#-repository-structure)
-  - [📚 Documentation](#-documentation)
-  - [📖 Citation](#-citation)
-  - [🔗 Links](#-links)
-  - [📝 License](#-license)
+- [🗓️ Timeline](#️-timeline)
+- [🤖 General-Purpose Agent Results](#-general-purpose-agent-results)
+- [🧠 Memory-System Baseline Results](#-memory-system-baseline-results)
+- [📊 Oracle and NIAH Results](#-oracle-and-niah-results)
+- [📋 Overview](#-overview)
+- [🚀 Quick Start](#-quick-start)
+- [📁 Repository Structure](#-repository-structure)
+- [📚 Documentation](#-documentation)
+- [📖 Citation](#-citation)
+- [🔗 Links](#-links)
+- [📝 License](#-license)
 
 <a id="timeline"></a>
 ## 🗓️ Timeline

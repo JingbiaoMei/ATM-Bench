@@ -4,8 +4,6 @@
 
 # ATM-Bench：长期个性化参照记忆问答
 
----
-
 **首个针对多模态、多来源个性化参照记忆问答的基准，涵盖约 4 年的长时间跨度，支持基于证据的检索与回答。**
 
 [🇬🇧 English](README.md) • [🇨🇳 中文](README_zh.md)
@@ -29,21 +27,17 @@
 <a id="table-of-contents-zh"></a>
 ## 目录
 
-- [ATM-Bench：长期个性化参照记忆问答](#atm-bench-zh)
-  - [目录](#table-of-contents-zh)
-  - [时间线](#timeline-zh)
-  - [通用智能体结果](#general-purpose-agent-results-zh)
-  - [记忆系统基线结果](#memory-system-baseline-results-zh)
-  - [Oracle 与 NIAH 结果](#oracle-and-niah-results-zh)
-  - [概述](#overview-zh)
-  - [记忆摄入](#memory-ingestion-zh)
-  - [NIAH 评估设置](#niah-evaluation-setup-zh)
-  - [快速开始](#quick-start-zh)
-  - [仓库结构](#repository-structure-zh)
-  - [文档](#documentation-zh)
-  - [引用](#citation-zh)
-  - [链接](#links-zh)
-  - [许可证](#license-zh)
+- [时间线](#timeline-zh)
+- [通用智能体结果](#general-purpose-agent-results-zh)
+- [记忆系统基线结果](#memory-system-baseline-results-zh)
+- [Oracle 与 NIAH 结果](#oracle-and-niah-results-zh)
+- [概述](#overview-zh)
+- [快速开始](#quick-start-zh)
+- [仓库结构](#repository-structure-zh)
+- [文档](#documentation-zh)
+- [引用](#citation-zh)
+- [链接](#links-zh)
+- [许可证](#license-zh)
 
 <a id="timeline-zh"></a>
 ## 时间线
