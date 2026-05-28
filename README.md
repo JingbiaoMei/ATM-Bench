@@ -52,6 +52,8 @@ Official code for ATM-Bench: a benchmark for long-term multimodal personalized A
 - **2026-03-12:** ATM-Bench data release on Hugging Face ([ATM-Bench](https://huggingface.co/datasets/Jingbiao/ATM-Bench)).
 - **2026-03-13:** Fixed Opencode Token Accounting and updated OpenClaw results.
 - **2026-05-15:** Released the MemPalace port and added memory-system comparison results.
+- **2026-05-27:** Released the SimpleMem port and added memory-system comparison results.
+- **2026-05-28:** Released the Pi Agent Benchmark results.
 - **Coming soon:** General-Purpose Agents benchmarking support, including OpenClaw.
 
 <a id="General-Purpose-Agent-results"></a>
@@ -62,16 +64,22 @@ Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. Th
 | Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Tokens/QS ↓ |
 |-------|-------|------------:|---------------:|-------------:|
 | Claude Code | Claude Opus 4.6 | 33.80% | 4.93M | 0.146M |
+| Claude Code | Claude Opus 4.7 | 39.50% | 5.03M | 0.127M |
 | Codex | GPT-5.2 | 39.70% | 15.46M | 0.389M |
-| Codex | GPT-5.4* | 29.60% | 14.29M | 0.483M |
+| Codex | GPT-5.2 (w/o SGM) | 16.30% | 22.23M | 1.364M |
+| Codex | GPT-5.5 | 41.40% | 16.14M | 0.390M |
 | OpenCode | GLM-5 | 27.00% | 16.89M | 0.626M |
 | OpenCode | Qwen3.5-397B-A17B | 24.50% | 12.06M | 0.492M |
 | OpenCode | Kimi K2.5 | 30.30% | 8.46M | 0.279M |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.50% | 21.40M | 3.292M |
 | OpenCode | MiniMax M2.5 | 22.90% | 14.5M | 0.633M |
 | OpenCode | MiniMax M2.7 | 27.80% | 13.48M | 0.485M |
 | OpenClaw 🦞 | Kimi K2.5 | 25.40% | 9.63M | 0.379M |
+| Pi | GLM-5.1 | 38.80% | 8.17M | 0.211M |
+| Pi | Kimi K2.5 | 37.80% | 9.92M | 0.262M |
+| Pi | MiMo v2.5 | 36.10% | 18.23M | 0.505M |
 
-* `GPT-5.4` results may be unreliable because the Codex service was unstable during evaluation.
+* All coding agents use their default configuration, including the reasoning effort.
 
 The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
 
@@ -87,6 +95,7 @@ Memory-system baselines below use `Qwen3-VL-8B-Instruct-FP8` as the answerer, `Q
 | [MemoryOS](https://github.com/BAI-LAB/MemoryOS) | 36.6 | 47.2 | 59.2 | 13.7 | 32.7 |
 | [HippoRAG2](https://github.com/OSU-NLP-Group/HippoRAG) | 1.5 | 42.9 | 66.4 | 9.4 | 31.9 |
 | [MemPalace](https://github.com/MemPalace/mempalace) | 0.5 | 56.8 | 76.4 | 9.7 | 28.3 |
+| [SimpleMem](https://github.com/aiming-lab/SimpleMem) | 15.7 | 27.3 | 23.3 | 3.2 | 7.0 |
 
 <a id="oracle-and-niah-results"></a>
 ## 📊 Oracle and NIAH Results
@@ -291,14 +300,24 @@ bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
   - `mem0`
   - `MemoryOS`
   - `MemPalace`
+  - `SimpleMem`
 - `MemoryOS` and `MemPalace` are strongly recommended to run in separate conda environments. `MemoryOS` uses a FAISS / sentence-transformers stack, while `MemPalace` uses ChromaDB / ONNX-backed local embeddings; isolating them avoids dependency collisions with the core baseline environment and each other.
 - `A-Mem`, `HippoRAG2`, and `mem0` are tested to be compatible with the core baseline environment, but separate environments are still safer for reproducibility and dependency isolation.
+- `SimpleMem` runs against a sibling clone of the upstream repo (LanceDB + Tantivy FTS stack); see [`memqa/qa_agent_baselines/SimpleMem/README.md`](memqa/qa_agent_baselines/SimpleMem/README.md). Pinned upstream commit: [`094027eca4c890dc9912be8cee1da04428de8076`](https://github.com/aiming-lab/SimpleMem/commit/094027eca4c890dc9912be8cee1da04428de8076) (verified by `scripts/QA_Agent/SimpleMem/run.sh`).
 - Setup references for the vendored baselines are under `third_party/`:
   - `third_party/A-mem/`
   - `third_party/HippoRAG/`
   - `third_party/mem0/`
   - `third_party/MemoryOS/`
 - `MemPalace` ships as a PyPI package (`mempalace==3.3.5`) and is installed via `memqa/qa_agent_baselines/Mempalace/requirements.txt` — no `third_party/` vendoring.
+- `SimpleMem` is **not** vendored under `third_party/`. Clone the upstream repo at the pinned commit alongside ATMBench and point `SIMPLEMEM_DIR` at it (defaults to `../SimpleMem`):
+
+  ```bash
+  git clone https://github.com/aiming-lab/SimpleMem.git ../SimpleMem
+  git -C ../SimpleMem checkout 094027eca4c890dc9912be8cee1da04428de8076
+  pip install -r ../SimpleMem/requirements.txt
+  pip install -r memqa/qa_agent_baselines/SimpleMem/requirements.txt
+  ```
 - OpenClaw support is planned; We will shortly release the evaluation setup for all General-Purpose Agents (Claude Code, Codex, OpenCode, OpenClaw) on ATM-Bench.
 
 For detailed setup, data layout, and reproducibility settings, see:

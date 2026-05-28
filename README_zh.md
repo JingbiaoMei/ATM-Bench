@@ -44,6 +44,8 @@ ATM-Bench 官方代码：面向长期多模态个性化 AI 记忆问答与检索
 - **2026-03-12：** ATM-Bench 数据集在 Hugging Face 发布（[Jingbiao/ATM-Bench](https://huggingface.co/datasets/Jingbiao/ATM-Bench)）。
 - **2026-03-13：** 修复 Opencode Token 统计并更新 OpenClaw 结果。
 - **2026-05-15：** 发布 MemPalace 移植版本，并加入记忆系统对比结果。
+- **2026-05-27：** 发布 SimpleMem 移植版本，并加入记忆系统对比结果。
+- **2026-05-28：** 发布 Pi 智能体基准结果。
 - **即将推出：** 通用智能体基准支持，包括 OpenClaw。
 
 <a id="general-purpose-agent-results-zh"></a>
@@ -54,16 +56,22 @@ ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-
 | 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ | Tokens/QS ↓ |
 |--------|------|-------------:|---------------:|------------:|
 | Claude Code | Claude Opus 4.6 | 33.80% | 4.93M | 0.146M |
+| Claude Code | Claude Opus 4.7 | 39.50% | 5.03M | 0.127M |
 | Codex | GPT-5.2 | 39.70% | 15.46M | 0.389M |
-| Codex | GPT-5.4* | 29.60% | 14.29M | 0.483M |
+| Codex | GPT-5.2 (w/o SGM) | 16.30% | 22.23M | 1.364M |
+| Codex | GPT-5.5 | 41.40% | 16.14M | 0.390M |
 | OpenCode | GLM-5 | 27.00% | 16.89M | 0.626M |
 | OpenCode | Qwen3.5-397B-A17B | 24.50% | 12.06M | 0.492M |
 | OpenCode | Kimi K2.5 | 30.30% | 8.46M | 0.279M |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.50% | 21.40M | 3.292M |
 | OpenCode | MiniMax M2.5 | 22.90% | 14.5M | 0.633M |
 | OpenCode | MiniMax M2.7 | 27.80% | 13.48M | 0.485M |
 | OpenClaw 🦞 | Kimi K2.5 | 25.40% | 9.63M | 0.379M |
+| Pi | GLM-5.1 | 38.80% | 8.17M | 0.211M |
+| Pi | Kimi K2.5 | 37.80% | 9.92M | 0.262M |
+| Pi | MiMo v2.5 | 36.10% | 18.23M | 0.505M |
 
-* `GPT-5.4` 的结果可能不够可靠，因为评测期间 Codex 服务状态不稳定。
+* 所有编程智能体均使用其默认配置（包括默认的 reasoning effort）。
 
 编程智能体在 ATM-Bench-Hard 上仍然表现不佳，但显著优于各种智能体记忆基线。
 
@@ -79,6 +87,7 @@ ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-
 | [MemoryOS](https://github.com/BAI-LAB/MemoryOS) | 36.6 | 47.2 | 59.2 | 13.7 | 23.7 |
 | [HippoRAG2](https://github.com/OSU-NLP-Group/HippoRAG) | 1.5 | 42.9 | 66.4 | 9.7 | 31.9 |
 | [MemPalace](https://github.com/MemPalace/mempalace) | 0.5 | 56.8 | 76.4 | 9.7 | 28.3 |
+| [SimpleMem](https://github.com/aiming-lab/SimpleMem) | 15.7 | 27.3 | 23.3 | 3.2 | 7.0 |
 
 <a id="oracle-and-niah-results-zh"></a>
 ## Oracle 与 NIAH 结果
@@ -280,14 +289,24 @@ bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
   - `mem0`
   - `MemoryOS`
   - `MemPalace`
+  - `SimpleMem`
 - 强烈建议在独立的 conda 环境中运行 `MemoryOS` 和 `MemPalace`。`MemoryOS` 使用 FAISS / sentence-transformers 依赖栈，`MemPalace` 使用 ChromaDB / ONNX 本地嵌入依赖栈；隔离环境可避免它们与核心基线环境及彼此之间发生依赖冲突。
 - `A-Mem`、`HippoRAG2` 和 `mem0` 经测试与核心基线环境兼容，但为确保可复现性和依赖隔离，仍建议使用独立环境。
+- `SimpleMem` 通过克隆的上游仓库（LanceDB + Tantivy FTS 依赖栈）运行；详见 [`memqa/qa_agent_baselines/SimpleMem/README.md`](memqa/qa_agent_baselines/SimpleMem/README.md)。固定的上游 commit 为 [`094027eca4c890dc9912be8cee1da04428de8076`](https://github.com/aiming-lab/SimpleMem/commit/094027eca4c890dc9912be8cee1da04428de8076)（由 `scripts/QA_Agent/SimpleMem/run.sh` 校验）。
 - 这些基线的设置参考位于 `third_party/` 下：
   - `third_party/A-mem/`
   - `third_party/HippoRAG/`
   - `third_party/mem0/`
   - `third_party/MemoryOS/`
 - `MemPalace` 以 PyPI 包形式发布（`mempalace==3.3.5`），通过 `memqa/qa_agent_baselines/Mempalace/requirements.txt` 安装；不需要放入 `third_party/`。
+- `SimpleMem` **未**纳入 `third_party/`。请在 ATMBench 旁边克隆上游仓库到固定的 commit，并将 `SIMPLEMEM_DIR` 指向它（默认值为 `../SimpleMem`）：
+
+  ```bash
+  git clone https://github.com/aiming-lab/SimpleMem.git ../SimpleMem
+  git -C ../SimpleMem checkout 094027eca4c890dc9912be8cee1da04428de8076
+  pip install -r ../SimpleMem/requirements.txt
+  pip install -r memqa/qa_agent_baselines/SimpleMem/requirements.txt
+  ```
 - OpenClaw 支持已在规划中；我们将很快发布所有通用智能体（Claude Code、Codex、OpenCode、OpenClaw）在 ATM-Bench 上的评估设置。
 
 详细的设置、数据布局和可复现性设置，请参见：
