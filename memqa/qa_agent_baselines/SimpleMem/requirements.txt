@@ -1,0 +1,17 @@
+# SimpleMem baseline requirements
+# Install with: pip install -r requirements.txt
+#
+# SimpleMem itself is consumed from a sibling clone of the upstream repo:
+#   git clone https://github.com/aiming-lab/SimpleMem.git ../SimpleMem
+#   export SIMPLEMEM_DIR=../SimpleMem
+#   pip install -r "${SIMPLEMEM_DIR}/requirements.txt"
+#
+# The dependencies below are the additional packages this baseline relies on
+# beyond the core ATMBench requirements; they overlap with SimpleMem's own
+# requirements and are listed here for reference / pinning convenience.
+
+lancedb>=0.6.0
+tantivy>=0.20.0
+pydantic>=2.0.0
+openai>=1.0.0
+tqdm>=4.65.0
