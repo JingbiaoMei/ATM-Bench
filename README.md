@@ -1,19 +1,28 @@
-[English](README.md) | [中文](README_zh.md)
+<div align="center">
 
 # ATM-Bench: Long-Term Personalized Referential Memory QA
 
-[![arXiv](https://img.shields.io/badge/arXiv-2603.01990-b31b1b.svg)](https://arxiv.org/abs/2603.01990)
+---
+
+**The first benchmark for multimodal, multi-source personalized referential memory QA over long time horizons (~4 years), with evidence-grounded retrieval and answering.**
+
+[🇬🇧 English](README.md) • [🇨🇳 中文](README_zh.md)
+
+[![arXiv](https://img.shields.io/badge/arXiv-2603.01990-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2603.01990)
+[![Project Page](https://img.shields.io/badge/🌐_Project-atmbench.github.io-1f6feb.svg)](https://atmbench.github.io/)
+[![Live Leaderboard](https://img.shields.io/badge/🏆_Leaderboard-Live-orange.svg)](https://atmbench.github.io/leaderboard.html)
+[![Hugging Face](https://img.shields.io/badge/🤗_HuggingFace-Dataset-FFD21E.svg)](https://huggingface.co/datasets/Jingbiao/ATM-Bench)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/datasets/Jingbiao/ATM-Bench)
 
-Official code for ATM-Bench: a benchmark for long-term multimodal personalized AI memory QA and retrieval.
+[🚀 Quick Start](#-quick-start) • [🤖 Agent Results](#-general-purpose-agent-results) • [🧠 Memory Systems](#-memory-system-baseline-results) • [📊 Oracle / NIAH](#-oracle-and-niah-results) • [🏆 Live Leaderboard](https://atmbench.github.io/leaderboard.html) • [📖 Citation](#-citation)
 
-**ATM-Bench** is the first benchmark for **multimodal, multi-source personalized referential memory QA** over long time horizons (~4 years) with **evidence-grounded** retrieval and answering.
+</div>
 
 <video src="https://atmbench.github.io/static/videos/ATM-Bench-demo.mp4" controls width="100%"></video>
 
-> **Paper:** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)  
-> **Project Page:** [https://atmbench.github.io/](https://atmbench.github.io/)
+> 📄 **Paper:** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)  
+> 🌐 **Project Page:** [https://atmbench.github.io/](https://atmbench.github.io/)  
+> 🏆 **Live Leaderboard:** [https://atmbench.github.io/leaderboard.html](https://atmbench.github.io/leaderboard.html)
 
 ## Table of Contents
 
@@ -58,6 +67,8 @@ Official code for ATM-Bench: a benchmark for long-term multimodal personalized A
 
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
+
+> 🏆 **The most up-to-date numbers live on the [ATM-Bench Live Leaderboard](https://atmbench.github.io/leaderboard.html).** The static snapshot below may lag behind new submissions.
 
 Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge. `Tokens/QS` shows the token cost per percentage point of QS, so lower is more efficient.
 
@@ -371,6 +382,8 @@ If you use ATM-Bench in your research, please cite:
 ## 🔗 Links
 
 - 📄 **Paper:** https://arxiv.org/abs/2603.01990
+- 🌐 **Project Page:** https://atmbench.github.io/
+- 🏆 **Live Leaderboard:** https://atmbench.github.io/leaderboard.html
 - 🤗 **Dataset:** https://huggingface.co/datasets/Jingbiao/ATM-Bench
 - 💻 **Code:** https://github.com/JingbiaoMei/ATM-Bench
 - 🐛 **Issues:** https://github.com/JingbiaoMei/ATM-Bench/issues

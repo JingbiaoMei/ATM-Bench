@@ -1,20 +1,30 @@
-[English](README.md) | [中文](README_zh.md)
-
 <a id="atm-bench-zh"></a>
+
+<div align="center">
+
 # ATM-Bench：长期个性化参照记忆问答
 
-[![arXiv](https://img.shields.io/badge/arXiv-2603.01990-b31b1b.svg)](https://arxiv.org/abs/2603.01990)
+---
+
+**首个针对多模态、多来源个性化参照记忆问答的基准，涵盖约 4 年的长时间跨度，支持基于证据的检索与回答。**
+
+[🇬🇧 English](README.md) • [🇨🇳 中文](README_zh.md)
+
+[![arXiv](https://img.shields.io/badge/arXiv-2603.01990-b31b1b.svg?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2603.01990)
+[![Project Page](https://img.shields.io/badge/🌐_项目主页-atmbench.github.io-1f6feb.svg)](https://atmbench.github.io/)
+[![Live Leaderboard](https://img.shields.io/badge/🏆_在线榜单-Live-orange.svg)](https://atmbench.github.io/leaderboard.html)
+[![Hugging Face](https://img.shields.io/badge/🤗_HuggingFace-Dataset-FFD21E.svg)](https://huggingface.co/datasets/Jingbiao/ATM-Bench)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/datasets/Jingbiao/ATM-Bench)
 
-ATM-Bench 官方代码：面向长期多模态个性化 AI 记忆问答与检索的基准测试。
+[🚀 快速开始](#quick-start-zh) • [🤖 智能体结果](#general-purpose-agent-results-zh) • [🧠 记忆系统](#memory-system-baseline-results-zh) • [📊 Oracle / NIAH](#oracle-and-niah-results-zh) • [🏆 在线榜单](https://atmbench.github.io/leaderboard.html) • [📖 引用](#citation-zh)
 
-**ATM-Bench** 是首个针对**多模态、多来源个性化参照记忆问答**的基准，涵盖约 4 年的长时间跨度，支持**基于证据的**检索与回答。
+</div>
 
 <video src="https://atmbench.github.io/static/videos/ATM-Bench-demo.mp4" controls width="100%"></video>
 
-> **论文：** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)
-> **项目主页：** [https://atmbench.github.io/](https://atmbench.github.io/)
+> 📄 **论文：** [According to Me: Long-Term Personalized Referential Memory QA](https://arxiv.org/abs/2603.01990)  
+> 🌐 **项目主页：** [https://atmbench.github.io/](https://atmbench.github.io/)  
+> 🏆 **在线榜单：** [https://atmbench.github.io/leaderboard.html](https://atmbench.github.io/leaderboard.html)
 
 <a id="table-of-contents-zh"></a>
 ## 目录
@@ -50,6 +60,8 @@ ATM-Bench 官方代码：面向长期多模态个性化 AI 记忆问答与检索
 
 <a id="general-purpose-agent-results-zh"></a>
 ## 通用智能体结果
+
+> 🏆 **最新结果请查看 [ATM-Bench 在线榜单](https://atmbench.github.io/leaderboard.html)。** 下方静态表格可能落后于最新提交。
 
 ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-mini` 作为主要评判模型。`Tokens/QS` 表示每 1 个 QS 百分点对应的 token 成本，因此数值越低表示效率越高。
 
@@ -359,10 +371,12 @@ ATMBench/
 <a id="links-zh"></a>
 ## 链接
 
-- **论文：** https://arxiv.org/abs/2603.01990
-- **数据集：** https://huggingface.co/datasets/Jingbiao/ATM-Bench
-- **代码：** https://github.com/JingbiaoMei/ATM-Bench
-- **问题反馈：** https://github.com/JingbiaoMei/ATM-Bench/issues
+- 📄 **论文：** https://arxiv.org/abs/2603.01990
+- 🌐 **项目主页：** https://atmbench.github.io/
+- 🏆 **在线榜单：** https://atmbench.github.io/leaderboard.html
+- 🤗 **数据集：** https://huggingface.co/datasets/Jingbiao/ATM-Bench
+- 💻 **代码：** https://github.com/JingbiaoMei/ATM-Bench
+- 🐛 **问题反馈：** https://github.com/JingbiaoMei/ATM-Bench/issues
 
 <a id="license-zh"></a>
 ## 许可证
