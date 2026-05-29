@@ -337,6 +337,117 @@ class Qwen3VLRetriever(BaseRetriever):
         return self.embedder.process([payload])
 
 
+class Qwen3VLDualRetriever(BaseRetriever):
+    """Encode image and text metadata as *separate* embeddings, then concatenate.
+
+    This addresses the concern that image tokens may dominate the embedding in
+    a joint encoding.  For each document:
+        doc_emb = normalize(concat(image_emb, text_emb))
+    where image_emb encodes the visual content (with a dummy black image for
+    emails) and text_emb encodes the textual metadata (with a dummy black
+    image so the VL model can still run).
+
+    For queries (text only):
+        query_emb = normalize(concat(q_emb, q_emb))
+    so the dot product decomposes as:
+        score = <q, image_emb> + <q, text_emb>
+    giving equal weight to visual and textual matching.
+    """
+
+    def __init__(
+        self,
+        model_name: str,
+        cache_dir: Path,
+        batch_size: int = 4,
+        instruction: Optional[str] = None,
+        num_frames: int = 8,
+        max_frames: int = 8,
+        device: Optional[str] = None,
+        torch_dtype: Optional[torch.dtype] = None,
+    ) -> None:
+        super().__init__(cache_dir, batch_size, device)
+        kwargs: Dict[str, Any] = {}
+        if torch_dtype is not None:
+            kwargs["torch_dtype"] = torch_dtype
+        self.embedder = load_qwen3_vl_embedder(
+            model_name,
+            num_frames=num_frames,
+            max_frames=max_frames,
+            **kwargs,
+        )
+        self.instruction = instruction
+        self.max_frames = max_frames
+
+        # Create a persistent dummy black image for text-only encoding
+        import tempfile
+        self._black_img_dir = tempfile.mkdtemp(prefix="dual_emb_black_")
+        self._black_img_path = str(Path(self._black_img_dir) / "black.png")
+        Image.new("RGB", (224, 224), color=(0, 0, 0)).save(self._black_img_path)
+
+    def _build_image_payload(self, item: RetrievalItem) -> Dict[str, Any]:
+        """Payload for visual-content encoding (image/video or black image)."""
+        payload: Dict[str, Any] = {"text": ""}
+        if self.instruction:
+            payload["instruction"] = self.instruction
+        if item.modality == "image" and item.image_path:
+            payload["image"] = str(item.image_path)
+        elif item.modality == "video" and item.video_path:
+            payload["video"] = str(item.video_path)
+            payload["max_frames"] = self.max_frames
+            payload["fps"] = 1
+        else:
+            # Email or missing media: use dummy black image
+            payload["image"] = self._black_img_path
+        return payload
+
+    def _build_text_payload(self, item: RetrievalItem) -> Dict[str, Any]:
+        """Payload for text-metadata encoding (always uses black image)."""
+        payload: Dict[str, Any] = {
+            "text": item.text,
+            "image": self._black_img_path,
+        }
+        if self.instruction:
+            payload["instruction"] = self.instruction
+        return payload
+
+    def encode_items(self, items: List[RetrievalItem]) -> torch.Tensor:
+        all_image_embs: List[torch.Tensor] = []
+        all_text_embs: List[torch.Tensor] = []
+        total = math.ceil(len(items) / self.batch_size) if items else 0
+
+        for chunk in tqdm(
+            batched(items, self.batch_size),
+            total=total,
+            desc="Dual-encode (image)",
+        ):
+            payloads = [self._build_image_payload(item) for item in chunk]
+            all_image_embs.append(self.embedder.process(payloads))
+
+        for chunk in tqdm(
+            batched(items, self.batch_size),
+            total=total,
+            desc="Dual-encode (text)",
+        ):
+            payloads = [self._build_text_payload(item) for item in chunk]
+            all_text_embs.append(self.embedder.process(payloads))
+
+        image_embs = torch.cat(all_image_embs, dim=0)
+        text_embs = torch.cat(all_text_embs, dim=0)
+        combined = torch.cat([image_embs, text_embs], dim=1)
+        return F.normalize(combined, p=2, dim=1)
+
+    def encode_query(self, query: str) -> torch.Tensor:
+        payload: Dict[str, Any] = {
+            "text": query,
+            "image": self._black_img_path,
+        }
+        if self.instruction:
+            payload["instruction"] = self.instruction
+        q_emb = self.embedder.process([payload])
+        combined = torch.cat([q_emb, q_emb], dim=1)
+        return F.normalize(combined, p=2, dim=1)
+
+
 class VistaRetriever(BaseRetriever):
     def __init__(
         self,
