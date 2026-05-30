@@ -1,0 +1,18 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openai-compatible": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenAI-compatible API server",
+      "options": {
+        "baseURL": "http://localhost:8000/v1",
+        "apiKey": "{env:OPENAI_COMPATIBLE_API_KEY}"
+      },
+      "models": {
+        "gpt-4o-mini": {
+          "name": "gpt-4o-mini"
+        }
+      }
+    }
+  }
+}

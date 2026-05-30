@@ -32,3 +32,8 @@ api_keys
 docs/internal/
 AGENTS.md
 docs/agent-instructions/
+
+# agent_systems generated artifacts (benchmark harness)
+agent_systems/eval_root*/
+agent_systems/**/node_modules/
+agent_systems/**/.codex-runtime/

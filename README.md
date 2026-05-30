@@ -47,7 +47,7 @@
 - **2026-05-15:** Released the MemPalace port and added memory-system comparison results.
 - **2026-05-27:** Released the SimpleMem port and added memory-system comparison results.
 - **2026-05-28:** Released the Pi Agent Benchmark results.
-- **Coming soon:** General-Purpose Agents benchmarking support, including OpenClaw.
+- **2026-05-30:** Released the General-Purpose Agent benchmark harness (`agent_systems/`) — isolated, per-question runners for Claude Code, Codex, Pi, OpenCode, and OpenClaw.
 
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
@@ -77,6 +77,8 @@ Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. Th
 * All coding agents use their default configuration, including the reasoning effort.
 
 The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
+
+To reproduce these runs, see the General-Purpose Agent harness under [`agent_systems/`](agent_systems/README.md), which provides isolated, per-question runners for Claude Code, Codex, Pi, OpenCode, and OpenClaw.
 
 <a id="memory-system-baseline-results"></a>
 ## 🧠 Memory-System Baseline Results
@@ -313,7 +315,7 @@ bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
   pip install -r ../SimpleMem/requirements.txt
   pip install -r memqa/qa_agent_baselines/SimpleMem/requirements.txt
   ```
-- OpenClaw support is planned; We will shortly release the evaluation setup for all General-Purpose Agents (Claude Code, Codex, OpenCode, OpenClaw) on ATM-Bench.
+- The General-Purpose Agent evaluation harness for all five agents (Claude Code, Codex, Pi, OpenCode, OpenClaw) ships under [`agent_systems/`](agent_systems/README.md).
 
 For detailed setup, data layout, and reproducibility settings, see:
 - [`docs/README.md`](docs/README.md)

@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The question ID (UUID)"
+    },
+    "question": {
+      "type": "string",
+      "description": "The question text"
+    },
+    "answer": {
+      "type": "string",
+      "description": "Your answer to the question"
+    }
+  },
+  "required": ["id", "question", "answer"],
+  "additionalProperties": false
+}
