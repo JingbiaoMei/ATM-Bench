@@ -50,7 +50,7 @@
 - **2026-05-15：** 发布 MemPalace 移植版本，并加入记忆系统对比结果。
 - **2026-05-27：** 发布 SimpleMem 移植版本，并加入记忆系统对比结果。
 - **2026-05-28：** 发布 Pi 智能体基准结果。
-- **即将推出：** 通用智能体基准支持，包括 OpenClaw。
+- **2026-05-30：** 发布通用智能体基准测试框架（`agent_systems/`）——为 Claude Code、Codex、Pi、OpenCode 和 OpenClaw 提供隔离的、按问题独立运行的运行器。
 
 <a id="general-purpose-agent-results-zh"></a>
 ## 通用智能体结果
@@ -80,6 +80,8 @@ ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-
 * 所有编程智能体均使用其默认配置（包括默认的 reasoning effort）。
 
 编程智能体在 ATM-Bench-Hard 上仍然表现不佳，但显著优于各种智能体记忆基线。
+
+要复现这些结果，请参见 [`agent_systems/`](agent_systems/README.md) 下的通用智能体测试框架，它为 Claude Code、Codex、Pi、OpenCode 和 OpenClaw 提供隔离的、按问题独立运行的运行器。
 
 <a id="memory-system-baseline-results-zh"></a>
 ## 记忆系统基线结果
@@ -313,7 +315,7 @@ bash scripts/QA_Agent/Oracle/run_oracle_gpt5.sh
   pip install -r ../SimpleMem/requirements.txt
   pip install -r memqa/qa_agent_baselines/SimpleMem/requirements.txt
   ```
-- OpenClaw 支持已在规划中；我们将很快发布所有通用智能体（Claude Code、Codex、OpenCode、OpenClaw）在 ATM-Bench 上的评估设置。
+- 面向全部五个智能体（Claude Code、Codex、Pi、OpenCode、OpenClaw）的通用智能体评估框架位于 [`agent_systems/`](agent_systems/README.md)。
 
 详细的设置、数据布局和可复现性设置，请参见：
 - [`docs/README.md`](docs/README.md)
