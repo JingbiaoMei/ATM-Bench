@@ -98,6 +98,7 @@ ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-
 | [HippoRAG2](https://github.com/OSU-NLP-Group/HippoRAG) | 1.5 | 42.9 | 66.4 | 9.4 | 31.9 |
 | [MemPalace](https://github.com/MemPalace/mempalace) | 0.5 | 56.8 | 76.4 | 9.7 | 28.3 |
 | [SimpleMem](https://github.com/aiming-lab/SimpleMem) | 15.7 | 27.3 | 23.3 | 3.2 | 7.0 |
+| **ATM-RAG（本文方法）** | 0.5 | 51.0 | 68.7 | 8.4 | 28.8 |
 
 <a id="oracle-and-niah-results-zh"></a>
 ## Oracle 与 NIAH 结果
