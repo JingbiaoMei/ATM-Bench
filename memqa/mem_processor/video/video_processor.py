@@ -68,7 +68,7 @@ class VideoProcessor:
         if self.use_geocoding:
             try:
                 self.geolocator = Nominatim(
-                    user_agent="Howard's mem assistant",
+                    user_agent="atm-bench",
                     timeout=10,
                 )
             except Exception as e:

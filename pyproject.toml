@@ -9,7 +9,7 @@ description = "ATMBench: Long-term personalized referential memory QA benchmark 
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-  {name = "Howard Mei"}
+  {name = "Jingbiao Mei"}
 ]
 requires-python = ">=3.8"
 dynamic = ["dependencies"]

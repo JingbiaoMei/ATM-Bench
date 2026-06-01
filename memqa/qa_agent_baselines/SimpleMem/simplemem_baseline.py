@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SimpleMem Baseline for PersonalMemoryQA Benchmark
+SimpleMem Baseline for ATM-Bench Benchmark
 
 SimpleMem is an efficient lifelong memory system based on semantic lossless compression.
 It uses a three-stage pipeline: Semantic Structured Compression, Online Semantic Synthesis,

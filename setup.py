@@ -31,7 +31,7 @@ setup(
     description="ATMBench: long-term personalized referential memory QA benchmark and baselines",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
-    author="Howard Mei",
+    author="Jingbiao Mei",
     packages=find_packages(where="."),
     package_dir={"": "."},
     python_requires=">=3.8",

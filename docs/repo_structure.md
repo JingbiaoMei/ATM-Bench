@@ -34,6 +34,8 @@ Baselines shipped with this repo:
 - `MemoryOS/`: tiered memory baseline (STM/MTM/LPM)
 - `A-Mem/`: agentic memory baseline (two-stage cache)
 - `mem0/`: mem0-backed memory baseline
+- `SimpleMem/`: SimpleMem (LanceDB + FTS) baseline
+- `Mempalace/`: MemPalace baseline
 
 ### `memqa/utils/evaluator/`
 
@@ -52,6 +54,8 @@ Public runnable scripts (repo-root execution):
 - `MemoryOS/`: MemoryOS runs
 - `A-Mem/`: A‑Mem runs
 - `mem0/`: Mem0 runs
+- `SimpleMem/`: SimpleMem runs
+- `Mempalace/`: MemPalace runs
 
 ### `data/`
 

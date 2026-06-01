@@ -1,3 +1,3 @@
-"""MemoryOS baseline for PersonalMemoryQA benchmark."""
+"""MemoryOS baseline for ATM-Bench benchmark."""
 
 __version__ = "1.0.0"

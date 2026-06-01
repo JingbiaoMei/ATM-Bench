@@ -1,6 +1,6 @@
-# MemoryOS Baseline for PersonalMemoryQA
+# MemoryOS Baseline for ATM-Bench
 
-Implementation of MemoryOS as a baseline for the PersonalMemoryQA benchmark.
+Implementation of MemoryOS as a baseline for the ATM-Bench benchmark.
 
 ## Paper
 
@@ -93,7 +93,7 @@ Defaults follow the paper (STM=10, MTM=2000, heat threshold=5.0). Override if yo
 
 ### 3.1 Full-History Mode (Benchmark Variant)
 
-For large PersonalMemoryQA runs, this implementation provides:
+For large ATM-Bench runs, this implementation provides:
 
 ```bash
 --memoryos-full-history-mode
@@ -440,7 +440,7 @@ Or use shared instance (with contamination caveat):
 
 ## Baseline Comparison: MemoryOS vs A-Mem vs MIRIX
 
-This section provides a comprehensive comparison of the three memory baselines for PersonalMemoryQA, covering architecture, scalability, and retrieval characteristics.
+This section provides a comprehensive comparison of the three memory baselines for ATM-Bench, covering architecture, scalability, and retrieval characteristics.
 
 ### Architecture Overview
 
@@ -614,7 +614,7 @@ This section provides a comprehensive comparison of the three memory baselines f
 
 **Root Cause:**
 - MemoryOS designed for **conversational paradigm** (~300 turns)
-- PersonalMemoryQA is **batch ingestion** (10,000+ items)
+- ATM-Bench is **batch ingestion** (10,000+ items)
 - Scale mismatch: **33x more items**, **278x more tokens**
 
 ---
@@ -720,7 +720,7 @@ Build checkpoint once with optimized settings, reuse for all QA evaluations.
 - ✅ Testing tiered memory paradigm (STM→MTM→LTM)
 - ✅ Conversational memory evolution (heat-based promotion)
 - ⚠️ **NOT RECOMMENDED** for large-scale batch ingestion without optimization
-- ⚠️ Requires capacity tuning for PersonalMemoryQA (15K+ items)
+- ⚠️ Requires capacity tuning for ATM-Bench (15K+ items)
 
 ---
 
@@ -810,7 +810,7 @@ To ensure fair comparison across all baselines:
 ## Contact
 
 For issues specific to this baseline implementation:
-- Open an issue in the PersonalMemoryQA repository
+- Open an issue in the ATM-Bench repository
 
 For MemoryOS core issues:
 - See [MemoryOS GitHub](https://github.com/BAI-LAB/MemoryOS)

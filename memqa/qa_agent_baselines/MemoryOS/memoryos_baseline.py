@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MemoryOS Baseline for PersonalMemoryQA Benchmark
+MemoryOS Baseline for ATM-Bench Benchmark
 
 MemoryOS is a hierarchical memory management system inspired by OS memory management.
 It organizes memory into three tiers:

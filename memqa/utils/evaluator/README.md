@@ -1,6 +1,6 @@
 # Evaluation Metrics Guide
 
-Comprehensive documentation for PersonalMemoryQA evaluation system.
+Comprehensive documentation for the ATM-Bench evaluation system.
 
 ---
 
@@ -503,14 +503,11 @@ You can override automatic detection by adding `qtype` field to ground truth JSO
 }
 ```
 
-**Qtype annotation tool**: `memqa/utils/final_data_processing/add_qtype.py`
+**Qtype detection**: `memqa/utils/evaluator/qtype_utils.py`
 
-```bash
-python memqa/utils/final_data_processing/add_qtype.py \
-  --input merged_qa.json
-```
-
-This adds/updates `qtype` field for all questions based on automatic detection.
+The released ATM-Bench ground-truth files already include a `qtype` field for
+every question; the evaluator falls back to automatic detection
+(`qtype_utils.detect_qtype`) when it is missing.
 
 ---
 
@@ -555,24 +552,20 @@ run_eval_dual() {
 ### Example 2: Complete Evaluation Pipeline
 
 ```bash
-# Step 1: Add qtype labels to ground truth
-python memqa/utils/final_data_processing/add_qtype.py \
-  --input memqa/utils/final_data_processing/atm-20260121.json
-
-# Step 2: Run ATM evaluation
+# Step 1: Run ATM evaluation
 python memqa/utils/evaluator/evaluate_qa.py \
-  --ground-truth memqa/utils/final_data_processing/atm-20260121.json \
+  --ground-truth data/atm-bench/atm-bench-hard.json \
   --predictions output/QA_Agent/method/mmrag_answers.jsonl \
   --output-dir output/QA_Agent/method/eval \
   --metrics atm \
   --judge-provider openai \
   --judge-model gpt-5-mini
 
-# Step 3: Post-hoc retrieval evaluation
+# Step 2: Post-hoc retrieval evaluation
 python memqa/utils/evaluator/evaluate_retrieval/comprehensive_eval.py \
   --details output/QA_Agent/method/retrieval_recall_details.json
 
-# Step 4: Joint answer + retrieval accuracy
+# Step 3: Joint answer + retrieval accuracy
 python memqa/utils/evaluator/evaluate_retrieval/joint_accuracy.py \
   --retrieval-details output/QA_Agent/method/retrieval_recall_details.json \
   --atm-details output/QA_Agent/method/eval/atm_gpt-5-mini.json
@@ -597,7 +590,7 @@ python memqa/utils/evaluator/evaluate_qa.py \
 | `evaluate_qa.py` | Ground truth + predictions | `{em,llm,atm}_*.json` | Answer evaluation |
 | `comprehensive_eval.py` | `retrieval_recall_details.json` | `retrieval_recall_comprehensive_summary.json` | Retrieval metrics |
 | `joint_accuracy.py` | Retrieval details + ATM results | `retrieval_recall_joint_accuracy_summary.json` | Joint metrics |
-| `add_qtype.py` | Ground truth JSON | Updated JSON with `qtype` | Qtype annotation |
+| `qtype_utils.py` | Question text / GT JSON | `qtype` label | Qtype detection |
 
 ---
 

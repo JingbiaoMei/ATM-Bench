@@ -5,9 +5,12 @@ This centralizes all common configurations including API keys, model settings,
 paths, and shared parameters used across different modules.
 """
 
+import logging
 import os
 from pathlib import Path
 from typing import Dict, Any, Optional
+
+logger = logging.getLogger(__name__)
 
 # ============================================================================
 # PROJECT ROOT AND PATHS
@@ -71,7 +74,7 @@ def get_api_key(service: str, env_var: str, file_name: str) -> str:
     )
     if STRICT_API_KEYS:
         raise RuntimeError(msg)
-    print(msg)
+    logger.warning(msg)
     return ""
 
 def get_openai_api_key() -> str:
@@ -323,8 +326,12 @@ def ensure_directories():
     for dir_path in dirs_to_create:
         dir_path.mkdir(parents=True, exist_ok=True)
 
-# Create directories on import
-ensure_directories()
+# Create commonly-used output/api-key directories on import. Best-effort: a
+# read-only filesystem should not prevent importing this config module.
+try:
+    ensure_directories()
+except OSError as exc:  # pragma: no cover - defensive
+    logger.debug("ensure_directories() skipped on import: %s", exc)
 
 # ============================================================================
 # EXPORTS (for convenient importing)

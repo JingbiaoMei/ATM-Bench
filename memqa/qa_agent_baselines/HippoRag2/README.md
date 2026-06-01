@@ -3,7 +3,7 @@
 HippoRAG 2 is a neurobiologically inspired memory framework that builds a knowledge graph
 from text passages and retrieves with Personalized PageRank (PPR) plus recognition memory.
 This baseline wraps the **original HippoRAG 2 implementation** for strict reproduction on
-PersonalMemoryQA.
+ATM-Bench.
 
 ## Quickstart
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-HippoRAG 2 Baseline for PersonalMemoryQA (strict reproduction).
+HippoRAG 2 Baseline for ATM-Bench (strict reproduction).
 
 This implementation delegates indexing/retrieval to the original HippoRAG 2
-codebase, while adapting PersonalMemoryQA data formats and output conventions.
+codebase, while adapting ATM-Bench data formats and output conventions.
 """
 
 from __future__ import annotations
@@ -284,7 +284,7 @@ def summarize_recalls(details: List[Dict[str, Any]], key: str) -> Dict[str, Any]
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="HippoRAG 2 baseline for PersonalMemoryQA"
+        description="HippoRAG 2 baseline for ATM-Bench"
     )
 
     # Input/Output

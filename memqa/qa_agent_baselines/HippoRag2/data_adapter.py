@@ -1,7 +1,7 @@
 """
 Data Adapter for HippoRAG 2
 
-Converts PersonalMemoryQA multimodal evidence (images, videos, emails) to
+Converts ATM-Bench multimodal evidence (images, videos, emails) to
 text passages in HippoRAG 2's expected format for graph construction.
 
 This adapter follows the MMRag text-only retrieval setup with essential
@@ -40,7 +40,7 @@ class TextPassage:
     text: str
     idx: int
     
-    # Extension fields for PersonalMemoryQA
+    # Extension fields for ATM-Bench
     evidence_id: str = ""
     modality: str = ""  # "email", "image", "video"
     timestamp: str = ""
@@ -225,7 +225,7 @@ def format_video_passage(
 
 
 class CorpusBuilder:
-    """Builds HippoRAG 2 corpus from PersonalMemoryQA data sources."""
+    """Builds HippoRAG 2 corpus from ATM-Bench data sources."""
     
     def __init__(
         self,
@@ -415,9 +415,9 @@ def convert_qa_to_hipporag_format(
     qa_items: List[Dict[str, Any]],
     corpus: HippoRAGCorpus,
 ) -> List[Dict[str, Any]]:
-    """Convert PersonalMemoryQA format to HippoRAG 2 query format.
+    """Convert ATM-Bench format to HippoRAG 2 query format.
     
-    PersonalMemoryQA format:
+    ATM-Bench format:
     {
         "id": "...",
         "question": "...",
@@ -487,7 +487,7 @@ def main():
     """CLI for corpus conversion."""
     import argparse
     
-    parser = argparse.ArgumentParser(description="Convert PersonalMemoryQA to HippoRAG 2 format")
+    parser = argparse.ArgumentParser(description="Convert ATM-Bench to HippoRAG 2 format")
     parser.add_argument("--email-file", type=str, help="Path to merged_emails.json")
     parser.add_argument("--image-batch-results", type=str, help="Path to image batch results")
     parser.add_argument("--video-batch-results", type=str, help="Path to video batch results")

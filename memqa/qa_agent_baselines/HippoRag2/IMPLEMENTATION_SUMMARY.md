@@ -8,7 +8,7 @@
 
 The HippoRAG 2 baseline now **wraps the original HippoRAG 2 codebase** for strict
 reproduction (OpenIE → KG → recognition memory → PPR retrieval → QA). The adapter
-converts PersonalMemoryQA evidence into text passages and aligns outputs with the
+converts ATM-Bench evidence into text passages and aligns outputs with the
 baseline conventions in `memqa/qa_agent_baselines/AGENTS.md`.
 
 ## Core Components

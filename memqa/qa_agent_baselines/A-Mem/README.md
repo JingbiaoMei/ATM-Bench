@@ -54,7 +54,7 @@ The original A-Mem paper proposes:
 
 ---
 
-## Our Adaptation for PersonalMemoryQA
+## Our Adaptation for ATM-Bench
 
 We adapt A-Mem for the **personal memory QA task**, where the goal is to answer questions about a user's photos, videos, and emails. Our implementation aligns closely with the original paper to ensure fair baseline comparison.
 
@@ -273,7 +273,7 @@ Return your decision in JSON format with the following structure:
 - ✅ Purpose explanation: "can be used to retrieve them later and categorize them"
 - ✅ Preservation rule: "If the context and the tags are not updated, the new context and tags should be the same as the original ones"
 
-### Multimodal Extension (Our Addition for PersonalMemoryQA)
+### Multimodal Extension (Our Addition for ATM-Bench)
 
 We extended the paper's text-only prompt to support multimodal memory construction:
 
@@ -811,7 +811,7 @@ The following components match the original A-Mem implementation:
 #### 3. Media-Centric Memory Construction
 - **Original**: Generic text notes
 - **Ours**: VLM-generated captions from images/videos (use `--caption-only` for clean comparison)
-- **Reason**: Tailored for PersonalMemoryQA data format
+- **Reason**: Tailored for ATM-Bench data format
 
 #### 4. Caching
 - **Original**: No caching
