@@ -28,6 +28,7 @@ api_keys
 *.egg
 .gemini
 .claude
+.vscode/
 # Internal-only docs
 docs/internal/
 AGENTS.md
