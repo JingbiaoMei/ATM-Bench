@@ -63,6 +63,8 @@ ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-
 |--------|------|-------------:|---------------:|------------:|
 | Claude Code | Claude Opus 4.6 | 33.80% | 4.93M | 0.146M |
 | Claude Code | Claude Opus 4.7 | 39.50% | 5.03M | 0.127M |
+| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.10% | 16.95M | 0.734M |
+| Claude Code | Claude Opus 4.8 | 41.60% | 4.42M | 0.106M |
 | Codex | GPT-5.2 | 39.70% | 15.46M | 0.389M |
 | Codex | GPT-5.2 (w/o SGM) | 16.30% | 22.23M | 1.364M |
 | Codex | GPT-5.5 | 41.40% | 16.14M | 0.390M |
