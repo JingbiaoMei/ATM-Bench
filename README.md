@@ -48,33 +48,37 @@
 - **2026-05-27:** Released the SimpleMem port and added memory-system comparison results.
 - **2026-05-28:** Released the Pi Agent Benchmark results.
 - **2026-05-30:** Released the General-Purpose Agent benchmark harness (`agent_systems/`) — isolated, per-question runners for Claude Code, Codex, Pi, OpenCode, and OpenClaw.
+- **2026-06-07:** Updated with more NIAH results and analysis, including the SGM vs. Raw comparison across various multimodal answerers.
 
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
 
 > 🏆 **The most up-to-date numbers live on the [ATM-Bench Live Leaderboard](https://atmbench.github.io/leaderboard.html).** The static snapshot below may lag behind new submissions.
 
-Initial General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge. `Tokens/QS` shows the token cost per percentage point of QS, so lower is more efficient.
+General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge.
 
-| Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Tokens/QS ↓ |
-|-------|-------|------------:|---------------:|-------------:|
-| Claude Code | Claude Opus 4.6 | 33.80% | 4.93M | 0.146M |
-| Claude Code | Claude Opus 4.7 | 39.50% | 5.03M | 0.127M |
-| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.10% | 16.95M | 0.734M |
-| Claude Code | Claude Opus 4.8 | 41.60% | 4.42M | 0.106M |
-| Codex | GPT-5.2 | 39.70% | 15.46M | 0.389M |
-| Codex | GPT-5.2 (w/o SGM) | 16.30% | 22.23M | 1.364M |
-| Codex | GPT-5.5 | 41.40% | 16.14M | 0.390M |
-| OpenCode | GLM-5 | 27.00% | 16.89M | 0.626M |
-| OpenCode | Qwen3.5-397B-A17B | 24.50% | 12.06M | 0.492M |
-| OpenCode | Kimi K2.5 | 30.30% | 8.46M | 0.279M |
-| OpenCode | Kimi K2.5 (w/o SGM) | 6.50% | 21.40M | 3.292M |
-| OpenCode | MiniMax M2.5 | 22.90% | 14.5M | 0.633M |
-| OpenCode | MiniMax M2.7 | 27.80% | 13.48M | 0.485M |
-| OpenClaw 🦞 | Kimi K2.5 | 25.40% | 9.63M | 0.379M |
-| Pi | GLM-5.1 | 38.80% | 8.17M | 0.211M |
-| Pi | Kimi K2.5 | 37.80% | 9.92M | 0.262M |
-| Pi | MiMo v2.5 | 36.10% | 18.23M | 0.505M |
+| Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ |
+|-------|-------|------------:|---------------:|
+| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M |
+| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M |
+| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M |
+| Claude Code | Claude Opus 4.8 | 41.6% | 4.4M |
+| Codex | GPT-5.2 | 39.7% | 15.5M |
+| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M |
+| Codex | GPT-5.5 | 41.4% | 16.1M |
+| OpenCode | GLM-5 | 27.0% | 16.9M |
+| OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M |
+| OpenCode | Kimi K2.5 | 30.3% | 8.5M |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M |
+| OpenCode | MiniMax M2.5 | 22.9% | 14.5M |
+| OpenCode | MiniMax M2.7 | 27.8% | 13.5M |
+| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M |
+| Pi | GLM-5.1 | 38.8% | 8.2M |
+| Pi | Kimi K2.5 | 37.8% | 9.9M |
+| Pi | MiMo v2.5 | 36.1% | 18.2M |
+| Pi | MiniMax M3 | 43.2% | 15.6M |
+| Pi | Qwen3.6-27B | 38.5% | 7.1M |
+| Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M |
 
 * All coding agents use their default configuration, including the reasoning effort.
 
@@ -100,32 +104,36 @@ Memory-system baselines below use `Qwen3-VL-8B-Instruct-FP8` as the answerer, `Q
 <a id="oracle-and-niah-results"></a>
 ## 📊 Oracle and NIAH Results
 
+We report QS for the Oracle ceiling and the NIAH haystack sweep (k=25/50/100) for multimodal answerers under both SGM and Raw (real images/video) settings, on the 31-question ATM-Bench-Hard split (`gpt-5-mini` judge).
 
-### Oracle on ATM-Bench-Hard
+For the full report, see the [ATM-Bench Live Leaderboard](https://atmbench.github.io/leaderboard.html).
 
-QS is reported with `gpt-5-mini` as the primary judge.
+### SGM
 
-| Model | Setting | QS |
-|-------|---------|----|
-| GPT-5 | Raw | 72.12% |
-| Qwen3-VL-8B-Instruct | Raw | 40.14% |
-| Qwen3-VL-8B-Instruct | SGM | 27.98% |
-| Qwen3-VL-8B-Instruct | D | 21.69% |
+| Model | Context Window | Parameters | Oracle | NIAH-25 | NIAH-50 | NIAH-100 |
+|-------|---------------:|------------|-------:|--------:|--------:|---------:|
+| Qwen3-VL-8B-Instruct | 256K | 8B LM (~9B total) | 28.0 | 16.3 | 15.8 | 12.7 |
+| MiniMax-M3 | 1M | Not disclosed | 60.5 | 45.9 | 55.1 | 43.4 |
+| MiMo-V2.5 | 1M | 310B total / 15B active | 44.6 | 39.1 | 34.5 | 31.8 |
+| Kimi-K2.5 | 256K | 1T total / 32B active | 41.9 | 47.9 | 39.6 | 33.5 |
+| Qwen3.6-27B | 262K | 27B LM | 42.8 | 39.2 | 29.6 | 27.4 |
+| ≈ input context depth | — | — | ≈4.5K | ≈12K | ≈22K | ≈44K |
 
-### NIAH on ATM-Bench-Hard
+### Raw (images/video)
 
-For NIAH, we compare the `Qwen3-VL-8B-Instruct` SGM and Raw settings at different haystack sizes.
+| Model | Context Window | Parameters | Oracle | NIAH-25 | NIAH-50 | NIAH-100 |
+|-------|---------------:|------------|-------:|--------:|--------:|---------:|
+| Qwen3-VL-8B-Instruct | 256K | 8B LM (~9B total) | 40.1 | 25.4 | 24.9 | 10.9 |
+| MiniMax-M3 | 1M | Not disclosed | 61.8 | 41.8 | 34.2 | 35.2 |
+| MiMo-V2.5 | 1M | 310B total / 15B active | 52.1 | 43.3 | 33.1 | 23.6 |
+| Kimi-K2.5 | 256K | 1T total / 32B active | 57.1 | 45.4 | failed | failed |
+| Qwen3.6-27B | 262K | 27B LM | 62.3 | 50.5 | failed | failed |
+| ≈ input context depth | — | — | ≈6.5K | ≈18K | ≈31K | ≈60K |
 
-| Model | Setting | QS | Avg. Context Tokens |
-|-------|---------|----|---------------------|
-| Qwen3-VL-8B-Instruct | Raw, Oracle | 40.14% | 5.7k |
-| Qwen3-VL-8B-Instruct | Raw, NIAH-25 | 25.43% | 15.9k |
-| Qwen3-VL-8B-Instruct | Raw, NIAH-50 | 24.87% | 29.0k |
-| Qwen3-VL-8B-Instruct | Raw, NIAH-100 | 10.90% | 56.0k |
-| Qwen3-VL-8B-Instruct | SGM, Oracle | 27.98% | 4.6k |
-| Qwen3-VL-8B-Instruct | SGM, NIAH-25 | 16.33% | 12.5k |
-| Qwen3-VL-8B-Instruct | SGM, NIAH-50 | 15.77% | 23.9k |
-| Qwen3-VL-8B-Instruct | SGM, NIAH-100 | 12.66% | 45.8k |
+> **Why SGM, not raw?** Raw outperforms SGM at the Oracle ceiling. But that advantage collapses under realistic conditions: as the haystack fills with distractors, raw degrades and even fails (payload/context limits), and under agentic retrieval the gap is stark — every "w/o SGM" (raw) agent lands far below its SGM run. SGM is the representation that holds up once there is noise under realistic conditions.
+
+> **failed** = the request exceeded the model's maximum allowed image/video count, or the API server's maximum upload/payload size, so that pool could not be served — a serving limit, not a model-quality result.
+
 
 
 <a id="overview"></a>

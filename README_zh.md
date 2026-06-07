@@ -51,33 +51,37 @@
 - **2026-05-27：** 发布 SimpleMem 移植版本，并加入记忆系统对比结果。
 - **2026-05-28：** 发布 Pi 智能体基准结果。
 - **2026-05-30：** 发布通用智能体基准测试框架（`agent_systems/`）——为 Claude Code、Codex、Pi、OpenCode 和 OpenClaw 提供隔离的、按问题独立运行的运行器。
+- **2026-06-07：** 更新更多 NIAH 结果与分析，包括多种多模态回答模型在 SGM 与 Raw 设置下的对比。
 
 <a id="general-purpose-agent-results-zh"></a>
 ## 通用智能体结果
 
 > 🏆 **最新结果请查看 [ATM-Bench 在线榜单](https://atmbench.github.io/leaderboard.html)。** 下方静态表格可能落后于最新提交。
 
-ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-mini` 作为主要评判模型。`Tokens/QS` 表示每 1 个 QS 百分点对应的 token 成本，因此数值越低表示效率越高。
+ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 作为主要评判模型。
 
-| 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ | Tokens/QS ↓ |
-|--------|------|-------------:|---------------:|------------:|
-| Claude Code | Claude Opus 4.6 | 33.80% | 4.93M | 0.146M |
-| Claude Code | Claude Opus 4.7 | 39.50% | 5.03M | 0.127M |
-| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.10% | 16.95M | 0.734M |
-| Claude Code | Claude Opus 4.8 | 41.60% | 4.42M | 0.106M |
-| Codex | GPT-5.2 | 39.70% | 15.46M | 0.389M |
-| Codex | GPT-5.2 (w/o SGM) | 16.30% | 22.23M | 1.364M |
-| Codex | GPT-5.5 | 41.40% | 16.14M | 0.390M |
-| OpenCode | GLM-5 | 27.00% | 16.89M | 0.626M |
-| OpenCode | Qwen3.5-397B-A17B | 24.50% | 12.06M | 0.492M |
-| OpenCode | Kimi K2.5 | 30.30% | 8.46M | 0.279M |
-| OpenCode | Kimi K2.5 (w/o SGM) | 6.50% | 21.40M | 3.292M |
-| OpenCode | MiniMax M2.5 | 22.90% | 14.5M | 0.633M |
-| OpenCode | MiniMax M2.7 | 27.80% | 13.48M | 0.485M |
-| OpenClaw 🦞 | Kimi K2.5 | 25.40% | 9.63M | 0.379M |
-| Pi | GLM-5.1 | 38.80% | 8.17M | 0.211M |
-| Pi | Kimi K2.5 | 37.80% | 9.92M | 0.262M |
-| Pi | MiMo v2.5 | 36.10% | 18.23M | 0.505M |
+| 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ |
+|--------|------|-------------:|---------------:|
+| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M |
+| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M |
+| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M |
+| Claude Code | Claude Opus 4.8 | 41.6% | 4.4M |
+| Codex | GPT-5.2 | 39.7% | 15.5M |
+| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M |
+| Codex | GPT-5.5 | 41.4% | 16.1M |
+| OpenCode | GLM-5 | 27.0% | 16.9M |
+| OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M |
+| OpenCode | Kimi K2.5 | 30.3% | 8.5M |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M |
+| OpenCode | MiniMax M2.5 | 22.9% | 14.5M |
+| OpenCode | MiniMax M2.7 | 27.8% | 13.5M |
+| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M |
+| Pi | GLM-5.1 | 38.8% | 8.2M |
+| Pi | Kimi K2.5 | 37.8% | 9.9M |
+| Pi | MiMo v2.5 | 36.1% | 18.2M |
+| Pi | MiniMax M3 | 43.2% | 15.6M |
+| Pi | Qwen3.6-27B | 38.5% | 7.1M |
+| Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M |
 
 * 所有编程智能体均使用其默认配置（包括默认的 reasoning effort）。
 
@@ -103,31 +107,37 @@ ATM-Bench-Hard 上的初始通用智能体结果如下。QS 分数使用 `gpt-5-
 <a id="oracle-and-niah-results-zh"></a>
 ## Oracle 与 NIAH 结果
 
-### ATM-Bench-Hard 上的 Oracle 结果
+我们在包含 31 个问题的 ATM-Bench-Hard 划分上，报告多模态回答模型在 SGM 与 Raw（真实图像/视频）设置下的 Oracle 上限和 NIAH haystack 扫描（k=25/50/100）QS，使用 `gpt-5-mini` 作为评判模型。
 
-QS 使用 `gpt-5-mini` 作为主要评判模型。
+完整报告请参见 [ATM-Bench 在线榜单](https://atmbench.github.io/leaderboard.html)。
 
-| 模型 | 设置 | QS |
-|------|------|----|
-| GPT-5 | Raw | 72.12% |
-| Qwen3-VL-8B-Instruct | Raw | 40.14% |
-| Qwen3-VL-8B-Instruct | SGM | 27.98% |
-| Qwen3-VL-8B-Instruct | D | 21.69% |
+### SGM
 
-### ATM-Bench-Hard 上的 NIAH 结果
+| 模型 | 上下文窗口 | 参数量 | Oracle | NIAH-25 | NIAH-50 | NIAH-100 |
+|------|-----------:|--------|-------:|--------:|--------:|---------:|
+| Qwen3-VL-8B-Instruct | 256K | 8B LM（总计约 9B） | 28.0 | 16.3 | 15.8 | 12.7 |
+| MiniMax-M3 | 1M | 未公开 | 60.5 | 45.9 | 55.1 | 43.4 |
+| MiMo-V2.5 | 1M | 总计 310B / 激活 15B | 44.6 | 39.1 | 34.5 | 31.8 |
+| Kimi-K2.5 | 256K | 总计 1T / 激活 32B | 41.9 | 47.9 | 39.6 | 33.5 |
+| Qwen3.6-27B | 262K | 27B LM | 42.8 | 39.2 | 29.6 | 27.4 |
+| 约输入上下文深度 | — | — | ≈4.5K | ≈12K | ≈22K | ≈44K |
 
-对于 NIAH，我们比较了 `Qwen3-VL-8B-Instruct` 在不同 haystack 规模下的 SGM 和 Raw 设置。
+### Raw（图像/视频）
 
-| 模型 | 设置 | QS | 平均上下文 Token 数 |
-|------|------|----|---------------------|
-| Qwen3-VL-8B-Instruct | Raw, Oracle | 40.14% | 5.7k |
-| Qwen3-VL-8B-Instruct | Raw, NIAH-25 | 25.43% | 15.9k |
-| Qwen3-VL-8B-Instruct | Raw, NIAH-50 | 24.87% | 29.0k |
-| Qwen3-VL-8B-Instruct | Raw, NIAH-100 | 10.90% | 56.0k |
-| Qwen3-VL-8B-Instruct | SGM, Oracle | 27.98% | 4.6k |
-| Qwen3-VL-8B-Instruct | SGM, NIAH-25 | 16.33% | 12.5k |
-| Qwen3-VL-8B-Instruct | SGM, NIAH-50 | 15.77% | 23.9k |
-| Qwen3-VL-8B-Instruct | SGM, NIAH-100 | 12.66% | 45.8k |
+| 模型 | 上下文窗口 | 参数量 | Oracle | NIAH-25 | NIAH-50 | NIAH-100 |
+|------|-----------:|--------|-------:|--------:|--------:|---------:|
+| Qwen3-VL-8B-Instruct | 256K | 8B LM（总计约 9B） | 40.1 | 25.4 | 24.9 | 10.9 |
+| MiniMax-M3 | 1M | 未公开 | 61.8 | 41.8 | 34.2 | 35.2 |
+| MiMo-V2.5 | 1M | 总计 310B / 激活 15B | 52.1 | 43.3 | 33.1 | 23.6 |
+| Kimi-K2.5 | 256K | 总计 1T / 激活 32B | 57.1 | 45.4 | failed | failed |
+| Qwen3.6-27B | 262K | 27B LM | 62.3 | 50.5 | failed | failed |
+| 约输入上下文深度 | — | — | ≈6.5K | ≈18K | ≈31K | ≈60K |
+
+> **为什么选择 SGM 而不是 Raw？** Raw 在 Oracle 上限下优于 SGM，但这种优势在现实条件下会消失：随着 haystack 中干扰项增多，Raw 的性能会下降，甚至因 payload/上下文限制而失败；在智能体检索中差距更加明显，所有“w/o SGM”（Raw）智能体的表现都远低于对应的 SGM 运行。SGM 是在现实噪声条件下更稳健的表示方式。
+
+> **failed** 表示请求超过了模型允许的最大图像/视频数量，或 API 服务器的最大上传/payload 大小，导致该规模的输入无法处理。这属于服务限制，而不是模型质量结果。
+
+
 
 <a id="overview-zh"></a>
 ## 概述
