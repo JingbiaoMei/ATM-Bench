@@ -278,6 +278,15 @@ def _extract_usage_fields(d: Dict[str, Any]) -> Tuple[
     Optional[int],
 ]:
     in_tok, out_tok, tot_tok = _canonical_tokens(d)
+    # OpenCode reports generated reasoning tokens separately from `output`
+    # (its `total` already includes them: total = input + cache.read + output +
+    # reasoning). Reasoning is billed at the output rate, so fold it into
+    # output_tokens. Other formats are unaffected: pi/claude expose no bare
+    # `reasoning` key, and codex carries `reasoning_output_tokens` which is already
+    # a subset of output_tokens (additive folding would double-count it).
+    reasoning_extra = _as_int(d.get("reasoning"))
+    if reasoning_extra is not None and out_tok is not None:
+        out_tok += reasoning_extra
     explicit_tot_tok = (
         _as_int(d.get("total_tokens"))
         or _as_int(d.get("totalTokens"))
@@ -319,6 +328,21 @@ def _extract_usage_fields(d: Dict[str, Any]) -> Tuple[
         cache_read = _as_int(d.get("cacheReadInputTokens"))
     if cache_read is None and cache is not None:
         cache_read = _as_int(cache.get("read"))
+    if cache_read is None:
+        # OpenAI / codex convention: `input_tokens` is the grand-total prompt
+        # (cached + uncached) and the cache-hit subset is reported separately as
+        # `cached_input_tokens`, with no distinct cache-creation field. Map that
+        # subset to cache_read and strip it out of the uncached remainder so the
+        # effective-input math below (uncached + cache_create + cache_read) still
+        # sums to the true total. Without this the whole codex prompt is billed at
+        # the full input price — a ~3x overcharge vs the cache-aware agents.
+        cached_subset = _as_int(d.get("cached_input_tokens"))
+        if cached_subset is None:
+            cached_subset = _as_int(d.get("cachedInputTokens"))
+        if cached_subset is not None:
+            cache_read = cached_subset
+            if uncached_in is not None:
+                uncached_in = max(0, uncached_in - cached_subset)
 
     effective_in = uncached_in
     if effective_in is None and (cache_create is not None or cache_read is not None):

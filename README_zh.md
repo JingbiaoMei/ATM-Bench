@@ -52,6 +52,7 @@
 - **2026-05-28：** 发布 Pi 智能体基准结果。
 - **2026-05-30：** 发布通用智能体基准测试框架（`agent_systems/`）——为 Claude Code、Codex、Pi、OpenCode 和 OpenClaw 提供隔离的、按问题独立运行的运行器。
 - **2026-06-07：** 更新更多 NIAH 结果与分析，包括多种多模态回答模型在 SGM 与 Raw 设置下的对比。
+- **2026-06-12：** 为通用智能体结果新增每次运行的美元成本估算。
 
 <a id="general-purpose-agent-results-zh"></a>
 ## 通用智能体结果
@@ -60,28 +61,30 @@
 
 ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 作为主要评判模型。
 
-| 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ |
-|--------|------|-------------:|---------------:|
-| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M |
-| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M |
-| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M |
-| Claude Code | Claude Opus 4.8 | 41.6% | 4.4M |
-| Codex | GPT-5.2 | 39.7% | 15.5M |
-| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M |
-| Codex | GPT-5.5 | 41.4% | 16.1M |
-| OpenCode | GLM-5 | 27.0% | 16.9M |
-| OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M |
-| OpenCode | Kimi K2.5 | 30.3% | 8.5M |
-| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M |
-| OpenCode | MiniMax M2.5 | 22.9% | 14.5M |
-| OpenCode | MiniMax M2.7 | 27.8% | 13.5M |
-| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M |
-| Pi | GLM-5.1 | 38.8% | 8.2M |
-| Pi | Kimi K2.5 | 37.8% | 9.9M |
-| Pi | MiMo v2.5 | 36.1% | 18.2M |
-| Pi | MiniMax M3 | 43.2% | 15.6M |
-| Pi | Qwen3.6-27B | 38.5% | 7.1M |
-| Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M |
+| 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ | 成本 (USD) ↓ |
+|--------|------|-------------:|---------------:|------------:|
+| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
+| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
+| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
+| Claude Code | Claude Opus 4.8 | 41.6% | 4.4M | $7.49 |
+| Codex | GPT-5.2 | 39.7% | 15.5M | — |
+| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
+| Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
+| OpenCode | GLM-5 | 27.0% | 16.9M | $14.92 |
+| OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M | $4.93 |
+| OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M | $6.40 |
+| OpenCode | MiniMax M2.5 | 22.9% | 14.5M | $4.43 |
+| OpenCode | MiniMax M2.7 | 27.8% | 13.5M | $1.36 |
+| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M | $2.37 |
+| Pi | GLM-5.1 | 38.8% | 8.2M | $4.33 |
+| Pi | Kimi K2.5 | 37.8% | 9.9M | $2.67 |
+| Pi | MiMo v2.5 | 36.1% | 18.2M | $2.06 |
+| Pi | MiniMax M3 | 43.2% | 15.6M | $3.39 |
+| Pi | Qwen3.6-27B | 38.5% | 7.1M | $2.45 |
+| Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M | $6.29 |
+
+> **成本**为一次完整 ATM-Bench-Hard 运行（31 个问题）的估算 USD API 费用，依据每次调用的 token 用量（未缓存输入、缓存写入、缓存读取、输出）按各提供商公开标价（≤200K 上下文档位，含缓存折扣）计算。
 
 * 所有编程智能体均使用其默认配置（包括默认的 reasoning effort）。
 

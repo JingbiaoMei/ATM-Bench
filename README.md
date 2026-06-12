@@ -49,6 +49,7 @@
 - **2026-05-28:** Released the Pi Agent Benchmark results.
 - **2026-05-30:** Released the General-Purpose Agent benchmark harness (`agent_systems/`) — isolated, per-question runners for Claude Code, Codex, Pi, OpenCode, and OpenClaw.
 - **2026-06-07:** Updated with more NIAH results and analysis, including the SGM vs. Raw comparison across various multimodal answerers.
+- **2026-06-12:** Added per-run USD cost estimates to the General-Purpose Agent results.
 
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
@@ -57,28 +58,30 @@
 
 General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge.
 
-| Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ |
-|-------|-------|------------:|---------------:|
-| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M |
-| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M |
-| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M |
-| Claude Code | Claude Opus 4.8 | 41.6% | 4.4M |
-| Codex | GPT-5.2 | 39.7% | 15.5M |
-| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M |
-| Codex | GPT-5.5 | 41.4% | 16.1M |
-| OpenCode | GLM-5 | 27.0% | 16.9M |
-| OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M |
-| OpenCode | Kimi K2.5 | 30.3% | 8.5M |
-| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M |
-| OpenCode | MiniMax M2.5 | 22.9% | 14.5M |
-| OpenCode | MiniMax M2.7 | 27.8% | 13.5M |
-| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M |
-| Pi | GLM-5.1 | 38.8% | 8.2M |
-| Pi | Kimi K2.5 | 37.8% | 9.9M |
-| Pi | MiMo v2.5 | 36.1% | 18.2M |
-| Pi | MiniMax M3 | 43.2% | 15.6M |
-| Pi | Qwen3.6-27B | 38.5% | 7.1M |
-| Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M |
+| Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Cost (USD) ↓ |
+|-------|-------|------------:|---------------:|------------:|
+| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
+| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
+| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
+| Claude Code | Claude Opus 4.8 | 41.6% | 4.4M | $7.49 |
+| Codex | GPT-5.2 | 39.7% | 15.5M | — |
+| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
+| Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
+| OpenCode | GLM-5 | 27.0% | 16.9M | $14.92 |
+| OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M | $4.93 |
+| OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M | $6.40 |
+| OpenCode | MiniMax M2.5 | 22.9% | 14.5M | $4.43 |
+| OpenCode | MiniMax M2.7 | 27.8% | 13.5M | $1.36 |
+| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M | $2.37 |
+| Pi | GLM-5.1 | 38.8% | 8.2M | $4.33 |
+| Pi | Kimi K2.5 | 37.8% | 9.9M | $2.67 |
+| Pi | MiMo v2.5 | 36.1% | 18.2M | $2.06 |
+| Pi | MiniMax M3 | 43.2% | 15.6M | $3.39 |
+| Pi | Qwen3.6-27B | 38.5% | 7.1M | $2.45 |
+| Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M | $6.29 |
+
+> **Cost** is the estimated USD API price for one full ATM-Bench-Hard run (31 questions), computed from per-call token usage (uncached input, cache write, cache read, output) at each provider's public list price (≤200K-context tier, cache-aware).
 
 * All coding agents use their default configuration, including the reasoning effort.
 
