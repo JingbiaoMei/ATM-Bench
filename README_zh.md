@@ -63,6 +63,7 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 
 | 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ | 成本 (USD) ↓ |
 |--------|------|-------------:|---------------:|------------:|
+| Claude Code | Claude Opus 4.7 (max) | 46.6% | 6.9M | $9.58 |
 | Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
 | Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
 | Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
@@ -70,6 +71,7 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 | Codex | GPT-5.2 | 39.7% | 15.5M | — |
 | Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
 | Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
+| Codex | GPT-5.5 (xhigh) | 48.1% | 22.9M | $39.74 |
 | OpenCode | GLM-5 | 27.0% | 16.9M | $14.92 |
 | OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M | $4.93 |
 | OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
@@ -86,7 +88,7 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 
 > **成本**为一次完整 ATM-Bench-Hard 运行（31 个问题）的估算 USD API 费用，依据每次调用的 token 用量（未缓存输入、缓存写入、缓存读取、输出）按各提供商公开标价（≤200K 上下文档位，含缓存折扣）计算。
 
-* 所有编程智能体均使用其默认配置（包括默认的 reasoning effort）。
+* 除非模型标签注明 `max` 或 `xhigh` 等 reasoning effort，编程智能体均使用默认配置。
 
 编程智能体在 ATM-Bench-Hard 上仍然表现不佳，但显著优于各种智能体记忆基线。
 
@@ -95,7 +97,7 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 <a id="memory-system-baseline-results-zh"></a>
 ## 记忆系统基线结果
 
-下面的记忆系统基线使用 `Qwen3-VL-8B-Instruct-FP8` 作为回答模型，`Qwen3-VL-2B-Instruct` 作为共享的图像/视频描述预处理器。ATM-Bench-Hard 使用 `atm-bench-hard` 发布集合，结果可能与原始预印本不同。
+除特别说明外，下面的记忆系统基线使用 `Qwen3-VL-8B-Instruct-FP8` 作为回答模型，`Qwen3-VL-2B-Instruct` 作为共享的图像/视频描述预处理器。ATM-Bench-Hard 使用 `atm-bench-hard` 发布集合，因此结果可能与原始预印本不同。
 
 | 系统 | 索引时间 (hr) ↓ | ATM-Bench QS ↑ | ATM-Bench Recall@10 ↑ | ATM-Bench-Hard QS ↑ | ATM-Bench-Hard Recall@10 ↑ |
 |------|----------------:|---------------:|----------------------:|--------------------:|---------------------------:|
@@ -105,7 +107,10 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 | [HippoRAG2](https://github.com/OSU-NLP-Group/HippoRAG) | 1.5 | 42.9 | 66.4 | 9.4 | 31.9 |
 | [MemPalace](https://github.com/MemPalace/mempalace) | 0.5 | 56.8 | 76.4 | 9.7 | 28.3 |
 | [SimpleMem](https://github.com/aiming-lab/SimpleMem) | 15.7 | 27.3 | 23.3 | 3.2 | 7.0 |
+| [Memexa](https://github.com/labazhou2024/memexa)（DeepSeek-V4-flash 记忆+回答，Qwen3.6-27B captions） | — | 68.0* | 79.1 | 47.9* | 44.7† |
 | **ATM-RAG（本文方法）** | 0.5 | 51.0 | 68.7 | 8.4 | 28.8 |
+
+* `*` 表示 QS 使用 DeepSeek-V4-flash 评判模型，而不是其他行使用的 `gpt-5-mini` 评判模型。`†` 表示 ATM-Bench-Hard Recall 使用固定的 Qwen3-VL-2B captions 汇报，尽管已提交的 Hard QS 运行使用 Qwen3.6-27B captions 回答。
 
 <a id="oracle-and-niah-results-zh"></a>
 ## Oracle 与 NIAH 结果

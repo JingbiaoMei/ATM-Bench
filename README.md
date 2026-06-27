@@ -60,6 +60,7 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
 
 | Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Cost (USD) ↓ |
 |-------|-------|------------:|---------------:|------------:|
+| Claude Code | Claude Opus 4.7 (max) | 46.6% | 6.9M | $9.58 |
 | Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
 | Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
 | Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
@@ -67,6 +68,7 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
 | Codex | GPT-5.2 | 39.7% | 15.5M | — |
 | Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
 | Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
+| Codex | GPT-5.5 (xhigh) | 48.1% | 22.9M | $39.74 |
 | OpenCode | GLM-5 | 27.0% | 16.9M | $14.92 |
 | OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M | $4.93 |
 | OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
@@ -83,7 +85,7 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
 
 > **Cost** is the estimated USD API price for one full ATM-Bench-Hard run (31 questions), computed from per-call token usage (uncached input, cache write, cache read, output) at each provider's public list price (≤200K-context tier, cache-aware).
 
-* All coding agents use their default configuration, including the reasoning effort.
+* Coding agents use their default configuration unless the model label states a reasoning effort such as `max` or `xhigh`.
 
 The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
 
@@ -92,7 +94,7 @@ To reproduce these runs, see the General-Purpose Agent harness under [`agent_sys
 <a id="memory-system-baseline-results"></a>
 ## 🧠 Memory-System Baseline Results
 
-Memory-system baselines below use `Qwen3-VL-8B-Instruct-FP8` as the answerer, `Qwen3-VL-2B-Instruct` as the memory processor. ATM-Bench-Hard uses the `atm-bench-hard` release set, the results may differ from the original preprint.
+Unless noted, memory-system baselines below use `Qwen3-VL-8B-Instruct-FP8` as the answerer and `Qwen3-VL-2B-Instruct` as the memory processor and the captioner. ATM-Bench-Hard uses the `atm-bench-hard` release set, so results may differ from the original preprint.
 
 | System | Index Time (hr) ↓ | ATM-Bench QS ↑ | ATM-Bench Recall@10 ↑ | ATM-Bench-Hard QS ↑ | ATM-Bench-Hard Recall@10 ↑ |
 |--------|------------------:|---------------:|----------------------:|--------------------:|---------------------------:|
@@ -102,7 +104,10 @@ Memory-system baselines below use `Qwen3-VL-8B-Instruct-FP8` as the answerer, `Q
 | [HippoRAG2](https://github.com/OSU-NLP-Group/HippoRAG) | 1.5 | 42.9 | 66.4 | 9.4 | 31.9 |
 | [MemPalace](https://github.com/MemPalace/mempalace) | 0.5 | 56.8 | 76.4 | 9.7 | 28.3 |
 | [SimpleMem](https://github.com/aiming-lab/SimpleMem) | 15.7 | 27.3 | 23.3 | 3.2 | 7.0 |
+| [Memexa](https://github.com/labazhou2024/memexa) (DeepSeek-V4-flash mem+ans, Qwen3.6-27B captions) | — | 68.0* | 79.1 | 47.9* | 44.7† |
 | **ATM-RAG (Ours)** | 0.5 | 51.0 | 68.7 | 8.4 | 28.8 |
+
+* `*` marks QS measured with a DeepSeek-V4-flash judge rather than the `gpt-5-mini` judge used for the other rows. `†` marks ATM-Bench-Hard Recall reported on fixed Qwen3-VL-2B captions, although the submitted Hard QS run answers from Qwen3.6-27B captions.
 
 <a id="oracle-and-niah-results"></a>
 ## 📊 Oracle and NIAH Results
