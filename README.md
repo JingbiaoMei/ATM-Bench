@@ -121,7 +121,7 @@ For the full report, see the [ATM-Bench Live Leaderboard](https://atmbench.githu
 | Model | Context Window | Parameters | Oracle | NIAH-25 | NIAH-50 | NIAH-100 |
 |-------|---------------:|------------|-------:|--------:|--------:|---------:|
 | Qwen3-VL-8B-Instruct | 256K | 8B LM (~9B total) | 28.0 | 16.3 | 15.8 | 12.7 |
-| MiniMax-M3 | 1M | Not disclosed | 60.5 | 45.9 | 55.1 | 43.4 |
+| MiniMax-M3 | 1M | 428B total / 23B active | 60.5 | 45.9 | 55.1 | 43.4 |
 | MiMo-V2.5 | 1M | 310B total / 15B active | 44.6 | 39.1 | 34.5 | 31.8 |
 | Kimi-K2.5 | 256K | 1T total / 32B active | 41.9 | 47.9 | 39.6 | 33.5 |
 | Qwen3.6-27B | 262K | 27B LM | 42.8 | 39.2 | 29.6 | 27.4 |
@@ -132,7 +132,7 @@ For the full report, see the [ATM-Bench Live Leaderboard](https://atmbench.githu
 | Model | Context Window | Parameters | Oracle | NIAH-25 | NIAH-50 | NIAH-100 |
 |-------|---------------:|------------|-------:|--------:|--------:|---------:|
 | Qwen3-VL-8B-Instruct | 256K | 8B LM (~9B total) | 40.1 | 25.4 | 24.9 | 10.9 |
-| MiniMax-M3 | 1M | Not disclosed | 61.8 | 41.8 | 34.2 | 35.2 |
+| MiniMax-M3 | 1M | 428B total / 23B active | 61.8 | 41.8 | 34.2 | 35.2 |
 | MiMo-V2.5 | 1M | 310B total / 15B active | 52.1 | 43.3 | 33.1 | 23.6 |
 | Kimi-K2.5 | 256K | 1T total / 32B active | 57.1 | 45.4 | failed | failed |
 | Qwen3.6-27B | 262K | 27B LM | 62.3 | 50.5 | failed | failed |
