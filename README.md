@@ -60,13 +60,13 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
 
 | Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Cost (USD) ↓ |
 |-------|-------|------------:|---------------:|------------:|
-| Claude Code | Claude Fable 5 (xhigh) | 56.4% | 2.9M | $20.05+ |
+| Claude Code | Claude Fable 5 (xhigh) | 56.4% | 2.9M | $15.06 |
 | Claude Code | Claude Opus 4.7 (max) | 46.6% | 6.9M | $9.58 |
 | Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
 | Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
 | Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
 | Claude Code | Claude Opus 4.8 | 41.6% | 4.4M | $7.49 |
-| Codex | GPT-5.6 Sol (medium) | 58.8% | 7.5M | — |
+| Codex | GPT-5.6 Sol (medium) | 58.8% | 7.5M | $12.52 |
 | Codex | GPT-5.2 | 39.7% | 15.5M | — |
 | Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
 | Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
@@ -85,9 +85,7 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
 | Pi | Qwen3.6-27B | 38.5% | 7.1M | $2.45 |
 | Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M | $6.29 |
 
-> **Cost** is the estimated USD API price for one full ATM-Bench-Hard run (31 questions), computed from per-call token usage (uncached input, cache write, cache read, output) at each provider's public list price (≤200K-context tier, cache-aware).
-
-The Fable 5 cost is the retained successful-trace total; transient retries may make the billed total slightly higher.
+> **Cost** is the API-equivalent estimate for one full ATM-Bench-Hard run (31 questions), calculated from saved per-call token counters with Tokdash's bundled standard short-context rates. It does not represent Codex subscription charges.
 
 * Coding agents use their default configuration unless the model label states a reasoning effort such as `max` or `xhigh`.
 
