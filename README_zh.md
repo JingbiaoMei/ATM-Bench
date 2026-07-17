@@ -63,11 +63,13 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 
 | 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ | 成本 (USD) ↓ |
 |--------|------|-------------:|---------------:|------------:|
+| Claude Code | Claude Fable 5 (xhigh) | 56.4% | 2.9M | $20.05+ |
 | Claude Code | Claude Opus 4.7 (max) | 46.6% | 6.9M | $9.58 |
 | Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
 | Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
 | Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
 | Claude Code | Claude Opus 4.8 | 41.6% | 4.4M | $7.49 |
+| Codex | GPT-5.6 Sol (medium) | 58.8% | 7.5M | — |
 | Codex | GPT-5.2 | 39.7% | 15.5M | — |
 | Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
 | Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
@@ -87,6 +89,8 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 | Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M | $6.29 |
 
 > **成本**为一次完整 ATM-Bench-Hard 运行（31 个问题）的估算 USD API 费用，依据每次调用的 token 用量（未缓存输入、缓存写入、缓存读取、输出）按各提供商公开标价（≤200K 上下文档位，含缓存折扣）计算。
+
+Fable 5 的成本为保留的成功 trace 合计；短暂失败后的重试可能使实际账单略高。
 
 * 除非模型标签注明 `max` 或 `xhigh` 等 reasoning effort，编程智能体均使用默认配置。
 
