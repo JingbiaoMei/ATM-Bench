@@ -53,6 +53,7 @@
 - **2026-05-30：** 发布通用智能体基准测试框架（`agent_systems/`）——为 Claude Code、Codex、Pi、OpenCode 和 OpenClaw 提供隔离的、按问题独立运行的运行器。
 - **2026-06-07：** 更新更多 NIAH 结果与分析，包括多种多模态回答模型在 SGM 与 Raw 设置下的对比。
 - **2026-06-12：** 为通用智能体结果新增每次运行的美元成本估算。
+- **2026-07-18：** ATM-Bench-Hard (SGM) 以 [Harbor](https://github.com/harbor-framework/harbor) 数据集形式发布——通过 `harbor run -d atm-bench/atm-bench-hard-sgm`，即可在按问题隔离的 Docker 容器中运行任意 Harbor 智能体，完成全部 31 个困难问题（参见 [`agent_systems/HARBOR.md`](agent_systems/HARBOR.md)）。
 
 <a id="general-purpose-agent-results-zh"></a>
 ## 通用智能体结果

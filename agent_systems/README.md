@@ -214,3 +214,5 @@ agent-system predictions are scored the same way as the other baselines.
 - `agent_systems/runner_setup_public.md` — per-agent install + auth
 - `agent_systems/runner_versions.md` — recorded CLI versions
 - `agent_systems/openclaw/` — OpenClaw isolation + operator guide
+- `agent_systems/HARBOR.md` — running ATM-Bench-Hard (SGM) through Harbor,
+  as an alternative to this harness

@@ -50,6 +50,7 @@
 - **2026-05-30:** Released the General-Purpose Agent benchmark harness (`agent_systems/`) — isolated, per-question runners for Claude Code, Codex, Pi, OpenCode, and OpenClaw.
 - **2026-06-07:** Updated with more NIAH results and analysis, including the SGM vs. Raw comparison across various multimodal answerers.
 - **2026-06-12:** Added per-run USD cost estimates to the General-Purpose Agent results.
+- **2026-07-18:** ATM-Bench-Hard (SGM) released as a [Harbor](https://github.com/harbor-framework/harbor) dataset — run any Harbor agent against the 31 hard questions in per-question Docker isolation with `harbor run -d atm-bench/atm-bench-hard-sgm` (see [`agent_systems/HARBOR.md`](agent_systems/HARBOR.md)).
 
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
