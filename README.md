@@ -59,6 +59,23 @@
 
 General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS score here uses `gpt-5-mini` as the primary judge.
 
+### Price vs. Performance
+
+<a href="https://atmbench.github.io/leaderboard.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/price-performance-dark.png">
+    <img src="docs/images/price-performance-light.png" width="100%"
+      alt="ATM-Bench-Hard score plotted against run cost on a log axis from $0.26 to $39.74. Lines join each model's reasoning-effort tiers; diamonds are single-configuration runs. GPT-5.6 Sol peaks at 58.8% for $12.52, Kimi K3-256k reaches 52.5% for $5.54, and GPT-5.6 Luna reaches 42.4% for $1.01.">
+  </picture>
+</a>
+
+What each run scored against what it cost, at API list-price equivalent. A line joins one model's
+reasoning-effort tiers, marker size is the tier, and a diamond is a system with a single configuration.
+**[The chart is interactive on the leaderboard](https://atmbench.github.io/leaderboard.html)** — hover any
+point for tokens, cost per score point, and how many of the 31 questions it answered. This image is a
+snapshot: it covers more configurations than the table below, and a few measured runs are left off the
+lines where a dearer tier scored lower.
+
 | Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Cost (USD) ↓ |
 |-------|-------|------------:|---------------:|------------:|
 | Claude Code | Claude Fable 5 (xhigh) | 56.4% | 2.9M | $15.06 |
