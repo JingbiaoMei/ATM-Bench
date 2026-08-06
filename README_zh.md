@@ -54,6 +54,7 @@
 - **2026-06-07：** 更新更多 NIAH 结果与分析，包括多种多模态回答模型在 SGM 与 Raw 设置下的对比。
 - **2026-06-12：** 为通用智能体结果新增每次运行的美元成本估算。
 - **2026-07-18：** ATM-Bench-Hard (SGM) 以 [Harbor](https://github.com/harbor-framework/harbor) 数据集形式发布——通过 `harbor run -d atm-bench/atm-bench-hard-sgm`，即可在按问题隔离的 Docker 容器中运行任意 Harbor 智能体，完成全部 31 个困难问题（参见 [`agent_systems/HARBOR.md`](agent_systems/HARBOR.md)）。
+- **2026-08-06：** 新增 Kimi Code、Antigravity（Gemini，经由 Harbor）与火山引擎 coding plan 的结果，智能体表格现已覆盖全部已计价运行。榜单页的完整散点图不再画出 `w/o SGM` 消融运行——这六次运行回答的是另一个问题，却占去了图表 45% 的纵向范围；它们仍保留在所有表格中。
 
 <a id="general-purpose-agent-results-zh"></a>
 ## 通用智能体结果
@@ -68,48 +69,97 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/price-performance-dark.png">
     <img src="docs/images/price-performance-light.png" width="100%"
-      alt="ATM-Bench-Hard 得分对运行成本的散点图，成本为对数轴（$0.26 至 $39.74）。折线连接同一模型的各推理强度档位，菱形表示单一配置运行。GPT-5.6 Sol 以 $12.52 取得 58.8%，Kimi K3-256k 以 $5.54 取得 52.5%，GPT-5.6 Luna 以 $1.01 取得 42.4%。">
+      alt="ATM-Bench-Hard 得分对运行成本的散点图，成本为对数轴（$0.26 至 $39.74）。折线连接同一模型的各推理强度档位，菱形表示单一配置运行。GPT-5.6 Sol 以 $12.52 取得 58.8%，Claude Opus 5 以 $12.33 取得 58.4%；Kimi K3-256k 以 $5.54 取得 52.5%，Gemini 3.6 Flash 以 $19.96 取得 48.2%，Claude Code 上的 GLM-5.2 以 $3.29 取得 47.7%，GPT-5.6 Luna 以 $1.01 取得 42.4%。">
   </picture>
 </a>
 
 每次运行的得分与花费（按 API 标价等价折算）。折线连接同一模型的各推理强度档位，标记大小表示档位，菱形表示单一配置的系统。
 **[榜单页面上的该图可交互](https://atmbench.github.io/leaderboard.html)** — 悬停任意数据点可查看 token 数、每分成本，以及 31 题中实际回答的题数。
-此图为快照：它覆盖的配置多于下方表格，且个别「更贵但得分更低」的运行未画入折线。
+此图是下方表格的精选视图：只画出能体现成本 – 得分关系的配置，且个别「更贵但得分更低」的运行未画入折线。下方表格列出全部已计价运行，包括 `w/o SGM` 消融运行——后者不出现在任何图中：它们的得分远低于任何真实配置，保留它们会占去图表 45% 的纵向分辨率。
 
 | 智能体 | 模型 | QS (Acc.) ↑ | 总 Token 数 ↓ | 成本 (USD) ↓ |
 |--------|------|-------------:|---------------:|------------:|
+| Claude Code | Claude Opus 5 (xhigh) | 58.4% | 6.1M | $12.33 |
 | Claude Code | Claude Fable 5 (xhigh) | 56.4% | 2.9M | $15.06 |
+| Claude Code | Claude Opus 5 (max) | 56.0% | 8.9M | $17.22 |
+| Claude Code | Claude Opus 5 (high) | 53.4% | 3.5M | $7.29 |
+| Claude Code | Claude Fable 5 (high) | 52.5% | 2.5M | $11.95 |
+| Claude Code | Claude Fable 5 (medium) | 51.7% | 2.2M | $10.13 |
+| Claude Code | Claude Opus 5 (medium) | 51.4% | 3.2M | $5.84 |
+| Claude Code | GLM-5.2 | 47.7% | 5.0M | $3.29 |
+| Claude Code | Kimi K2.7 Code | 47.0% | 10.7M | $3.00 |
+| Claude Code | Claude Fable 5 (low) | 46.8% | 1.9M | $7.93 |
 | Claude Code | Claude Opus 4.7 (max) | 46.6% | 6.9M | $9.58 |
-| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
-| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
-| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
+| Claude Code | Doubao Seed 2.1 Turbo | 46.2% | 9.3M | $1.63 |
 | Claude Code | Claude Opus 4.8 | 41.6% | 4.4M | $7.49 |
+| Claude Code | Claude Opus 4.7 (xhigh) | 39.5% | 5.0M | $7.70 |
+| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
+| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 16.9M | $19.84 |
 | Codex | GPT-5.6 Sol (medium) | 58.8% | 7.5M | $12.52 |
-| Codex | GPT-5.2 | 39.7% | 15.5M | — |
-| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
-| Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
+| Codex | GPT-5.6 Sol (high) | 51.5% | 10.2M | $14.79 |
+| Codex | GPT-5.6 Sol (max) | 48.3% | 17.6M | $23.90 |
 | Codex | GPT-5.5 (xhigh) | 48.1% | 22.9M | $39.74 |
+| Codex | GPT-5.6 Terra (max) | 44.5% | 17.2M | $9.92 |
+| Codex | GPT-5.6 Sol (xhigh) | 44.0% | 11.5M | $17.79 |
+| Codex | GPT-5.6 Terra (low) | 43.5% | 6.2M | $4.08 |
+| Codex | GPT-5.6 Luna (xhigh) | 42.4% | 18.8M | $1.01 |
+| Codex | GPT-5.6 Luna (high) | 41.7% | 14.0M | $0.78 |
+| Codex | GPT-5.6 Sol (low) | 41.7% | 5.1M | $9.53 |
+| Codex | GPT-5.5 (medium) | 41.4% | 16.1M | $27.17 |
+| Codex | GPT-5.6 Terra (xhigh) | 41.0% | 9.4M | $5.96 |
+| Codex | GPT-5.2 | 39.7% | 15.5M | — |
+| Codex | GPT-5.6 Terra (high) | 38.6% | 7.8M | $5.01 |
+| Codex | GPT-5.6 Luna (medium) | 34.9% | 8.3M | $0.53 |
+| Codex | GPT-5.6 Luna (low) | 31.6% | 7.0M | $0.45 |
+| Codex | GPT-5.4 | 29.6% | 14.3M | $9.33 |
+| Codex | GPT-5.6 Luna (max) | 28.2% | 28.8M | $1.44 |
+| Codex | GPT-5.6 Terra (medium) | 28.2% | 6.7M | $4.32 |
+| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
+| Kimi Code | Kimi K3-256k (high) | 52.5% | 7.9M | $5.54 |
+| Kimi Code | Kimi K3 (max) | 51.4% | 6.3M | $4.90 |
+| Kimi Code | Kimi K2.7 | 49.1% | 14.1M | $3.53 |
+| Kimi Code | Kimi K3-256k (low) | 48.5% | 5.4M | $3.68 |
+| Kimi Code | Kimi K3-256k (max) | 48.5% | 8.0M | $5.83 |
+| OpenCode | MiniMax M3 | 47.3% | 16.3M | $2.83 |
+| OpenCode | DeepSeek V4 Flash (0731) | 38.3% | 12.5M | $0.26 |
+| OpenCode | Kimi K2.7 Code | 37.8% | 32.9M | $6.81 |
+| OpenCode | Doubao Seed 2.1 Turbo | 37.7% | 9.8M | $1.69 |
+| OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
+| OpenCode | LongCat 2.0 | 28.2% | 31.2M | $0.72 |
+| OpenCode | MiniMax M2.7 | 27.8% | 13.5M | $1.36 |
 | OpenCode | GLM-5 | 27.0% | 16.9M | $14.92 |
 | OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M | $4.93 |
-| OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
-| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M | $6.40 |
 | OpenCode | MiniMax M2.5 | 22.9% | 14.5M | $4.43 |
-| OpenCode | MiniMax M2.7 | 27.8% | 13.5M | $1.36 |
-| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M | $2.37 |
-| Pi | GLM-5.1 | 38.8% | 8.2M | $4.33 |
-| Pi | Kimi K2.5 | 37.8% | 9.9M | $2.67 |
-| Pi | MiMo v2.5 | 36.1% | 18.2M | $2.06 |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M | $6.40 |
+| Pi | GLM-5.2 | 45.1% | 5.0M | $3.02 |
 | Pi | MiniMax M3 | 43.2% | 15.6M | $3.39 |
-| Pi | Qwen3.6-27B | 38.5% | 7.1M | $2.45 |
+| Pi | Kimi K2.7 Code | 39.2% | 17.1M | $4.44 |
+| Pi | GLM-5.1 | 38.8% | 8.2M | $4.33 |
+| Pi | Qwen3.6-27B | 38.5% | 7.2M | $2.45 |
+| Pi | Kimi K2.5 | 37.8% | 9.9M | $2.67 |
+| Pi | Doubao Seed 2.1 Turbo | 36.8% | 4.9M | $0.97 |
+| Pi | MiMo V2.5 | 36.1% | 18.2M | $2.06 |
+| Pi | MiMo V2.5 Pro | 31.9% | 14.6M | $4.98 |
+| Pi | MiMo V2.5 (w/o SGM) | 18.6% | 60.5M | $5.74 |
 | Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M | $6.29 |
+| Pi | MiMo V2.5 Pro (w/o SGM) | 14.6% | 50.0M | $13.97 |
+| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M | $2.37 |
+| Antigravity | Gemini 3.5 Flash (high) | 55.8% | 49.5M | $19.09 |
+| Antigravity | Gemini 3.5 Flash (medium) | 54.4% | 122.0M | $50.18 |
+| Antigravity | Gemini 3.6 Flash (medium) | 48.1% | 54.3M | $19.96 |
+| Antigravity | Gemini 3.6 Flash (high) | 44.7% | 56.6M | $21.02 |
+| Antigravity | Gemini 3.1 Pro (high) | 43.6% | 54.7M | $28.14 |
+| Antigravity | Gemini 3.6 Flash (low) | 42.8% | 27.4M | $13.59 |
+| Antigravity | Gemini 3.1 Pro (low) | 40.3% | 21.3M | $13.41 |
 
 > **成本**为一次完整 ATM-Bench-Hard 运行（31 个问题）的 API 等价估算，使用保存的每次调用 token 计数与 Tokdash 内置的标准短上下文费率计算。该数值不代表 Codex 订阅费用。
 
 * 除非模型标签注明 `max` 或 `xhigh` 等 reasoning effort，编程智能体均使用默认配置。
+* 同一模型在不同框架下可相差数个百分点——GLM-5.2 在 Claude Code 下为 47.7%，在 Pi 下为 45.1%；Kimi K2.7 Code 在 Claude Code、Pi、OpenCode 下分别为 47.0% / 39.2% / 37.8%。此处框架与模型是一个整体，而非两个独立因素。
 
 编程智能体在 ATM-Bench-Hard 上仍然表现不佳，但显著优于各种智能体记忆基线。
 
-要复现这些结果，请参见 [`agent_systems/`](agent_systems/README.md) 下的通用智能体测试框架，它为 Claude Code、Codex、Pi、OpenCode 和 OpenClaw 提供隔离的、按问题独立运行的运行器。
+要复现这些结果，请参见 [`agent_systems/`](agent_systems/README.md) 下的通用智能体测试框架，它为 Claude Code、Codex、Pi、OpenCode 和 OpenClaw 提供隔离的、按问题独立运行的运行器。表中另有两个框架不在其中：Kimi Code 通过自带 CLI 运行；Antigravity（即 Gemini 各行）通过 [Harbor](agent_systems/HARBOR.md) 在已发布的 `atm-bench-hard-sgm` 数据集上运行。
 
 <a id="memory-system-baseline-results-zh"></a>
 ## 记忆系统基线结果

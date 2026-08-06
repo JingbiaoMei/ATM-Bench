@@ -51,6 +51,7 @@
 - **2026-06-07:** Updated with more NIAH results and analysis, including the SGM vs. Raw comparison across various multimodal answerers.
 - **2026-06-12:** Added per-run USD cost estimates to the General-Purpose Agent results.
 - **2026-07-18:** ATM-Bench-Hard (SGM) released as a [Harbor](https://github.com/harbor-framework/harbor) dataset — run any Harbor agent against the 31 hard questions in per-question Docker isolation with `harbor run -d atm-bench/atm-bench-hard-sgm` (see [`agent_systems/HARBOR.md`](agent_systems/HARBOR.md)).
+- **2026-08-06:** Added Kimi Code, Antigravity (Gemini, via Harbor) and Volcano Engine coding-plan results, taking the Agent table to every priced run. The leaderboard's full scatter now leaves out the `w/o SGM` ablations, which were spending 45% of the chart's vertical range on six runs that answer a different question; they remain in every table.
 
 <a id="General-Purpose-Agent-results"></a>
 ## 🤖 General-Purpose Agent Results
@@ -65,51 +66,102 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/images/price-performance-dark.png">
     <img src="docs/images/price-performance-light.png" width="100%"
-      alt="ATM-Bench-Hard score plotted against run cost on a log axis from $0.26 to $39.74. Lines join each model's reasoning-effort tiers; diamonds are single-configuration runs. GPT-5.6 Sol peaks at 58.8% for $12.52, Kimi K3-256k reaches 52.5% for $5.54, and GPT-5.6 Luna reaches 42.4% for $1.01.">
+      alt="ATM-Bench-Hard score plotted against run cost on a log axis from $0.26 to $39.74. Lines join each model's reasoning-effort tiers; diamonds are single-configuration runs. GPT-5.6 Sol peaks at 58.8% for $12.52 and Claude Opus 5 reaches 58.4% for $12.33; Kimi K3-256k reaches 52.5% for $5.54, Gemini 3.6 Flash 48.2% for $19.96, GLM-5.2 under Claude Code 47.7% for $3.29, and GPT-5.6 Luna 42.4% for $1.01.">
   </picture>
 </a>
 
 What each run scored against what it cost, at API list-price equivalent. A line joins one model's
 reasoning-effort tiers, marker size is the tier, and a diamond is a system with a single configuration.
 **[The chart is interactive on the leaderboard](https://atmbench.github.io/leaderboard.html)** — hover any
-point for tokens, cost per score point, and how many of the 31 questions it answered. This image is a
-snapshot: it covers more configurations than the table below, and a few measured runs are left off the
-lines where a dearer tier scored lower.
+point for tokens, cost per score point, and how many of the 31 questions it answered. The chart is a
+curated view of the table below: it draws the configurations that carry the price/performance story, and
+holds a few measured runs off the lines where a dearer tier scored lower. The table lists every priced run,
+including the `w/o SGM` ablations, which no chart draws — they score far below every real configuration and
+carrying them costs 45% of a chart's vertical resolution.
 
 | Agent | Model | QS (Acc.) ↑ | Total Tokens ↓ | Cost (USD) ↓ |
 |-------|-------|------------:|---------------:|------------:|
+| Claude Code | Claude Opus 5 (xhigh) | 58.4% | 6.1M | $12.33 |
 | Claude Code | Claude Fable 5 (xhigh) | 56.4% | 2.9M | $15.06 |
+| Claude Code | Claude Opus 5 (max) | 56.0% | 8.9M | $17.22 |
+| Claude Code | Claude Opus 5 (high) | 53.4% | 3.5M | $7.29 |
+| Claude Code | Claude Fable 5 (high) | 52.5% | 2.5M | $11.95 |
+| Claude Code | Claude Fable 5 (medium) | 51.7% | 2.2M | $10.13 |
+| Claude Code | Claude Opus 5 (medium) | 51.4% | 3.2M | $5.84 |
+| Claude Code | GLM-5.2 | 47.7% | 5.0M | $3.29 |
+| Claude Code | Kimi K2.7 Code | 47.0% | 10.7M | $3.00 |
+| Claude Code | Claude Fable 5 (low) | 46.8% | 1.9M | $7.93 |
 | Claude Code | Claude Opus 4.7 (max) | 46.6% | 6.9M | $9.58 |
-| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
-| Claude Code | Claude Opus 4.7 | 39.5% | 5.0M | $7.70 |
-| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 17.0M | $19.84 |
+| Claude Code | Doubao Seed 2.1 Turbo | 46.2% | 9.3M | $1.63 |
 | Claude Code | Claude Opus 4.8 | 41.6% | 4.4M | $7.49 |
+| Claude Code | Claude Opus 4.7 (xhigh) | 39.5% | 5.0M | $7.70 |
+| Claude Code | Claude Opus 4.6 | 33.8% | 4.9M | $8.01 |
+| Claude Code | Claude Opus 4.7 (w/o SGM) | 23.1% | 16.9M | $19.84 |
 | Codex | GPT-5.6 Sol (medium) | 58.8% | 7.5M | $12.52 |
-| Codex | GPT-5.2 | 39.7% | 15.5M | — |
-| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
-| Codex | GPT-5.5 | 41.4% | 16.1M | $27.17 |
+| Codex | GPT-5.6 Sol (high) | 51.5% | 10.2M | $14.79 |
+| Codex | GPT-5.6 Sol (max) | 48.3% | 17.6M | $23.90 |
 | Codex | GPT-5.5 (xhigh) | 48.1% | 22.9M | $39.74 |
+| Codex | GPT-5.6 Terra (max) | 44.5% | 17.2M | $9.92 |
+| Codex | GPT-5.6 Sol (xhigh) | 44.0% | 11.5M | $17.79 |
+| Codex | GPT-5.6 Terra (low) | 43.5% | 6.2M | $4.08 |
+| Codex | GPT-5.6 Luna (xhigh) | 42.4% | 18.8M | $1.01 |
+| Codex | GPT-5.6 Luna (high) | 41.7% | 14.0M | $0.78 |
+| Codex | GPT-5.6 Sol (low) | 41.7% | 5.1M | $9.53 |
+| Codex | GPT-5.5 (medium) | 41.4% | 16.1M | $27.17 |
+| Codex | GPT-5.6 Terra (xhigh) | 41.0% | 9.4M | $5.96 |
+| Codex | GPT-5.2 | 39.7% | 15.5M | — |
+| Codex | GPT-5.6 Terra (high) | 38.6% | 7.8M | $5.01 |
+| Codex | GPT-5.6 Luna (medium) | 34.9% | 8.3M | $0.53 |
+| Codex | GPT-5.6 Luna (low) | 31.6% | 7.0M | $0.45 |
+| Codex | GPT-5.4 | 29.6% | 14.3M | $9.33 |
+| Codex | GPT-5.6 Luna (max) | 28.2% | 28.8M | $1.44 |
+| Codex | GPT-5.6 Terra (medium) | 28.2% | 6.7M | $4.32 |
+| Codex | GPT-5.2 (w/o SGM) | 16.3% | 22.2M | $9.22 |
+| Kimi Code | Kimi K3-256k (high) | 52.5% | 7.9M | $5.54 |
+| Kimi Code | Kimi K3 (max) | 51.4% | 6.3M | $4.90 |
+| Kimi Code | Kimi K2.7 | 49.1% | 14.1M | $3.53 |
+| Kimi Code | Kimi K3-256k (low) | 48.5% | 5.4M | $3.68 |
+| Kimi Code | Kimi K3-256k (max) | 48.5% | 8.0M | $5.83 |
+| OpenCode | MiniMax M3 | 47.3% | 16.3M | $2.83 |
+| OpenCode | DeepSeek V4 Flash (0731) | 38.3% | 12.5M | $0.26 |
+| OpenCode | Kimi K2.7 Code | 37.8% | 32.9M | $6.81 |
+| OpenCode | Doubao Seed 2.1 Turbo | 37.7% | 9.8M | $1.69 |
+| OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
+| OpenCode | LongCat 2.0 | 28.2% | 31.2M | $0.72 |
+| OpenCode | MiniMax M2.7 | 27.8% | 13.5M | $1.36 |
 | OpenCode | GLM-5 | 27.0% | 16.9M | $14.92 |
 | OpenCode | Qwen3.5-397B-A17B | 24.5% | 12.1M | $4.93 |
-| OpenCode | Kimi K2.5 | 30.3% | 8.5M | $1.81 |
-| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M | $6.40 |
 | OpenCode | MiniMax M2.5 | 22.9% | 14.5M | $4.43 |
-| OpenCode | MiniMax M2.7 | 27.8% | 13.5M | $1.36 |
-| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M | $2.37 |
-| Pi | GLM-5.1 | 38.8% | 8.2M | $4.33 |
-| Pi | Kimi K2.5 | 37.8% | 9.9M | $2.67 |
-| Pi | MiMo v2.5 | 36.1% | 18.2M | $2.06 |
+| OpenCode | Kimi K2.5 (w/o SGM) | 6.5% | 21.4M | $6.40 |
+| Pi | GLM-5.2 | 45.1% | 5.0M | $3.02 |
 | Pi | MiniMax M3 | 43.2% | 15.6M | $3.39 |
-| Pi | Qwen3.6-27B | 38.5% | 7.1M | $2.45 |
+| Pi | Kimi K2.7 Code | 39.2% | 17.1M | $4.44 |
+| Pi | GLM-5.1 | 38.8% | 8.2M | $4.33 |
+| Pi | Qwen3.6-27B | 38.5% | 7.2M | $2.45 |
+| Pi | Kimi K2.5 | 37.8% | 9.9M | $2.67 |
+| Pi | Doubao Seed 2.1 Turbo | 36.8% | 4.9M | $0.97 |
+| Pi | MiMo V2.5 | 36.1% | 18.2M | $2.06 |
+| Pi | MiMo V2.5 Pro | 31.9% | 14.6M | $4.98 |
+| Pi | MiMo V2.5 (w/o SGM) | 18.6% | 60.5M | $5.74 |
 | Pi | Qwen3.6-27B (w/o SGM) | 16.6% | 20.8M | $6.29 |
+| Pi | MiMo V2.5 Pro (w/o SGM) | 14.6% | 50.0M | $13.97 |
+| OpenClaw 🦞 | Kimi K2.5 | 25.4% | 9.6M | $2.37 |
+| Antigravity | Gemini 3.5 Flash (high) | 55.8% | 49.5M | $19.09 |
+| Antigravity | Gemini 3.5 Flash (medium) | 54.4% | 122.0M | $50.18 |
+| Antigravity | Gemini 3.6 Flash (medium) | 48.1% | 54.3M | $19.96 |
+| Antigravity | Gemini 3.6 Flash (high) | 44.7% | 56.6M | $21.02 |
+| Antigravity | Gemini 3.1 Pro (high) | 43.6% | 54.7M | $28.14 |
+| Antigravity | Gemini 3.6 Flash (low) | 42.8% | 27.4M | $13.59 |
+| Antigravity | Gemini 3.1 Pro (low) | 40.3% | 21.3M | $13.41 |
 
 > **Cost** is the API-equivalent estimate for one full ATM-Bench-Hard run (31 questions), calculated from saved per-call token counters with Tokdash's bundled standard short-context rates. It does not represent Codex subscription charges.
 
 * Coding agents use their default configuration unless the model label states a reasoning effort such as `max` or `xhigh`.
+* The same model can differ by several points across harnesses — GLM-5.2 scores 47.7% under Claude Code and 45.1% under Pi, Kimi K2.7 Code 47.0% / 39.2% / 37.8% under Claude Code, Pi and OpenCode. Harness and model are one system here, not two independent factors.
 
 The coding agents still struggle on ATM-Bench-Hard, although they perform much better than various agentic memory baselines.
 
-To reproduce these runs, see the General-Purpose Agent harness under [`agent_systems/`](agent_systems/README.md), which provides isolated, per-question runners for Claude Code, Codex, Pi, OpenCode, and OpenClaw.
+To reproduce these runs, see the General-Purpose Agent harness under [`agent_systems/`](agent_systems/README.md), which provides isolated, per-question runners for Claude Code, Codex, Pi, OpenCode, and OpenClaw. Two harnesses in the table are not in that set: Kimi Code runs through its own CLI, and Antigravity (the Gemini rows) runs under [Harbor](agent_systems/HARBOR.md) against the published `atm-bench-hard-sgm` dataset.
 
 <a id="memory-system-baseline-results"></a>
 ## 🧠 Memory-System Baseline Results
