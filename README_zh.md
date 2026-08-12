@@ -74,11 +74,8 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 ### 成本 – 得分
 
 <a href="https://atmbench.github.io/leaderboard.html">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/price-performance-dark.png">
-    <img src="docs/images/price-performance-light.png" width="100%"
-      alt="ATM-Bench-Hard 得分对运行成本的散点图，成本为对数轴（$0.26 至 $39.74）。折线连接同一模型的各推理强度档位，菱形表示单一配置运行。GPT-5.6 Sol 以 $12.52 取得 58.8%，Claude Opus 5 以 $12.33 取得 58.4%；Kimi K3-256k 以 $5.54 取得 52.5%，Gemini 3.6 Flash 以 $19.96 取得 48.2%，Claude Code 上的 GLM-5.2 以 $3.29 取得 47.7%，GPT-5.6 Luna 以 $1.01 取得 42.4%。">
-  </picture>
+  <img src="docs/images/price-performance-light.png" width="100%"
+    alt="ATM-Bench-Hard 得分对运行成本的散点图，成本为对数轴（$0.26 至 $39.74）。折线连接同一模型的各推理强度档位，菱形表示单一配置运行。GPT-5.6 Sol 以 $12.52 取得 58.8%，Claude Opus 5 以 $12.33 取得 58.4%；Kimi K3-256k 以 $5.54 取得 52.5%，Gemini 3.6 Flash 以 $19.96 取得 48.2%，Claude Code 上的 GLM-5.2 以 $3.29 取得 47.7%，GPT-5.6 Luna 以 $1.01 取得 42.4%。">
 </a>
 
 这是 2026-06-28 的精选快照，刻意保持简短：其中不含此后新增的模型（DeepSeek V4 Flash、

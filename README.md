@@ -73,11 +73,8 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
 ### Price vs. Performance
 
 <a href="https://atmbench.github.io/leaderboard.html">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/images/price-performance-dark.png">
-    <img src="docs/images/price-performance-light.png" width="100%"
-      alt="ATM-Bench-Hard score plotted against run cost on a log axis from $0.26 to $39.74. Lines join each model's reasoning-effort tiers; diamonds are single-configuration runs. GPT-5.6 Sol peaks at 58.8% for $12.52 and Claude Opus 5 reaches 58.4% for $12.33; Kimi K3-256k reaches 52.5% for $5.54, Gemini 3.6 Flash 48.2% for $19.96, GLM-5.2 under Claude Code 47.7% for $3.29, and GPT-5.6 Luna 42.4% for $1.01.">
-  </picture>
+  <img src="docs/images/price-performance-light.png" width="100%"
+    alt="ATM-Bench-Hard score plotted against run cost on a log axis from $0.26 to $39.74. Lines join each model's reasoning-effort tiers; diamonds are single-configuration runs. GPT-5.6 Sol peaks at 58.8% for $12.52 and Claude Opus 5 reaches 58.4% for $12.33; Kimi K3-256k reaches 52.5% for $5.54, Gemini 3.6 Flash 48.2% for $19.96, GLM-5.2 under Claude Code 47.7% for $3.29, and GPT-5.6 Luna 42.4% for $1.01.">
 </a>
 
 
