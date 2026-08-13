@@ -67,14 +67,14 @@ General-Purpose Agent results on ATM-Bench-Hard are summarized below. The QS sco
 
 <a href="https://atmbench.github.io/leaderboard.html">
   <img src="docs/images/price-performance-full-light.png" width="100%"
-    alt="Scatter of ATM-Bench-Hard score against run cost for every priced agent run, on a log cost axis from $0.13 to $50.18, coloured by coding harness. A dashed staircase marks the Pareto frontier — the best score reachable at or below each price. The frontier runs from DeepSeek V4 Flash on Pi at 36.9% for $0.13, through the same model on Claude Code and Codex, GPT-5.6 Luna, Doubao Seed 2.1 Turbo, MiniMax M3, GLM-5.2 and the Kimi K2.7 and K3 tiers, to Claude Opus 5 (xhigh) at 58.4% for $12.33 and GPT-5.6 Sol (medium) at 58.8% for $12.52. It rises steeply below $5 and is almost flat above it.">
+    alt="Scatter of ATM-Bench-Hard score against run cost for every priced agent run, on a log cost axis from $0.13 to $50.18, coloured by coding harness. A dashed staircase marks the Pareto frontier — the best score reachable at or below each price. The frontier runs from DeepSeek V4 Flash on Pi at 36.9% for $0.13, through the same model on Claude Code, DeepSeek V4 Pro on Pi at 45.9% for $0.44, Doubao Seed 2.1 Turbo, MiniMax M3, GLM-5.2 and the Kimi K2.7 and K3 tiers, to Claude Opus 5 (xhigh) at 58.4% for $12.33 and GPT-5.6 Sol (medium) at 58.8% for $12.52. It rises steeply below $5 and is almost flat above it.">
 </a>
 
 ### Price vs. Performance
 
 <a href="https://atmbench.github.io/leaderboard.html">
   <img src="docs/images/price-performance-light.png" width="100%"
-    alt="ATM-Bench-Hard score plotted against run cost on a log axis from $0.26 to $39.74. Lines join each model's reasoning-effort tiers; diamonds are single-configuration runs. GPT-5.6 Sol peaks at 58.8% for $12.52 and Claude Opus 5 reaches 58.4% for $12.33; Kimi K3-256k reaches 52.5% for $5.54, Gemini 3.6 Flash 48.2% for $19.96, GLM-5.2 under Claude Code 47.7% for $3.29, and GPT-5.6 Luna 42.4% for $1.01.">
+    alt="ATM-Bench-Hard score plotted against run cost on a log axis from $0.26 to $39.74. Lines join each model's reasoning-effort tiers; diamonds are single-configuration runs. GPT-5.6 Sol peaks at 58.8% for $12.52 and Claude Opus 5 reaches 58.4% for $12.33; Kimi K3-256k reaches 52.5% for $5.54, Gemini 3.6 Flash 48.2% for $19.96, GLM-5.2 under Claude Code 47.7% for $3.29, DeepSeek V4 Pro under Pi 45.9% for $0.44, and GPT-5.6 Luna 42.4% for $1.01.">
 </a>
 
 

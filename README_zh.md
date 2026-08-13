@@ -68,14 +68,14 @@ ATM-Bench-Hard 上的通用智能体结果如下。QS 分数使用 `gpt-5-mini` 
 
 <a href="https://atmbench.github.io/leaderboard.html">
   <img src="docs/images/price-performance-full-light.png" width="100%"
-    alt="ATM-Bench-Hard 得分对运行成本的散点图，包含全部已计价的智能体运行，成本为对数轴（$0.13 至 $50.18），按编程智能体着色。虚线阶梯为帕累托前沿，即在该价位及以下可达的最高得分。前沿从 Pi 上的 DeepSeek V4 Flash（$0.13，36.9%）起，经同一模型在 Claude Code 与 Codex 上的运行、GPT-5.6 Luna、Doubao Seed 2.1 Turbo、MiniMax M3、GLM-5.2 以及 Kimi K2.7 与 K3 各档，至 Claude Opus 5 (xhigh)（$12.33，58.4%）与 GPT-5.6 Sol (medium)（$12.52，58.8%）。前沿在 $5 以下陡升，之后趋于平缓。">
+    alt="ATM-Bench-Hard 得分对运行成本的散点图，包含全部已计价的智能体运行，成本为对数轴（$0.13 至 $50.18），按编程智能体着色。虚线阶梯为帕累托前沿，即在该价位及以下可达的最高得分。前沿从 Pi 上的 DeepSeek V4 Flash（$0.13，36.9%）起，经同一模型在 Claude Code 上的运行、Pi 上的 DeepSeek V4 Pro（$0.44，45.9%）、Doubao Seed 2.1 Turbo、MiniMax M3、GLM-5.2 以及 Kimi K2.7 与 K3 各档，至 Claude Opus 5 (xhigh)（$12.33，58.4%）与 GPT-5.6 Sol (medium)（$12.52，58.8%）。前沿在 $5 以下陡升，之后趋于平缓。">
 </a>
 
 ### 成本 – 得分
 
 <a href="https://atmbench.github.io/leaderboard.html">
   <img src="docs/images/price-performance-light.png" width="100%"
-    alt="ATM-Bench-Hard 得分对运行成本的散点图，成本为对数轴（$0.26 至 $39.74）。折线连接同一模型的各推理强度档位，菱形表示单一配置运行。GPT-5.6 Sol 以 $12.52 取得 58.8%，Claude Opus 5 以 $12.33 取得 58.4%；Kimi K3-256k 以 $5.54 取得 52.5%，Gemini 3.6 Flash 以 $19.96 取得 48.2%，Claude Code 上的 GLM-5.2 以 $3.29 取得 47.7%，GPT-5.6 Luna 以 $1.01 取得 42.4%。">
+    alt="ATM-Bench-Hard 得分对运行成本的散点图，成本为对数轴（$0.26 至 $39.74）。折线连接同一模型的各推理强度档位，菱形表示单一配置运行。GPT-5.6 Sol 以 $12.52 取得 58.8%，Claude Opus 5 以 $12.33 取得 58.4%；Kimi K3-256k 以 $5.54 取得 52.5%，Gemini 3.6 Flash 以 $19.96 取得 48.2%，Claude Code 上的 GLM-5.2 以 $3.29 取得 47.7%，Pi 上的 DeepSeek V4 Pro 以 $0.44 取得 45.9%，GPT-5.6 Luna 以 $1.01 取得 42.4%。">
 </a>
 
 这是 2026-06-28 的精选快照，刻意保持简短：其中不含此后新增的模型（DeepSeek V4 Flash、
